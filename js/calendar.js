@@ -4,7 +4,7 @@
   "use strict";
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
-  const DAYS = window.ADVENT_DAYS, MAP = window.ADVENT_MAP || {}, Viz = window.Viz;
+  const DAYS = window.ADVENT_DAYS, MAP = window.ADVENT_MAP || {}, PKG = window.ADVENT_PKG || {}, Viz = window.Viz;
   if (!DAYS || !Viz) return;
 
   /* ---------- Налаштування ---------- */
@@ -45,7 +45,8 @@
       genes: "генів, що кодують білки", genesMt: "генів у молекулі", regions: "інших відомих ділянок на карті", legGene: "ген дня", legOther: "інші відомі ділянки",
       others: "Інші гени цієї хромосоми та пов’язані з ними ознаки", noMt: "Мітохондріальна ДНК не входить до хромосомної карти.",
       noVars: "На карті немає окремих добре вивчених варіантів цієї хромосоми: її маркери працюють у складі полігенних оцінок.",
-      role: "Ген дня", known: "Що відомо", not: "Чого це не означає", habit: "Звичка дня", sources: "Джерела:",
+      role: "Ген дня", known: "Що відомо", not: "Чого це не означає", tip: "Порада дня", tipPick: "Оберіть, що вас стосується", sources: "Джерела", source: "Джерело",
+      pkgNote: "Натисніть на ознаку, щоб відкрити сторінку пакета Apixmed Prism, який її досліджує.", pkgTitle: (n) => `Пакет Apixmed Prism: ${n}`,
       next: (n) => `Наступне віконце відчиниться завтра, ${n} грудня`, prevBtn: "Попереднє відчинене віконце", nextBtn: "Наступне відчинене віконце", close: "Закрити",
       ideo: { pArm: "коротке плече (p)", qArm: "довге плече (q)", bp: "пар нуклеотидів", mtBp: "16 569", mt: "мітохондріальна ДНК", chromosome: "хромосома" },
       disclaimer: "Матеріал має освітній характер. Генетичні асоціації описують імовірність у групах людей, а не діагноз чи прогноз для окремої людини, і не замінюють консультацію лікаря.",
@@ -80,7 +81,8 @@
       genes: "protein-coding genes", genesMt: "genes in the molecule", regions: "other known regions on the map", legGene: "gene of the day", legOther: "other known regions",
       others: "Other genes on this chromosome and the traits linked to them", noMt: "Mitochondrial DNA is not part of the chromosome map.",
       noVars: "The map has no well-studied individual variants on this chromosome: its markers work as part of polygenic scores.",
-      role: "Gene of the day", known: "What is known", not: "What it does not mean", habit: "Habit of the day", sources: "Sources:",
+      role: "Gene of the day", known: "What is known", not: "What it does not mean", tip: "Tip of the day", tipPick: "Choose what applies to you", sources: "Sources", source: "Source",
+      pkgNote: "Click a trait to open the Apixmed Prism package that covers it.", pkgTitle: (n) => `Apixmed Prism package: ${n}`,
       next: (n) => `The next door opens tomorrow, ${n} December`, prevBtn: "Previous opened door", nextBtn: "Next opened door", close: "Close",
       ideo: { pArm: "short arm (p)", qArm: "long arm (q)", bp: "base pairs", mtBp: "16,569", mt: "mitochondrial DNA", chromosome: "chromosome" },
       disclaimer: "This material is educational. Genetic associations describe probabilities in groups of people, not a diagnosis or a forecast for an individual, and they do not replace a doctor’s advice.",
@@ -327,7 +329,41 @@
   }
 
   /* ---------- Картка дня ---------- */
-  const srcLine = (x) => x ? `<p class="src"><b>${T.sources}</b> ${x}</p>` : "";
+  const esc = (x) => String(x).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+  const extIcon = `<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4.5 2.5h5v5M9.5 2.5L3 9"/></svg>`;
+  /* Позначка {n} у тексті стає посиланням на n-те джерело дня */
+  function marker(d) {
+    const refs = d.refs || [];
+    return (x) => String(x).replace(/\{(\d+)\}/g, (m, n) => {
+      const r = refs[n - 1];
+      return r ? `<sup class="ref"><a href="${r[1]}" target="_blank" rel="noopener" title="${esc(L(r[0]))}" aria-label="${T.source} ${n}: ${esc(L(r[0]))}">${n}</a></sup>` : "";
+    });
+  }
+  const refsHTML = (d) => (d.refs && d.refs.length)
+    ? `<div class="sect c-refs"><h4>${T.sources}</h4><ol class="refs">${d.refs.map((r) => `<li><a href="${r[1]}" target="_blank" rel="noopener">${L(r[0])}</a></li>`).join("")}</ol></div>` : "";
+  /* Порада дня: текст залежить від обраного генотипу або групи */
+  function tipHTML(d, c, m) {
+    if (!c.tip || !c.tip.length) return "";
+    return `<div class="sect tip" data-tip>
+        <h4>${T.tip}</h4>
+        <p class="tip-pick">${T.tipPick}</p>
+        <div class="seg3${c.tip.length === 2 ? " two" : ""}" role="group" aria-label="${T.tipPick}">${c.tip.map((o, i) => `<button type="button" aria-pressed="${i === 0}"><b>${o.k}</b><small>${o.s}</small></button>`).join("")}</div>
+        <p class="tip-t" aria-live="polite">${c.tip[0].t}</p>
+        <p class="hf tip-f">${m(c.tip[0].f)}</p>
+        ${c.tipNote ? `<p class="tip-n">${c.tipNote}</p>` : ""}
+      </div>`;
+  }
+  function mountTip() {
+    const box = $("#sheet [data-tip]");
+    if (!box || typeof state.open !== "number") return;
+    const d = dayOf(state.open), c = C(d), m = marker(d), btns = $$(".seg3 button", box);
+    btns.forEach((b, i) => b.addEventListener("click", () => {
+      btns.forEach((x, k) => x.setAttribute("aria-pressed", String(k === i)));
+      $(".tip-t", box).textContent = c.tip[i].t;
+      $(".tip-f", box).innerHTML = m(c.tip[i].f);
+    }));
+  }
+  const pkgUrl = (p) => "https://apixmed.com.ua/" + (lang === "en" ? "en/" : "") + "product/" + p[0];
   const topicIdx = () => (lang === "en" ? 3 : 2);
   function mapGenes(d) {
     const seen = new Set(), items = [];
@@ -335,9 +371,13 @@
     return items;
   }
   function cardHTML(d) {
-    const c = C(d), gene = L(d.gene), items = mapGenes(d), label = d.chr === "MT" ? T.mtShort : (d.chr2 ? "X·Y" : d.chr), ti = topicIdx();
+    const c = C(d), gene = L(d.gene), items = mapGenes(d), label = d.chr === "MT" ? T.mtShort : (d.chr2 ? "X·Y" : d.chr), ti = topicIdx(), m = marker(d);
+    const chip = (v) => {
+      const p = PKG[v[4]], cls = "chip" + (v[1] === gene || v[1].split("/").includes(gene) ? " hero" : ""), inner = `<em>${v[1]}</em>${v[ti]}`;
+      return p ? `<a class="${cls}" href="${pkgUrl(p)}" target="_blank" rel="noopener" title="${esc(T.pkgTitle(p[lang === "en" ? 2 : 1]))}">${inner}${extIcon}</a>` : `<span class="${cls}">${inner}</span>`;
+    };
     const chips = items.length
-      ? `<div class="chips">${items.map((v) => `<span class="chip ${v[1] === gene || v[1].split("/").includes(gene) ? "hero" : ""}"><em>${v[1]}</em>${v[ti]}</span>`).join("")}</div>`
+      ? `<p class="chips-note">${T.pkgNote}</p><div class="chips">${items.map(chip).join("")}</div>`
       : `<p class="caveat">${d.chr === "MT" ? T.noMt : T.noVars}</p>`;
     const ideo = `<div class="ideo c-ideo">
           <div class="big">${label}<small>${d.chr === "MT" ? T.mtLower : d.chr2 ? T.sex : T.pairOf}</small></div>
@@ -354,15 +394,15 @@
         <h2 class="m-title">${c.title}</h2>
         <div class="geneline"><em>${gene}</em><span>${L(d.band)}</span></div></div>`;
     const tomorrow = d.d === now.today && d.d < CFG.last ? `<p class="next">${lockIcon}${T.next(d.d + 1)}</p>` : "";
-    const vz = (slot) => (d.viz || []).filter((v) => v.after === slot && Viz.has(v.id)).map((v) => Viz.html(v.id, lang)).join("");
+    const vz = (slot) => (d.viz || []).filter((v) => v.after === slot && Viz.has(v.id)).map((v) => Viz.html(v.id, lang, m)).join("");
     const body = d.ready
-      ? `<div class="prose" style="margin-top:14px"><p>${c.intro}</p></div>${vz("intro")}
-          <div class="sect"><h4>${T.role}</h4><div class="prose"><p>${c.role}</p></div></div>${vz("role")}
-          <div class="sect"><h4>${T.known}</h4><div class="prose"><p>${c.known}</p></div></div>${vz("known")}
-          <div class="callout"><b>${T.not}</b>${c.not}</div>
-          <div class="sect"><h4>${T.habit}</h4><div class="prose"><p>${c.habit}</p></div>${c.habitFact ? `<p class="hf">${c.habitFact}</p>` : ""}</div>${vz("habit")}
-          ${srcLine(c.sources)}`
-      : `<p class="standfirst" style="margin-top:14px">${c.hook}</p>`;
+      ? `<div class="prose" style="margin-top:14px"><p>${m(c.intro)}</p></div>${vz("intro")}
+          <div class="sect"><h4>${T.role}</h4><div class="prose"><p>${m(c.role)}</p></div></div>${vz("role")}
+          <div class="sect"><h4>${T.known}</h4><div class="prose"><p>${m(c.known)}</p></div></div>${vz("known")}
+          <div class="callout"><b>${T.not}</b>${m(c.not)}</div>
+          ${tipHTML(d, c, m)}
+          ${refsHTML(d)}`
+      : `<p class="standfirst" style="margin-top:14px">${m(c.hook)}</p>${refsHTML(d)}`;
     /* На широкому екрані портрет хромосоми стоїть ліворуч і лишається на екрані під час читання;
        на вузькому порядок: заголовок, портрет, текст, інші гени */
     return `<div class="m-grid"><div class="col c-side">${ideo}</div><div class="col">${head}<div class="c-body">${body}${tomorrow}</div>${more}</div></div>`;
@@ -379,10 +419,11 @@
   }
   function mountViz(force) {
     const figs = $$("#sheet .viz");
-    if (!figs.length) return;
+    if (!figs.length || typeof state.open !== "number") return;
     if (!force && figs.every((f) => +f.querySelector(".viz-stage").dataset.w === Math.max(260, Math.floor(f.querySelector(".viz-stage").clientWidth)))) return;
     stopViz();
-    figs.forEach((f) => vizStops.push(Viz.mount(f, lang)));
+    const m = marker(dayOf(state.open));
+    figs.forEach((f) => vizStops.push(Viz.mount(f, lang, m)));
   }
   function showSheet(html, narrow) {
     stopViz();
@@ -412,7 +453,7 @@
     $("#overlay").setAttribute("aria-label", `${T.date(n)}: ${kick(d)}`);
     $("#prev").addEventListener("click", () => { if (idx > 0) openCard(avail[idx - 1]); });
     $("#next").addEventListener("click", () => { if (idx >= 0 && idx < avail.length - 1) openCard(avail[idx + 1]); });
-    mountIdeo(); mountViz(true);
+    mountIdeo(); mountViz(true); mountTip();
   }
   function openInfo() {
     state.open = "info";

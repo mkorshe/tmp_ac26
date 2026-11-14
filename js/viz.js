@@ -94,23 +94,23 @@
         food: "Фолат із їжі", enzyme: "фермент MTHFR", active: "активна форма", tank: "Фолат в еритроцитах", ref: "рівень без варіанта",
         read: ["Точка відліку: середній рівень фолату в людей без варіанта.", "Одна копія: у середньому на 8% менше фолату в еритроцитах.", "Дві копії: у середньому на 16% менше. Фермент працює повільніше, але фолат усе одно переробляє."],
         dist: "Генотипи в європейській вибірці",
-        src: "Потік на схемі умовний. Числа: середня різниця рівня фолату в еритроцитах у здорових жінок 12–49 років (метааналіз, мікробіологічний метод). Джерела: Tsang et al., 2015; 1000 Genomes Project, фаза 3 (503 людини)." },
+        src: "Потік на схемі умовний. Числа: середня різниця рівня фолату в еритроцитах у здорових жінок 12–49 років (метааналіз, мікробіологічний метод). Джерела: Tsang et al., 2015{3}; 1000 Genomes Project, фаза 3 (503 людини){4}." },
       en: { title: "Same diet, three genotypes", sub: "Pick a genotype for the C677T variant and see how red-cell folate changes at the same intake.",
         g: [["CC", "no variant"], ["CT", "one copy"], ["TT", "two copies"]], group: "Genotype",
         food: "Folate from food", enzyme: "MTHFR enzyme", active: "active form", tank: "Red-cell folate", ref: "level without the variant",
         read: ["The reference point: average folate in people without the variant.", "One copy: on average 8% less folate in red blood cells.", "Two copies: on average 16% less. The enzyme works more slowly but still processes folate."],
         dist: "Genotypes in a European sample",
-        src: "The flow in the diagram is schematic. Numbers: mean difference in red-cell folate among healthy women aged 12–49 (meta-analysis, microbiological assay). Sources: Tsang et al., 2015; 1000 Genomes Project, phase 3 (503 people)." }
+        src: "The flow in the diagram is schematic. Numbers: mean difference in red-cell folate among healthy women aged 12–49 (meta-analysis, microbiological assay). Sources: Tsang et al., 2015{3}; 1000 Genomes Project, phase 3 (503 people){4}." }
     },
     fusion: {
       uk: { title: "Як із двох хромосом вийшла одна", sub: "У шимпанзе, горили й орангутана 24 пари хромосом. У предків людини дві хромосоми з’єдналися кінцями.",
         apes: ["24 пари", "людиноподібні мавпи"], human: ["23 пари", "людина"], group: "Вид",
         tel: "теломери: кінці хромосом", cen: "центромера", scar: "місце злиття: теломерні повтори посеред хромосоми, 2q13", old: "колишня центромера, тепер неактивна", hum2: "хромосома 2 людини",
-        src: "Схема; довжини частин відповідають ділянкам хромосоми 2 людини. Джерела: IJdo et al., PNAS, 1991; Hillier et al., Nature, 2005." },
+        src: "Схема; довжини частин відповідають ділянкам хромосоми 2 людини. Джерела: IJdo et al., PNAS, 1991{2}; Hillier et al., Nature, 2005{3}." },
       en: { title: "How two chromosomes became one", sub: "Chimpanzees, gorillas and orangutans have 24 pairs of chromosomes. In human ancestors two chromosomes joined end to end.",
         apes: ["24 pairs", "great apes"], human: ["23 pairs", "humans"], group: "Species",
         tel: "telomeres: chromosome ends", cen: "centromere", scar: "fusion site: telomere repeats mid-chromosome, 2q13", old: "former centromere, now inactive", hum2: "human chromosome 2",
-        src: "Schematic; segment lengths match the regions of human chromosome 2. Sources: IJdo et al., PNAS, 1991; Hillier et al., Nature, 2005." }
+        src: "Schematic; segment lengths match the regions of human chromosome 2. Sources: IJdo et al., PNAS, 1991{2}; Hillier et al., Nature, 2005{3}." }
     },
     lactase: {
       uk: { title: "Де цей варіант поширений", sub: "Частка людей у вибірці, які мають хоча б одну копію варіанта. Торкніться склянки, щоб побачити деталі.",
@@ -118,13 +118,13 @@
         eu: ["Північно-західна Європа", "Британія", "Фінляндія", "Іспанія", "Тоскана, Італія"], world: ["Європа", "Америка", "Південна Азія", "Африка", "Східна Азія"],
         detail: (n, c, a) => `${n}: ${c} людей у вибірці, варіант на ${a}% хромосом.`,
         note: "У Східній Африці ту саму здатність дають інші варіанти цієї ділянки, тому низький рівень на графіку не означає, що молоко там не перетравлюють.",
-        src: "Північно-західна Європа: нащадки вихідців із цього регіону, штат Юта. Джерела: 1000 Genomes Project, фаза 3 (через Ensembl); Enattah et al., 2002; Tishkoff et al., 2007." },
+        src: "Північно-західна Європа: нащадки вихідців із цього регіону, штат Юта. Джерела: 1000 Genomes Project, фаза 3 (через Ensembl){5}; Enattah et al., 2002{4}; Tishkoff et al., 2007{6}." },
       en: { title: "Where the variant is common", sub: "Share of people in each sample who carry at least one copy of the variant. Tap a glass for details.",
         tabs: ["Europe", "World"], group: "Region",
         eu: ["North-west Europe", "Britain", "Finland", "Spain", "Tuscany, Italy"], world: ["Europe", "Americas", "South Asia", "Africa", "East Asia"],
         detail: (n, c, a) => `${n}: ${c} people sampled, variant on ${a}% of chromosomes.`,
         note: "In East Africa other variants in the same region give the same ability, so a low level here does not mean milk is not digested there.",
-        src: "North-west Europe: Utah residents with ancestry from that region. Sources: 1000 Genomes Project, phase 3 (via Ensembl); Enattah et al., 2002; Tishkoff et al., 2007." }
+        src: "North-west Europe: Utah residents with ancestry from that region. Sources: 1000 Genomes Project, phase 3 (via Ensembl){5}; Enattah et al., 2002{4}; Tishkoff et al., 2007{6}." }
     },
     dpp: {
       uk: { title: "Ген і спосіб життя: масштаб ефекту", sub: "Програма профілактики діабету: 3 234 людини з високим ризиком, три групи. Оберіть групу.",
@@ -133,26 +133,26 @@
         notes: ["Група порівняння.", "Ліки призначали в межах дослідження.", "Цілі групи: мінус 7% маси тіла і щонайменше 150 хвилин руху на тиждень."],
         scale: "Масштаб ефекту", gene: "Поширений варіант PPARG", geneV: "+25%", life: "Зміна способу життя", lifeV: "−58%", zero: "без змін",
         cap: "Варіант гена: різниця між носіями в дослідженнях асоціацій. Спосіб життя: рандомізоване дослідження серед людей із високим ризиком. Групи різні, тож порівнюємо лише масштаб.",
-        src: "Джерела: Knowler et al., New England Journal of Medicine, 2002; Altshuler et al., Nature Genetics, 2000." },
+        src: "Джерела: Knowler et al., New England Journal of Medicine, 2002{4}; Altshuler et al., Nature Genetics, 2000{3}." },
       en: { title: "Gene and lifestyle: the scale of effect", sub: "The Diabetes Prevention Program: 3,234 people at high risk, three groups. Pick a group.",
         arms: ["Placebo", "Metformin", "Lifestyle"], group: "Study group",
         unit: "new cases of diabetes per 100 people per year", vs: "versus placebo",
         notes: ["The comparison group.", "The drug was given as part of the trial.", "Group goals: 7% weight loss and at least 150 minutes of activity a week."],
         scale: "Scale of effect", gene: "Common PPARG variant", geneV: "+25%", life: "Lifestyle change", lifeV: "−58%", zero: "no change",
         cap: "Gene variant: the difference between carriers in association studies. Lifestyle: a randomised trial in people at high risk. The groups differ, so only the scale is compared.",
-        src: "Sources: Knowler et al., New England Journal of Medicine, 2002; Altshuler et al., Nature Genetics, 2000." }
+        src: "Sources: Knowler et al., New England Journal of Medicine, 2002{4}; Altshuler et al., Nature Genetics, 2000{3}." }
     },
     clock: {
       uk: { title: "Доба всередині клітини", sub: "Перетягніть стрілку по колу або натисніть «Пуск», щоб пройти один оберт молекулярного годинника.",
         play: "Пуск", pause: "Пауза", a: "CLOCK–BMAL1: зчитування генів PER і CRY", p: "Білки PER і CRY", hand: "Час доби",
         ph: [["ранок", "CLOCK і BMAL1 запускають зчитування генів PER і CRY."], ["день", "Зчитування на піку, білки PER і CRY накопичуються."], ["вечір", "Білків PER і CRY найбільше: вони гальмують CLOCK–BMAL1."], ["ніч", "PER і CRY руйнуються, гальмо слабшає. Цикл починається знову."]],
-        tiles: [["24 год 11 хв", "середній власний період годинника людини; світло щодня підводить його до 24 годин"], ["43%", "генів, що кодують білки, мають добовий ритм хоча б в одному з 12 органів миші"]],
-        src: "Схема для однієї клітини; години орієнтовні й відрізняються між тканинами. Джерела: Takahashi, Nature Reviews Genetics, 2017; Czeisler et al., Science, 1999; Zhang et al., PNAS, 2014." },
+        tiles: [["24 год 11 хв", "середній власний період годинника людини; світло щодня підводить його до 24 годин{7}{10}"], ["43%", "генів, що кодують білки, мають добовий ритм хоча б в одному з 12 органів миші{8}"]],
+        src: "Схема для однієї клітини; години орієнтовні й відрізняються між тканинами. Джерела: Takahashi, Nature Reviews Genetics, 2017{2}; Czeisler et al., Science, 1999{7}; Zhang et al., PNAS, 2014{8}." },
       en: { title: "A day inside the cell", sub: "Drag the hand around the dial or press Play to go once round the molecular clock.",
         play: "Play", pause: "Pause", a: "CLOCK–BMAL1: reading of the PER and CRY genes", p: "PER and CRY proteins", hand: "Time of day",
         ph: [["morning", "CLOCK and BMAL1 start the reading of the PER and CRY genes."], ["day", "Reading peaks; PER and CRY proteins build up."], ["evening", "PER and CRY proteins are at their highest: they hold CLOCK–BMAL1 back."], ["night", "PER and CRY break down, the brake eases. The cycle starts again."]],
-        tiles: [["24 h 11 min", "the average intrinsic period of the human clock; daylight resets it to 24 hours each day"], ["43%", "of protein-coding genes follow a daily rhythm in at least one of 12 mouse organs"]],
-        src: "A schematic for a single cell; the hours are approximate and differ between tissues. Sources: Takahashi, Nature Reviews Genetics, 2017; Czeisler et al., Science, 1999; Zhang et al., PNAS, 2014." }
+        tiles: [["24 h 11 min", "the average intrinsic period of the human clock; daylight resets it to 24 hours each day{7}{10}"], ["43%", "of protein-coding genes follow a daily rhythm in at least one of 12 mouse organs{8}"]],
+        src: "A schematic for a single cell; the hours are approximate and differ between tissues. Sources: Takahashi, Nature Reviews Genetics, 2017{2}; Czeisler et al., Science, 1999{7}; Zhang et al., PNAS, 2014{8}." }
     },
     telomere: {
       uk: { title: "Лічильник поділів", sub: "Пересувайте повзунок: із кожним поділом кінці хромосоми коротшають. Увімкніть теломеразу й порівняйте.",
@@ -160,15 +160,15 @@
         lost: (kb) => `теломери коротші приблизно на ${kb} тис. пар нуклеотидів`, full: "теломери повної довжини", kept: "теломераза добудовує повтори: довжина тримається",
         end: "У цій схемі запас повторів вичерпано: клітина з критично короткими теломерами припиняє ділитися.",
         on: "У сперматозоїдах теломери з віком донора не коротшали, що вказує на роботу теломерази в статевих клітинах.",
-        tiles: [["TTAGGG", "шість літер, що повторюються на кінцях кожної хромосоми"], ["≈ 10 поділів", "додавала кожна тисяча пар нуклеотидів початкової довжини теломер (клітини 31 донора)"]],
-        src: "Схема: один сегмент відповідає п’яти поділам. Джерело розрахунку: Allsopp et al., PNAS, 1992 (фібробласти в культурі)." },
+        tiles: [["TTAGGG", "шість літер, що повторюються на кінцях кожної хромосоми{9}"], ["≈ 10 поділів", "додавала кожна тисяча пар нуклеотидів початкової довжини теломер (клітини 31 донора){8}"]],
+        src: "Схема: один сегмент відповідає п’яти поділам. Джерело розрахунку: Allsopp et al., PNAS, 1992{8} (фібробласти в культурі)." },
       en: { title: "The division counter", sub: "Move the slider: with every division the chromosome ends get shorter. Switch telomerase on and compare.",
         div: "Cell divisions", play: "Play", pause: "Pause", again: "Restart", tel: "Telomerase",
         lost: (kb) => `telomeres shorter by about ${kb} thousand base pairs`, full: "telomeres at full length", kept: "telomerase adds repeats back: length holds",
         end: "In this schematic the repeats have run out: a cell with critically short telomeres stops dividing.",
         on: "In sperm, telomeres did not shorten with the donor’s age, which points to telomerase at work in germ cells.",
-        tiles: [["TTAGGG", "six letters repeated at the ends of every chromosome"], ["≈ 10 divisions", "gained for every thousand base pairs of starting telomere length (cells from 31 donors)"]],
-        src: "Schematic: one segment stands for five divisions. Basis for the estimate: Allsopp et al., PNAS, 1992 (fibroblasts in culture)." }
+        tiles: [["TTAGGG", "six letters repeated at the ends of every chromosome{9}"], ["≈ 10 divisions", "gained for every thousand base pairs of starting telomere length (cells from 31 donors){8}"]],
+        src: "Schematic: one segment stands for five divisions. Basis for the estimate: Allsopp et al., PNAS, 1992{8} (fibroblasts in culture)." }
     }
   };
   const tiles = (arr) => `<div class="viz-tiles">${arr.map((x) => `<div><b>${x[0]}</b><span>${x[1]}</span></div>`).join("")}</div>`;
@@ -470,16 +470,19 @@
   }
 
   const RENDER = { folate, fusion, lactase, dpp, clock, telomere };
+  /* Позначки {n} у текстах графіка замінюються посиланнями на джерела дня; без обробника вони просто зникають */
+  const strip = (s) => s.replace(/\{\d+\}/g, "");
+  const deep = (v, f) => typeof v === "string" ? f(v) : Array.isArray(v) ? v.map((x) => deep(x, f)) : v && typeof v === "object" ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, deep(x, f)])) : v;
   window.Viz = {
     nf, miniChrom, ideogram,
     has: (id) => !!RENDER[id],
     /* Розмітка картки графіка; сам графік монтується після вставлення в сторінку */
-    html(id, lang) {
-      const t = TXT[id][lang] || TXT[id].uk;
+    html(id, lang, mark) {
+      const t = deep(TXT[id][lang] || TXT[id].uk, mark || strip);
       return `<figure class="viz viz-${id}" data-viz="${id}"><h3>${t.title}</h3><p class="sub">${t.sub}</p><div class="viz-stage"></div><figcaption>${t.src}</figcaption></figure>`;
     },
-    mount(fig, lang) {
-      const id = fig.dataset.viz, stage = fig.querySelector(".viz-stage"), t = TXT[id][lang] || TXT[id].uk;
+    mount(fig, lang, mark) {
+      const id = fig.dataset.viz, stage = fig.querySelector(".viz-stage"), t = deep(TXT[id][lang] || TXT[id].uk, mark || strip);
       const W = Math.max(260, Math.floor(stage.clientWidth));
       stage.dataset.w = W;
       return RENDER[id](stage, t, lang, W) || (() => {});
