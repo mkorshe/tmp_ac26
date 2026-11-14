@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>23 пари · адвент-календар Apixmed Prism</title>
+  <meta name="description" content="Адвент-календар про хромосоми людини: щодня з 1 по 24 грудня одна пара й один відомий ген, пов’язаний зі здоров’ям і самопочуттям.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#F3FAFD">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="23 пари · адвент-календар Apixmed Prism">
+  <meta property="og:description" content="Щодня з 1 по 24 грудня одна пара хромосом і один відомий ген.">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:locale:alternate" content="en_GB">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Crect x='1' y='1' width='32' height='32' rx='5' fill='%23429DB5'/%3E%3Cpath d='M1 24h15a7 7 0 0 0 7-7V1M8 33V18a10 10 0 0 1 10-10h15' fill='none' stroke='%23fff' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="preload" href="assets/fonts/raleway-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/raleway-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/calendar.css?v=20">
+  <link rel="stylesheet" href="css/viz.css?v=20">
+</head>
+<body>
+  <div class="app">
+    <header class="strip">
+      <div class="brand">
+        <img src="assets/logo/logo-light.svg" alt="Apixmed Prism" width="232" height="34">
+        <span class="sep" aria-hidden="true"></span>
+        <h1 class="ttl"><b>23 пари</b><small>адвент-календар · грудень 2026</small></h1>
+      </div>
+
+      <nav class="karyo" id="karyo" aria-label="Каріограма: пари хромосом за днями грудня"></nav>
+
+      <div class="meta">
+        <span class="pill prog" id="prog" aria-live="polite"></span>
+        <span class="pill date" id="date"></span>
+        <div class="lang" id="lang" role="group" aria-label="Мова">
+          <button type="button" data-lang="uk" aria-pressed="true" lang="uk" aria-label="Українська">Укр</button>
+          <button type="button" data-lang="en" aria-pressed="false" lang="en" aria-label="English">Eng</button>
+        </div>
+        <button class="icon-btn" id="info" aria-label="Про календар">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="8" cy="8" r="6.3"/><path d="M8 7.3v3.9"/><circle cx="8" cy="4.9" r=".6" fill="currentColor"/></svg>
+        </button>
+      </div>
+      <div class="k-tip" id="ktip" role="tooltip"></div>
+    </header>
+
+    <main class="board" aria-label="Календар: 24 віконця">
+      <div class="panel">
+        <div class="wins" id="wins"></div>
+      </div>
+    </main>
+  </div>
+
+  <canvas id="snow" aria-hidden="true"></canvas>
+
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="День календаря">
+    <div class="sheet" id="sheet"></div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <noscript><p class="noscript">Щоб відчинити віконця календаря, увімкніть JavaScript у браузері. · Turn on JavaScript in your browser to open the calendar doors.</p></noscript>
+
+  <script src="js/map.js?v=20"></script>
+  <script src="js/days.js?v=20"></script>
+  <script src="js/viz.js?v=20"></script>
+  <script src="js/calendar.js?v=20"></script>
+</body>
+</html>
