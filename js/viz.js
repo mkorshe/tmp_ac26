@@ -127,7 +127,7 @@
         const x = f1(x0 + (d.pos / len) * w), right = x < W / 2;
         g += `<line x1="${x}" x2="${x}" y1="${y - 5}" y2="${y + h + 20}" stroke="${PEACH}" stroke-width="1.8"/>`;
         g += `<circle class="pulse" cx="${x}" cy="${y + h / 2}" r="6" fill="${PEACH}"/>${ball(x, y + h / 2, 7, "fx-ball-peach")}`;
-        g += `<text x="${x + (right ? 10 : -10)}" y="${y + h + 26}" text-anchor="${right ? "start" : "end"}" style="font-family:var(--font-head);font-style:italic;font-weight:600;font-size:19px" fill="#FFB575">${esc(gene)}</text>`;
+        g += `<text x="${x + (right ? 10 : -10)}" y="${y + h + 26}" text-anchor="${right ? "start" : "end"}" style="font-family:var(--font-body);font-style:italic;font-weight:600;font-size:19px" fill="#FFB575">${esc(gene)}</text>`;
         g += `<text x="${x + (right ? 10 : -10)}" y="${y + h + 43}" text-anchor="${right ? "start" : "end"}" style="font-family:var(--font-body);font-size:12px" fill="rgba(255,255,255,.8)">${esc(band)}</text>`;
       }
       y += h + (hasHero ? 84 : 26);
@@ -245,7 +245,7 @@
         <path d="M${sx - 9},${cy + 7} C${sx - 10},${cy - 7} ${sx + 2},${cy - 12} ${sx + 10},${cy - 10} C${sx + 11},${cy + 2} ${sx + 3},${cy + 10} ${sx - 9},${cy + 7} Z M${sx - 9},${cy + 8} L${sx + 5},${cy - 5}" fill="#fff" fill-opacity=".85" stroke="#2F7D48" stroke-width="1.2" stroke-linejoin="round"/>
         <text class="vz-lab" x="${sx - 24}" y="${cy + 52}">${t.food}</text>
         ${ball(ex, cy, er, "fx-ball")}
-        <text x="${ex}" y="${cy + 5}" text-anchor="middle" style="font-family:var(--font-head);font-style:italic;font-weight:700;font-size:13.5px" fill="#fff">MTHFR</text>
+        <text x="${ex}" y="${cy + 5}" text-anchor="middle" style="font-family:var(--font-body);font-style:italic;font-weight:700;font-size:13.5px" fill="#fff">MTHFR</text>
         <path class="fl-ring" d="M${ex - rx},${cy} A${rx},${f1(ryR)} 0 0 0 ${ex + rx},${cy}"/>
         <text class="vz-lab" x="${ex}" y="${cy + er + 36}" text-anchor="middle">${t.enzyme}</text>
         <text class="vz-lab vz-peach" x="${f1((ex + rx + tx) / 2)}" y="${cy - 18}" text-anchor="middle">${t.active}</text>
@@ -325,7 +325,7 @@
           <rect class="fu-smooth" x="${f1(bx + lb * oldCen - 10)}" y="${y}" width="20" height="${h}" fill="url(#fx-tube)"/>
           <g class="fu-tel fu-in">${capL(bx)}</g><g class="fu-tel">${capR(bx + lb)}</g>
           <text class="fu-name" x="${f1(bx + lb / 2)}" y="${y - 12}" text-anchor="middle">2B</text>
-          <g class="fu-lct"><line x1="${f1(bx + lb * lct)}" x2="${f1(bx + lb * lct)}" y1="${y - 6}" y2="${y + h + 4}" stroke="${PEACH}" stroke-width="2"/>${ball(bx + lb * lct, y + h / 2, 6, "fx-ball-peach")}<text x="${f1(bx + lb * lct + 9)}" y="${y - 10}" style="font-family:var(--font-head);font-style:italic;font-weight:700;font-size:13px" fill="#B4541A">LCT</text></g>
+          <g class="fu-lct"><line x1="${f1(bx + lb * lct)}" x2="${f1(bx + lb * lct)}" y1="${y - 6}" y2="${y + h + 4}" stroke="${PEACH}" stroke-width="2"/>${ball(bx + lb * lct, y + h / 2, 6, "fx-ball-peach")}<text x="${f1(bx + lb * lct + 9)}" y="${y - 10}" style="font-family:var(--font-body);font-style:italic;font-weight:700;font-size:13px" fill="#B4541A">LCT</text></g>
         </g>
         <g class="fu-join"><rect x="${f1(W / 2 - r - 2)}" y="${y}" width="${f1(2 * r + 4)}" height="${h}" fill="url(#fx-tube)"/><path d="M${f1(W / 2 - r - 2)},${y} h${f1(2 * r + 4)} M${f1(W / 2 - r - 2)},${y + h} h${f1(2 * r + 4)}" stroke="rgba(11,37,50,.28)" stroke-width="1" fill="none"/><rect x="${f1(W / 2 - r - 2)}" y="${y + 4}" width="${f1(2 * r + 4)}" height="3.2" fill="#fff" opacity=".5"/><rect x="${f1(W / 2 - 3)}" y="${y}" width="6" height="${h}" fill="url(#fx-tube-peach)" stroke="#B95A1B" stroke-width="1"/></g>
         <text class="fu-h2" x="${W / 2}" y="${y - 28}" text-anchor="middle">${t.hum2}</text>
@@ -623,7 +623,78 @@
     return () => {};
   }
 
-  const RENDER = { folate, fusion, lactase, dpp, clock, telomere, bars3d, share, picker, flip };
+  /* ---------- Шаблон: наочна схема роботи білка (kind + три підписи) ----------
+     kind: enzyme (фермент), receptor (рецептор на мембрані), tf (білок на ДНК), present (HLA показує пептид),
+     structure (білок у м’язовому волокні), hormone (орган → кров → мішень), organelle (мітохондрія з кільцевою ДНК) */
+  function mech(stage, t, lang, W, ui, v) {
+    const H = 178, cx = W / 2, cy = 88;
+    const num = (x, y, n) => `<g class="mh-n"><circle cx="${f1(x)}" cy="${f1(y)}" r="10.5" fill="${NAVY}" stroke="#fff" stroke-width="2"/><text x="${f1(x)}" y="${f1(y + 4)}" text-anchor="middle">${n}</text></g>`;
+    let g = "";
+    const kind = v.kind;
+    if (kind === "enzyme") {
+      const dx = cx - 108, dx2 = W - cx - 104;
+      g = `${sh(cx, cy + 46, 46, 7, 0.24)}${tube(26, cy - 6, W - 52, 12, "fx-tube-ice")}
+        <g class="mh-sub" style="--dx:${f1(dx)}px">${ball(46, cy, 12, "fx-ball-green")}${ball(64, cy - 2, 9.5, "fx-ball-green")}</g>
+        <g class="mh-prod" style="--dx:${f1(dx2)}px">${ball(cx + 52, cy - 9, 10, "fx-ball-peach")}${ball(cx + 58, cy + 12, 8.5, "fx-ball-peach")}</g>
+        <g class="mh-enz">${ball(cx - 10, cy + 2, 34, "fx-ball")}${ball(cx + 22, cy - 12, 23, "fx-ball")}<path d="M${cx - 30},${cy - 4} q10,-10 22,-4" stroke="#fff" stroke-width="4" stroke-linecap="round" fill="none" opacity=".45"/></g>
+        ${num(50, cy - 30, 1)}${num(cx + 4, cy - 52, 2)}${num(W - 52, cy - 30, 3)}`;
+    } else if (kind === "receptor") {
+      let lip = "";
+      for (let x = 10; x < W; x += 13) lip += ball(x, 102, 5.4, "fx-ball-ice") + ball(x, 122, 5.4, "fx-ball-ice");
+      g = `<rect x="0" y="126" width="${W}" height="${H - 126}" fill="rgba(30,101,140,.07)"/><rect x="0" y="104" width="${W}" height="16" fill="#C9DFEA"/>${lip}
+        <path d="M${cx - 15},70 V146 A15,6 0 0 0 ${cx + 15},146 V70 Z" fill="url(#fx-cyl)"/><ellipse cx="${cx}" cy="70" rx="24" ry="8" fill="#BFEAF5" stroke="#2A77A0"/><ellipse cx="${cx}" cy="70" rx="13" ry="4" fill="#1E658C" opacity=".55"/>
+        <g class="mh-lig">${ball(cx, 22, 11, "fx-ball-peach")}</g>
+        <g class="mh-sig">${ball(cx - 18, 156, 4.5, "fx-ball-peach")}${ball(cx, 166, 4.5, "fx-ball-peach")}${ball(cx + 18, 156, 4.5, "fx-ball-peach")}</g>
+        ${num(cx + 34, 26, 1)}${num(cx + 44, 88, 2)}${num(cx + 48, 158, 3)}`;
+    } else if (kind === "tf") {
+      const y0 = 118, x1 = 16, x2 = W - 16, px = W * 0.36;
+      let a = "", b = "", rungs = "";
+      for (let x = x1; x <= x2; x += 3) { const k = (x - x1) / 26; a += (x === x1 ? "M" : "L") + f1(x) + "," + f1(y0 + Math.sin(k) * 13); b += (x === x1 ? "M" : "L") + f1(x) + "," + f1(y0 - Math.sin(k) * 13); }
+      for (let x = x1 + 6; x < x2; x += 10) { const k = (x - x1) / 26, d = Math.sin(k) * 13; if (Math.abs(d) > 4) rungs += `<line x1="${f1(x)}" x2="${f1(x)}" y1="${f1(y0 - d)}" y2="${f1(y0 + d)}" stroke="#9DBBCB" stroke-width="2"/>`; }
+      g = `${sh(cx, y0 + 28, W * 0.42, 6, 0.16)}${rungs}<path d="${a}" fill="none" stroke="#2A77A0" stroke-width="5" stroke-linecap="round"/><path d="${b}" fill="none" stroke="#7CC8DE" stroke-width="5" stroke-linecap="round"/>
+        <g class="mh-enz">${ball(px, y0 - 24, 27, "fx-ball")}${ball(px + 32, y0 - 20, 19, "fx-ball-peach")}</g>
+        <path class="mh-rna" pathLength="100" d="M${f1(px + 56)},${y0 - 22} q14,-26 30,-12 t30,-14 t30,-12 t${f1(Math.max(10, W - px - 190))},-10" fill="none" stroke="${PEACH}" stroke-width="4.5" stroke-linecap="round"/>
+        ${num(px - 8, y0 - 64, 1)}${num(W * 0.14, y0 + 34, 2)}${num(W - 40, y0 - 82, 3)}`;
+    } else if (kind === "present") {
+      g = `<ellipse cx="${cx}" cy="-34" rx="${f1(W * 0.42)}" ry="74" fill="#E3EFF5" stroke="#B9CFDA"/><ellipse cx="${cx}" cy="218" rx="${f1(W * 0.46)}" ry="84" fill="#CFE3EC" stroke="#9DBBCB"/>
+        <path d="M${cx - 20},104 V140 h12 V112 q8,8 16,0 V140 h12 V104 q-20,18 -40,0 Z" fill="url(#fx-cyl)"/>
+        ${ball(cx, 98, 8.5, "fx-ball-peach")}
+        <g class="mh-tcr"><path d="M${cx},40 V62 M${cx},62 l-11,13 M${cx},62 l11,13" stroke="#1E658C" stroke-width="6" stroke-linecap="round" fill="none"/></g>
+        ${num(cx + 28, 98, 1)}${num(cx + 40, 128, 2)}${num(cx + 30, 50, 3)}`;
+    } else if (kind === "structure") {
+      const zl = W * 0.2, zr = W * 0.8, rows = [48, 68, 88, 108, 128];
+      let thin = "", act = "", thick = "";
+      rows.forEach((y) => {
+        thin += `<line x1="${f1(zl)}" x2="${f1(zl + W * 0.22)}" y1="${y}" y2="${y}" stroke="#5FB4CC" stroke-width="3.5" stroke-linecap="round"/><line x1="${f1(zr)}" x2="${f1(zr - W * 0.22)}" y1="${y}" y2="${y}" stroke="#5FB4CC" stroke-width="3.5" stroke-linecap="round"/>`;
+        act += ball(zl + 9, y, 5.5, "fx-ball-peach") + ball(zr - 9, y, 5.5, "fx-ball-peach");
+      });
+      [58, 78, 98, 118].forEach((y) => { thick += `<rect x="${f1(cx - W * 0.17)}" y="${y - 3.5}" width="${f1(W * 0.34)}" height="7" rx="3.5" fill="url(#fx-tube-grey)"/>`; });
+      g = `${sh(cx, 150, W * 0.4, 6, 0.16)}${thick}<g class="mh-zl">${thin}</g>
+        <rect x="${f1(zl - 5)}" y="36" width="10" height="104" rx="4" fill="url(#fx-cyl)"/><rect x="${f1(zr - 5)}" y="36" width="10" height="104" rx="4" fill="url(#fx-cyl)"/>${act}
+        ${num(zl, 22, 1)}${num(zl + 30, 156, 2)}${num(W * 0.36, 30, 3)}`;
+    } else if (kind === "hormone") {
+      let drops = "";
+      for (let i = 0; i < 5; i++) drops += `<circle class="mh-drop" style="--i:${i};--dx:${f1(W - 190)}px" cx="96" cy="${cy + (i % 2 ? 4 : -4)}" r="5.5" fill="url(#fx-ball)"/>`;
+      g = `${sh(52, cy + 46, 30, 6, 0.22)}${sh(W - 54, cy + 46, 30, 6, 0.22)}${tube(84, cy - 12, W - 168, 24, "fx-tube-ice")}${drops}
+        <path d="M52,${cy - 44} c26,0 38,22 38,44 s-12,44 -38,44 c-12,0 -20,-8 -20,-18 c0,-10 10,-12 10,-26 s-10,-16 -10,-26 c0,-10 8,-18 20,-18 Z" fill="url(#fx-ball-red)"/>
+        ${ball(W - 54, cy, 34, "fx-ball-ice")}${ball(W - 50, cy + 2, 12, "fx-ball")}
+        ${num(52, cy - 60, 1)}${num(cx, cy - 34, 2)}${num(W - 54, cy - 50, 3)}`;
+    } else {                                                        // organelle
+      const x0 = 28, w = W - 56, rx = W * 0.36;
+      let fold = `M${x0 + 30},${cy + 30}`;
+      for (let x = x0 + 30, i = 0; x < x0 + w - 34; x += 22, i++) fold += ` Q${x + 11},${cy + (i % 2 ? 34 : -34)} ${x + 22},${cy + (i % 2 ? -26 : 30)}`;
+      g = `${sh(cx, cy + 54, w * 0.44, 7, 0.24)}<rect x="${x0}" y="${cy - 44}" width="${w}" height="88" rx="44" fill="url(#fx-tube-peach)" stroke="#B95A1B"/>
+        <rect x="${x0 + 8}" y="${cy - 36}" width="${w - 16}" height="72" rx="36" fill="#FFE9D3" opacity=".55"/>
+        <path d="${fold}" fill="none" stroke="#D9772F" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/>
+        <circle class="mh-ring" cx="${f1(rx)}" cy="${cy}" r="16" fill="#FFF6EC" stroke="${LINK}" stroke-width="5" stroke-dasharray="6 4"/>
+        <g class="mh-atp">${ball(W - 30, cy - 18, 5, "fx-ball-peach")}${ball(W - 22, cy + 2, 6, "fx-ball-peach")}${ball(W - 32, cy + 22, 4.5, "fx-ball-peach")}</g>
+        ${num(x0 + 20, cy - 56, 1)}${num(rx, cy - 30, 2)}${num(W - 26, cy - 44, 3)}`;
+    }
+    stage.innerHTML = `<svg class="fx-scene mh mh-${kind}" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(plain(t.title))}">${g}</svg><ol class="mh-leg">${t.items.map((x) => `<li><span>${x}</span></li>`).join("")}</ol>`;
+    return () => {};
+  }
+
+  const RENDER = { folate, fusion, lactase, dpp, clock, telomere, bars3d, share, picker, flip, mech };
   /* Позначки {n} у текстах графіка замінюються посиланнями на джерела дня; без обробника вони просто зникають */
   const strip = (s) => s.replace(/\{\d+\}/g, "");
   const deep = (v, f) => typeof v === "string" ? f(v) : Array.isArray(v) ? v.map((x) => deep(x, f)) : v && typeof v === "object" ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, deep(x, f)])) : v;
@@ -642,7 +713,7 @@
       const stage = fig.querySelector(".viz-stage"), W = Math.max(260, Math.floor(stage.clientWidth));
       stage.dataset.w = W;
       stage.className = "viz-stage";
-      const stop = RENDER[v.id](stage, texts(v, lang, mark), lang, W, UI[lang] || UI.uk) || (() => {});
+      const stop = RENDER[v.id](stage, texts(v, lang, mark), lang, W, UI[lang] || UI.uk, v) || (() => {});
       const untilt = v.id === "clock" ? () => {} : tilt(stage);
       return () => { stop(); untilt(); };
     }

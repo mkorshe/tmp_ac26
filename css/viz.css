@@ -256,6 +256,78 @@ a.chip:hover svg { opacity: 1; }
 a.chip:active { transform: translateY(2px); box-shadow: 0 0 0 rgba(11, 37, 50, .1); }
 .chips-note { margin: -2px 0 10px; font-size: 12.5px; line-height: 1.45; color: var(--muted); }
 
+/* ---------- Шрифти: Unbounded для чисел і заголовків, Manrope для тексту (резерв: Raleway та Inter) ---------- */
+:root { --font-head: "Unbounded", "Raleway", "Helvetica Neue", Arial, sans-serif; --font-body: "Manrope", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+.pill b, .k-tip b, .k-tip em, .in-gene, .chip em, .geneline em, .standfirst, .viz-read, .tip-t, .fc-f b, .seg3 button b, .fl-keys button b, .dp-lab b, .tl-range b, .fu-name, .fu-h2, .about li::before, .lc-val, .gene-h em { font-family: var(--font-body); }
+.in-gene, .geneline em, .chip em { font-weight: 800; }
+.standfirst { font-weight: 600; font-size: 17.5px; line-height: 1.45; }
+.viz-read, .tip-t { font-weight: 600; }
+.seg3 button b { font-weight: 700; font-size: 14px; }
+.pill b { font-weight: 800; font-size: 14px; }
+.lc-val { font-weight: 800; font-size: 17px; }
+.f-num { font-weight: 300; letter-spacing: -.05em; font-size: clamp(21px, 37cqmin, 104px); }
+.s21 .f-num { font-size: clamp(23px, 42cqmin, 104px); }
+.brand .ttl b { font-size: 15px; font-weight: 500; letter-spacing: -.02em; }
+.m-day { font-size: 12.5px; font-weight: 500; }
+.m-title { font-size: clamp(21px, 2.5vw, 32px); font-weight: 500; letter-spacing: -.03em; line-height: 1.22; }
+.about h2 { font-size: clamp(20px, 2.7vw, 29px); font-weight: 500; letter-spacing: -.03em; line-height: 1.22; }
+.viz h3 { font-size: 16.5px; font-weight: 500; letter-spacing: -.02em; line-height: 1.3; }
+.ideo .big { font-size: 76px; font-weight: 200; letter-spacing: -.06em; }
+.ideo .big small { font-family: var(--font-body); letter-spacing: 0; }
+.ideo .i-facts b { font-size: 16px; font-weight: 500; letter-spacing: -.02em; }
+.dp-num, .sh-read b, .ck-time b { font-size: 38px; font-weight: 300; letter-spacing: -.05em; }
+.fl-val { font-size: 18px; font-weight: 500; }
+.viz-tiles b { font-size: 16px; font-weight: 500; letter-spacing: -.02em; }
+.fc-f i { font-size: 34px; font-weight: 200; }
+.pk-letter { font-size: 32px; font-weight: 600; }
+
+/* ---------- Наочні схеми роботи білків ---------- */
+.mh-n text { font-family: var(--font-body); font-size: 11px; font-weight: 800; fill: #fff; }
+.viz-stage svg.mh-present { overflow: hidden; border-radius: 8px; background: linear-gradient(180deg, #F6FBFD, #EAF4F9); }
+.mh-leg { list-style: none; counter-reset: mh; margin: 10px 0 0; padding: 0; display: grid; gap: 7px; }
+.mh-leg li { counter-increment: mh; display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 9px; align-items: start; font-size: 13.5px; line-height: 1.45; color: var(--ink-2); }
+.mh-leg li::before { content: counter(mh); width: 22px; height: 22px; border-radius: 5px; display: grid; place-items: center; background: var(--navy-900); box-shadow: 0 2px 0 #04121A; color: #fff; font-size: 11.5px; font-weight: 800; }
+.mh-sub { animation: mhIn 3.4s ease-in-out infinite; }
+.mh-prod { animation: mhOut 3.4s ease-in-out infinite; }
+@keyframes mhIn { 0% { transform: translateX(0); opacity: 1; } 42% { transform: translateX(var(--dx)); opacity: 1; } 50%, 100% { transform: translateX(var(--dx)); opacity: 0; } }
+@keyframes mhOut { 0%, 46% { transform: translateX(0); opacity: 0; } 56% { transform: translateX(0); opacity: 1; } 94% { transform: translateX(var(--dx)); opacity: 1; } 100% { transform: translateX(var(--dx)); opacity: 0; } }
+.mh-enz { transform-box: fill-box; transform-origin: center; animation: mhBreath 3.4s ease-in-out infinite; }
+@keyframes mhBreath { 0%, 34%, 68%, 100% { transform: scale(1); } 46%, 54% { transform: scale(1.07); } }
+.mh-lig { animation: mhDock 3.6s ease-in-out infinite; }
+@keyframes mhDock { 0% { transform: translateY(-6px); opacity: 0; } 12% { opacity: 1; } 48%, 84% { transform: translateY(40px); opacity: 1; } 100% { transform: translateY(40px); opacity: 0; } }
+.mh-sig circle, .mh-atp circle { opacity: 0; animation: mhSig 3.6s ease-in-out infinite; }
+.mh-sig circle:nth-child(2), .mh-atp circle:nth-child(2) { animation-delay: .18s; }
+.mh-sig circle:nth-child(3), .mh-atp circle:nth-child(3) { animation-delay: .36s; }
+.mh-atp circle { animation-duration: 2.6s; }
+@keyframes mhSig { 0%, 46% { opacity: 0; transform: translateY(-8px); } 62%, 84% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(0); } }
+.mh-rna { stroke-dasharray: 100; stroke-dashoffset: 100; animation: mhRna 3.6s ease-in-out infinite; }
+@keyframes mhRna { 0%, 16% { stroke-dashoffset: 100; opacity: 1; } 74%, 90% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+.mh-tcr { animation: mhTcr 3.6s ease-in-out infinite; }
+@keyframes mhTcr { 0%, 100% { transform: translateY(-10px); } 45%, 72% { transform: translateY(8px); } }
+.mh-drop { animation: mhFlow 4s linear infinite; animation-delay: calc(var(--i) * -0.8s); }
+@keyframes mhFlow { 0% { transform: translateX(0); opacity: 0; } 10%, 90% { opacity: 1; } 100% { transform: translateX(var(--dx)); opacity: 0; } }
+.mh-ring { transform-box: fill-box; transform-origin: center; animation: mhSpin 9s linear infinite; }
+@keyframes mhSpin { to { transform: rotate(360deg); } }
+
+/* ---------- Статті блогу ---------- */
+.c-blog { margin-top: 24px; }
+.blog { display: grid; gap: 8px; }
+.blog-a { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border-radius: 8px; background: linear-gradient(180deg, #fff, #F1F8FB); border: 1px solid var(--line); box-shadow: 0 2px 0 rgba(11, 37, 50, .1); color: var(--navy-900); font-size: 14px; font-weight: 600; line-height: 1.35; text-decoration: none; transition: border-color .2s, background .2s, transform .1s, box-shadow .1s; }
+.blog-a:hover { border-color: var(--link); background: var(--sky-100); }
+.blog-a:active { transform: translateY(2px); box-shadow: 0 0 0 rgba(11, 37, 50, .1); }
+.blog-a svg { flex: none; width: 12px; height: 12px; opacity: .6; }
+
+/* ---------- Гени хромосоми з поясненнями ---------- */
+.genes { display: grid; gap: 8px; }
+.gene { padding: 10px 12px; border-radius: 8px; background: #fff; border: 1px solid var(--line-2); box-shadow: 0 2px 0 rgba(11, 37, 50, .06); }
+.gene.hero { border-color: var(--peach-600); background: var(--peach-100); }
+.gene-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; }
+.gene-h em { font-style: italic; font-weight: 800; font-size: 14.5px; color: var(--link); }
+.gene-h span { font-size: 12.5px; line-height: 1.4; color: var(--ink-2); }
+.gene .chips { margin-top: 7px; }
+.genes.cut .gene:nth-child(n+7) { display: none; }
+.genes-more { margin-top: 10px; }
+
 @media (max-width: 700px) {
   .lang button { height: 26px; padding: 0 9px; font-size: 12px; }
   .viz { padding: 18px 14px 12px; }
@@ -272,10 +344,19 @@ a.chip:active { transform: translateY(2px); box-shadow: 0 0 0 rgba(11, 37, 50, .
   .fc-f b { margin-top: 0; }
   .pk { grid-template-columns: 1fr; }
 }
+@media (max-width: 700px) {
+  .ideo .big { font-size: 58px; }
+  .m-title { font-size: 22px; }
+  .dp-num, .sh-read b, .ck-time b { font-size: 34px; }
+}
+@media (max-width: 480px) {
+  .brand .ttl b { font-size: 11.5px; }
+}
 @media (max-width: 380px) {
   .viz-tiles { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
   .is-on .tl-enz circle { animation: none; }
   .fx-scene { transform: none; }
+  .mh-sub, .mh-prod, .mh-enz, .mh-lig, .mh-sig circle, .mh-atp circle, .mh-rna, .mh-tcr, .mh-drop, .mh-ring { animation: none; opacity: 1; stroke-dashoffset: 0; }
 }

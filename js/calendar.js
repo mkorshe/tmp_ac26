@@ -47,6 +47,7 @@
       noVars: "На карті немає окремих добре вивчених варіантів цієї хромосоми: її маркери працюють у складі полігенних оцінок.",
       role: "Ген дня", known: "Що відомо", not: "Чого це не означає", tip: "Порада дня", tipPick: "Оберіть, що вас стосується", sources: "Джерела", source: "Джерело",
       pkgNote: "Натисніть на ознаку, щоб відкрити сторінку пакета Apixmed Prism, який її досліджує.", pkgTitle: (n) => `Пакет Apixmed Prism: ${n}`,
+      blog: "Читайте також у блозі Apixmed", showAll: (n) => `Показати всі гени: ${n}`, showLess: "Згорнути перелік",
       next: (n) => `Наступне віконце відчиниться завтра, ${n} грудня`, prevBtn: "Попереднє відчинене віконце", nextBtn: "Наступне відчинене віконце", close: "Закрити",
       ideo: { pArm: "коротке плече (p)", qArm: "довге плече (q)", bp: "пар нуклеотидів", mtBp: "16 569", mt: "мітохондріальна ДНК", chromosome: "хромосома" },
       disclaimer: "Матеріал має освітній характер. Генетичні асоціації описують імовірність у групах людей, а не діагноз чи прогноз для окремої людини, і не замінюють консультацію лікаря.",
@@ -83,6 +84,7 @@
       noVars: "The map has no well-studied individual variants on this chromosome: its markers work as part of polygenic scores.",
       role: "Gene of the day", known: "What is known", not: "What it does not mean", tip: "Tip of the day", tipPick: "Choose what applies to you", sources: "Sources", source: "Source",
       pkgNote: "Click a trait to open the Apixmed Prism package that covers it.", pkgTitle: (n) => `Apixmed Prism package: ${n}`,
+      blog: "Read more on the Apixmed blog", showAll: (n) => `Show all genes: ${n}`, showLess: "Show fewer",
       next: (n) => `The next door opens tomorrow, ${n} December`, prevBtn: "Previous opened door", nextBtn: "Next opened door", close: "Close",
       ideo: { pArm: "short arm (p)", qArm: "long arm (q)", bp: "base pairs", mtBp: "16,569", mt: "mitochondrial DNA", chromosome: "chromosome" },
       disclaimer: "This material is educational. Genetic associations describe probabilities in groups of people, not a diagnosis or a forecast for an individual, and they do not replace a doctor’s advice.",
@@ -364,6 +366,13 @@
     }));
   }
   const pkgUrl = (p) => "https://apixmed.com.ua/" + (lang === "en" ? "en/" : "") + "product/" + p[0];
+  const blogHTML = (d) => (d.blog && d.blog.length)
+    ? `<div class="sect c-blog"><h4>${T.blog}</h4><div class="blog">${d.blog.map((b) => `<a class="blog-a" href="https://apixmed.com.ua/${lang === "en" ? "en/" : ""}blog/${b.slug}" target="_blank" rel="noopener"><span>${b[lang] || b.uk}</span>${extIcon}</a>`).join("")}</div></div>` : "";
+  function mountMore() {
+    const btn = $("#sheet .genes-more"), box = $("#sheet .genes");
+    if (!btn || !box) return;
+    btn.addEventListener("click", () => { const cut = box.classList.toggle("cut"); btn.textContent = cut ? T.showAll(+btn.dataset.n) : T.showLess; });
+  }
   const topicIdx = () => (lang === "en" ? 3 : 2);
   function mapGenes(d) {
     const seen = new Set(), items = [];
@@ -372,12 +381,19 @@
   }
   function cardHTML(d) {
     const c = C(d), gene = L(d.gene), items = mapGenes(d), label = d.chr === "MT" ? T.mtShort : (d.chr2 ? "X·Y" : d.chr), ti = topicIdx(), m = marker(d);
-    const chip = (v) => {
-      const p = PKG[v[4]], cls = "chip" + (v[1] === gene || v[1].split("/").includes(gene) ? " hero" : ""), inner = `<em>${v[1]}</em>${v[ti]}`;
-      return p ? `<a class="${cls}" href="${pkgUrl(p)}" target="_blank" rel="noopener" title="${esc(T.pkgTitle(p[lang === "en" ? 2 : 1]))}">${inner}${extIcon}</a>` : `<span class="${cls}">${inner}</span>`;
+    /* Гени згруповано: назва, коротке пояснення і пов’язані ознаки з посиланнями на пакети */
+    const GEN = window.ADVENT_GENES || {}, groups = [];
+    items.forEach((v) => { let gr = groups.find((x) => x.g === v[1]); if (!gr) groups.push(gr = { g: v[1], t: [] }); gr.t.push(v); });
+    const tchip = (v) => {
+      const p = PKG[v[4]];
+      return p ? `<a class="chip" href="${pkgUrl(p)}" target="_blank" rel="noopener" title="${esc(T.pkgTitle(p[lang === "en" ? 2 : 1]))}">${v[ti]}${extIcon}</a>` : `<span class="chip">${v[ti]}</span>`;
     };
-    const chips = items.length
-      ? `<p class="chips-note">${T.pkgNote}</p><div class="chips">${items.map(chip).join("")}</div>`
+    const geneRow = (gr) => {
+      const x = GEN[gr.g], hero = gr.g === gene || gr.g.split("/").includes(gene);
+      return `<div class="gene${hero ? " hero" : ""}"><div class="gene-h"><em>${gr.g}</em>${x ? `<span>${x[lang] || x.uk}</span>` : ""}</div><div class="chips">${gr.t.map(tchip).join("")}</div></div>`;
+    };
+    const chips = groups.length
+      ? `<p class="chips-note">${T.pkgNote}</p><div class="genes${groups.length > 6 ? " cut" : ""}">${groups.map(geneRow).join("")}</div>${groups.length > 6 ? `<button type="button" class="btn genes-more" data-n="${groups.length}">${T.showAll(groups.length)}</button>` : ""}`
       : `<p class="caveat">${d.chr === "MT" ? T.noMt : T.noVars}</p>`;
     const ideo = `<div class="ideo c-ideo">
           <div class="big">${label}<small>${d.chr === "MT" ? T.mtLower : d.chr2 ? T.sex : T.pairOf}</small></div>
@@ -400,9 +416,9 @@
           <div class="sect"><h4>${T.role}</h4><div class="prose"><p>${m(c.role)}</p></div></div>${vz("role")}
           <div class="sect"><h4>${T.known}</h4><div class="prose"><p>${m(c.known)}</p></div></div>${vz("known")}
           <div class="callout"><b>${T.not}</b>${m(c.not)}</div>
-          ${tipHTML(d, c, m)}
-          ${refsHTML(d)}`
-      : `<p class="standfirst" style="margin-top:14px">${m(c.hook)}</p>${vz("hook")}${refsHTML(d)}`;
+          ${tipHTML(d, c, m)}${vz("hook")}
+          ${refsHTML(d)}${blogHTML(d)}`
+      : `<p class="standfirst" style="margin-top:14px">${m(c.hook)}</p>${vz("role")}${vz("hook")}${refsHTML(d)}${blogHTML(d)}`;
     /* На широкому екрані портрет хромосоми стоїть ліворуч і лишається на екрані під час читання;
        на вузькому порядок: заголовок, портрет, текст, інші гени */
     return `<div class="m-grid"><div class="col c-side">${ideo}</div><div class="col">${head}<div class="c-body">${body}${tomorrow}</div>${more}</div></div>`;
@@ -453,7 +469,7 @@
     $("#overlay").setAttribute("aria-label", `${T.date(n)}: ${kick(d)}`);
     $("#prev").addEventListener("click", () => { if (idx > 0) openCard(avail[idx - 1]); });
     $("#next").addEventListener("click", () => { if (idx >= 0 && idx < avail.length - 1) openCard(avail[idx + 1]); });
-    mountIdeo(); mountViz(true); mountTip();
+    mountIdeo(); mountViz(true); mountTip(); mountMore();
   }
   function openInfo() {
     state.open = "info";
