@@ -1,4 +1,4 @@
-/* «23 пари» · хімічні схеми: структурні формули, обертові 3D-моделі молекул, ланцюжки амінокислот і рівняння реакцій.
+/* «23 пари» · схеми з молекулами: обертові моделі, структурні формули, ланцюжки амінокислот і рівняння реакцій.
    Структури беруться з js/mol.js (PubChem). Формулу малюємо за правилами скелетного запису: атоми карбону не підписано,
    гідроген показано лише біля гетероатомів, клин і штрихи позначають зв’язки, спрямовані до глядача й від нього. */
 (function () {
@@ -11,12 +11,20 @@
   const nf = (n, lang) => Number(n).toLocaleString(lang === "en" ? "en-GB" : "uk-UA", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).replace(/ /g, " ");
 
   const UI = {
-    uk: { f2: "Формула", f3: "3D-модель", hint2: "Натисніть на молекулу, щоб прочитати про неї. Кольором підсвічено групу атомів, про яку йдеться.",
-      hint3: "Потягніть модель, щоб повернути її.", no3: "лише формула", eq: "Рівняння реакції", gmol: "г/моль", aa: (n) => `${n} амінокислот`,
-      src: "структура: PubChem", el: { C: "Карбон", H: "Гідроген", O: "Оксиген", N: "Нітроген", S: "Сульфур", P: "Фосфор", I: "Йод" }, atoms: "Атоми" },
-    en: { f2: "Formula", f3: "3D model", hint2: "Tap a molecule to read about it. The group of atoms in question is highlighted.",
-      hint3: "Drag the model to rotate it.", no3: "formula only", eq: "Reaction equation", gmol: "g/mol", aa: (n) => `${n} amino acids`,
-      src: "structure: PubChem", el: { C: "carbon", H: "hydrogen", O: "oxygen", N: "nitrogen", S: "sulfur", P: "phosphorus", I: "iodine" }, atoms: "Atoms" }
+    uk: { f2: "Формула", f3: "Модель",
+      hint3: "Кульки — це атоми, палички — зв’язки між ними. Модель можна покрутити, а помаранчевим обведено місце, про яке йдеться.",
+      hint2: "Так молекулу записують хіміки: кожен злам лінії — атом вуглецю. Помаранчевим підсвічено місце, про яке йдеться.",
+      hintP: "Кожна «намистина» — одна амінокислота. Натисніть на картку, щоб прочитати пояснення.",
+      hintS: "Кожна літера — один нуклеотид ДНК. Натисніть на картку, щоб прочитати пояснення.",
+      no3: "лише формула", eq: "Рівняння реакції", more: "Для допитливих: формули й рівняння", gmol: "г/моль", aa: (n) => `${n} амінокислот`,
+      el: { C: "вуглець", H: "водень", O: "кисень", N: "азот", S: "сірка", P: "фосфор", I: "йод" }, atoms: "Кольори атомів" },
+    en: { f2: "Formula", f3: "Model",
+      hint3: "The balls are atoms and the sticks are the bonds between them. You can rotate the model; the spot in question is ringed in orange.",
+      hint2: "This is how chemists write a molecule: every corner of a line is a carbon atom. The spot in question is highlighted in orange.",
+      hintP: "Each “bead” is one amino acid. Tap a card to read the explanation.",
+      hintS: "Each letter is one DNA nucleotide. Tap a card to read the explanation.",
+      no3: "formula only", eq: "Reaction equation", more: "For the curious: formulas and equations", gmol: "g/mol", aa: (n) => `${n} amino acids`,
+      el: { C: "carbon", H: "hydrogen", O: "oxygen", N: "nitrogen", S: "sulfur", P: "phosphorus", I: "iodine" }, atoms: "Atom colours" }
   };
   const AA = { A: "Ala", R: "Arg", N: "Asn", D: "Asp", C: "Cys", Q: "Gln", E: "Glu", G: "Gly", H: "His", I: "Ile", L: "Leu", K: "Lys", M: "Met", F: "Phe", P: "Pro", S: "Ser", T: "Thr", W: "Trp", Y: "Tyr", V: "Val" };
   const AAN = {
@@ -177,9 +185,10 @@
     svg.setAttribute("role", "img"); svg.setAttribute("aria-label", label);
     const mk = (tag, cls) => { const e = document.createElementNS(NS, tag); if (cls) e.setAttribute("class", cls); return e; };
     const items = [];
-    for (let k = 0; k < m.b.length; k += 3) {
-      const o = m.b[k + 2], parts = o > 1 ? [mk("line", "bd"), mk("line", "bd")] : [mk("line", "bd")];
-      items.push({ t: 1, i: m.b[k], j: m.b[k + 1], parts, z: 0 });
+    const B = m.b3 || m.b;      // у 3D-записі нумерація атомів може відрізнятися
+    for (let k = 0; k < B.length; k += 3) {
+      const o = B[k + 2], parts = o > 1 ? [mk("line", "bd"), mk("line", "bd")] : [mk("line", "bd")];
+      items.push({ t: 1, i: B[k], j: B[k + 1], parts, z: 0 });
     }
     for (let i = 0; i < n; i++) { const c = mk("circle", "at" + (hl.has(i) ? " on" : "")); c.setAttribute("fill", `url(#c3-${el[i]})`); items.push({ t: 0, i, parts: [c], z: 0 }); }
     box.textContent = "";
@@ -244,7 +253,9 @@
     sig: `<circle cx="14" cy="24" r="9" fill="url(#fx-ball)"/><path d="M26,14 q8,10 0,20 M33,9 q12,15 0,30" fill="none" stroke="#FF9D45" stroke-width="3.6" stroke-linecap="round"/>`
   };
 
-  /* ---------- Схема: молекули, стрілки з ферментом, ланцюжки амінокислот ---------- */
+  /* ---------- Схема: молекули, стрілки з ферментом, ланцюжки амінокислот ----------
+     Основний вигляд розрахований на читача без хімічної освіти: модель молекули, проста назва й підпис.
+     Формули, молярні маси та рівняння реакцій сховано в розділ «Для допитливих». */
   function render(stage, t, lang, W, v) {
     defs();
     const ui = UI[lang] || UI.uk, flow = v.flow || [], T = t.items || [];
@@ -253,65 +264,74 @@
     const elems = [];
     mols.forEach((m) => { if (m) prep(m).el.forEach((e) => { if (!elems.includes(e)) elems.push(e); }); });
     elems.sort((a, b) => "CHONSPI".indexOf(a) - "CHONSPI".indexOf(b));
-    const hlOf = (k) => { const f = flow[k], m = mols[k]; return new Set((m && f.g && m.g && m.g[f.g]) || []); };
-    const draws = flow.map((f, k) => (mols[k] ? svg2d(mols[k], hlOf(k), mols[k].n[lang] || mols[k].n.uk, f.fx) : null));
-    // у рядок, якщо все вміщується; інакше стовпчиком зі стрілками донизу
-    const basis = (k) => (draws[k] ? Math.round(Math.max(88, Math.min(draws[k].w * 0.92, 250))) : flow[k].p ? 186 : 112);
-    let need = (flow.length - 1) * 10;
-    flow.forEach((f, k) => { need += f.a ? 92 : f.plus ? 14 : basis(k) + 18; });
-    const row = need <= W + 2;
-    // сусідні молекули (між стрілками) тримаються разом: у стовпчику вони стоять в один ряд
+    const hlOf = (k, d3) => { const f = flow[k], m = mols[k], g = m && ((d3 && m.g3) || m.g); return new Set((g && f.g && g[f.g]) || []); };
+    const sciOf = (k) => mols[k].n[lang] || mols[k].n.uk;
+    const nameOf = (k) => (T[k] && T[k].n) || (mols[k] ? sciOf(k) : "");
+    const draws = flow.map((f, k) => (mols[k] ? svg2d(mols[k], hlOf(k), plain(nameOf(k)), f.fx) : null));
+    // сусідні картки (між стрілками) тримаються разом
     const sets = [];
     let cur = [];
     flow.forEach((f, k) => { if (f.a) { if (cur.length) sets.push({ set: cur }); sets.push({ arr: k }); cur = []; } else cur.push(k); });
     if (cur.length) sets.push({ set: cur });
-    // висота сцени: спільна для молекул, що стоять поруч
-    const hOf = {}, tall = (ks) => Math.round(Math.max(any3 ? 112 : 96, Math.min(row ? 156 : 178, Math.max.apply(null, ks.map((k) => (draws[k] ? draws[k].h * 1.12 + 12 : 0))))));
-    const molKs = flow.map((f, k) => k).filter((k) => draws[k]);
-    if (row) { const h = tall(molKs.length ? molKs : [0]); molKs.forEach((k) => { hOf[k] = h; }); }
-    else sets.forEach((p) => { if (!p.set) return; const ks = p.set.filter((k) => draws[k]); if (ks.length) { const h = tall(ks); ks.forEach((k) => { hOf[k] = h; }); } });
+    // розкладка залежить від вигляду: моделі компактні, формулам великих молекул потрібно більше місця
+    const lay = (mode) => {
+      const basis = (k) => (!draws[k] ? (flow[k].p ? 186 : flow[k].s ? 176 : 112)
+        : mode === "3d" && mols[k].p3 ? Math.round(Math.max(104, Math.min(60 + prep(mols[k]).n * 2.2, 170)))
+          : Math.round(Math.max(88, Math.min(draws[k].w * 0.92, 250))));
+      let need = (flow.length - 1) * 10;
+      flow.forEach((f, k) => { need += f.a ? 84 : f.plus ? 14 : basis(k) + 18; });
+      const row = need <= W + 2, hOf = {};
+      const tall = (ks) => (mode === "3d" ? (row ? 150 : 172) : Math.round(Math.max(96, Math.min(row ? 156 : 178, Math.max.apply(null, ks.map((k) => draws[k].h * 1.12 + 12))))));
+      if (row) { const ks = flow.map((f, k) => k).filter((k) => draws[k]); if (ks.length) { const h = tall(ks); ks.forEach((k) => { hOf[k] = h; }); } }
+      else sets.forEach((p) => { if (!p.set) return; const ks = p.set.filter((k) => draws[k]); if (ks.length) { const h = tall(ks); ks.forEach((k) => { hOf[k] = h; }); } });
+      return { row, basis, hOf };
+    };
     const tile = (f, k) => {
       const x = T[k] || {};
-      if (f.a) return `<div class="ch-arr"><em>${x.by || ""}</em><i></i>${x.co ? `<small>${x.co}</small>` : ""}</div>`;
+      if (f.a) return `<div class="ch-arr"><em>${x.by || ""}</em><i></i><small>${x.co || ""}</small></div>`;
       if (f.plus) return `<div class="ch-plus" aria-hidden="true">+</div>`;
-      const m = mols[k];
-      let body, name, meta = "";
-      if (m) { body = `<div class="ch-stage" style="height:${hOf[k]}px">${draws[k].svg}</div>`; name = m.n[lang] || m.n.uk; meta = `<span>${formula(m.f)}</span> · <span>${nf(m.w, lang)} ${ui.gmol}</span>`; }
-      else if (f.p) { body = `<div class="ch-stage ch-pep">${f.pre ? `<u>${f.pre}</u>` : ""}${f.p.split("").map((c, i) => `${f.cut === i ? `<i class="cut" aria-hidden="true"></i>` : ""}<b class="aa${(f.hl || []).includes(i) ? " on" : ""}" title="${(AAN[lang] || AAN.uk)[c] || ""}">${AA[c] || c}</b>`).join("")}${f.post ? `<u>${f.post}</u>` : ""}</div>`; name = x.n || ""; meta = ui.aa(f.p.length); }
-      else if (f.s) { body = `<div class="ch-stage ch-seq"><u>5′</u>${f.s.split("").map((c) => (c === " " ? `<i></i>` : `<b class="nt nt-${c}">${c}</b>`)).join("")}<u>3′</u></div>`; name = x.n || ""; }
-      else { body = `<div class="ch-stage ch-ico"><svg viewBox="0 0 48 48" width="62" height="62" aria-hidden="true">${ICO[f.ico] || ICO.cell}</svg></div>`; name = x.n || ""; }
-      return `<div class="ch-mol${x.t ? " can" : ""}" data-k="${k}"${x.t ? ` role="button" tabindex="0"` : ""} style="--fb:${basis(k)}px">${body}<b class="ch-name">${name}</b>${meta ? `<small class="ch-meta">${meta}</small>` : ""}</div>`;
+      let body;
+      if (mols[k]) body = `<div class="ch-stage"></div>`;
+      else if (f.p) body = `<div class="ch-stage ch-pep">${f.p.split("").map((c, i) => `${f.cut === i ? `<i class="cut" aria-hidden="true"></i>` : ""}<b class="aa${(f.hl || []).includes(i) ? " on" : ""}" title="${(AAN[lang] || AAN.uk)[c] || ""}">${AA[c] || c}</b>`).join("")}</div>`;
+      else if (f.s) body = `<div class="ch-stage ch-seq"><u>5′</u>${f.s.split("").map((c) => (c === " " ? `<i></i>` : `<b class="nt nt-${c}">${c}</b>`)).join("")}<u>3′</u></div>`;
+      else body = `<div class="ch-stage ch-ico"><svg viewBox="0 0 48 48" width="58" height="58" aria-hidden="true">${ICO[f.ico] || ICO.cell}</svg></div>`;
+      const cap = x.c ? `<small class="ch-meta">${x.c}</small>` : f.p ? `<small class="ch-meta">${ui.aa(f.p.length)}</small>` : "";
+      return `<div class="ch-mol${x.t ? " can" : ""}" data-k="${k}"${x.t ? ` role="button" tabindex="0"` : ""}>${body}<b class="ch-name">${nameOf(k)}</b>${cap}</div>`;
     };
-    stage.innerHTML = `<div class="ch${row ? " row" : " col"}" data-mode="2d">
-      ${any3 ? `<div class="ch-bar"><div class="seg3 two ch-mode" role="group"><button type="button" data-mode="2d" aria-pressed="true"><b>${ui.f2}</b></button><button type="button" data-mode="3d" aria-pressed="false"><b>${ui.f3}</b></button></div></div>` : ""}
-      <p class="ch-hint">${ui.hint2}</p>
+    const sci = mols.map((m, k) => (m ? `<li><b>${sciOf(k)}</b> <span class="ch-f">${formula(m.f)} · ${nf(m.w, lang)} ${ui.gmol}</span> <a class="ch-src" href="https://pubchem.ncbi.nlm.nih.gov/compound/${m.cid}" target="_blank" rel="noopener">PubChem</a></li>` : "")).join("");
+    const eq = t.eq && t.eq.length ? `<div class="ch-eq"><span>${ui.eq}</span>${t.eq.map((e) => `<p>${e}</p>`).join("")}</div>` : "";
+    stage.innerHTML = `<div class="ch" data-mode="">
+      ${any3 ? `<div class="ch-bar"><div class="seg3 two ch-mode" role="group"><button type="button" data-mode="3d"><b>${ui.f3}</b></button><button type="button" data-mode="2d"><b>${ui.f2}</b></button></div></div>` : ""}
       <div class="ch-flow">${sets.map((p) => (p.set ? `<div class="ch-set">${p.set.map((k) => tile(flow[k], k)).join("")}</div>` : tile(flow[p.arr], p.arr))).join("")}</div>
+      <p class="ch-hint"></p>
       <div class="ch-note" aria-live="polite"></div>
-      ${t.eq && t.eq.length ? `<div class="ch-eq"><span>${ui.eq}</span>${t.eq.map((e) => `<p>${e}</p>`).join("")}</div>` : ""}
-      ${elems.length ? `<div class="ch-el"><span>${ui.atoms}:</span>${elems.map((e) => `<i><svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="6.4" fill="url(#c3-${e})"/></svg><b>${e}</b> ${ui.el[e]}</i>`).join("")}</div>` : ""}
+      ${elems.length ? `<div class="ch-el"><span>${ui.atoms}:</span>${elems.map((e) => `<i><svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="6.4" fill="url(#c3-${e})"/></svg>${ui.el[e]}</i>`).join("")}</div>` : ""}
+      ${sci || eq ? `<details class="ch-more"><summary>${ui.more}</summary>${sci ? `<ul>${sci}</ul>` : ""}${eq}</details>` : ""}
     </div>`;
     const root = stage.querySelector(".ch"), note = root.querySelector(".ch-note"), hint = root.querySelector(".ch-hint");
     let stops = [];
     const setMode = (mode) => {
       stops.forEach((s) => s()); stops = [];
+      const L = lay(mode);
       root.dataset.mode = mode;
+      root.classList.toggle("row", L.row); root.classList.toggle("col", !L.row);
       root.querySelectorAll(".ch-mode button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.mode === mode));
-      hint.textContent = mode === "3d" ? ui.hint3 : ui.hint2;
+      hint.textContent = !draws.some(Boolean) ? (flow.some((f) => f.p) ? ui.hintP : ui.hintS) : mode === "3d" ? ui.hint3 : ui.hint2;
       root.querySelectorAll(".ch-mol").forEach((el) => {
         const k = +el.dataset.k, m = mols[k], box = el.querySelector(".ch-stage");
+        el.style.setProperty("--fb", L.basis(k) + "px");
         if (!m) return;
+        box.style.height = L.hOf[k] + "px";
         box.classList.toggle("is3", mode === "3d" && !!m.p3);
-        el.classList.toggle("no3", mode === "3d" && !m.p3);
-        if (mode === "3d" && m.p3) stops.push(view3d(box, m, hlOf(k), m.n[lang] || m.n.uk));
+        if (mode === "3d" && m.p3) stops.push(view3d(box, m, hlOf(k, true), plain(nameOf(k))));
         else box.innerHTML = draws[k].svg + (mode === "3d" ? `<span class="ch-no3">${ui.no3}</span>` : "");
       });
     };
     const pick = (k) => {
-      const x = T[k] || {}, m = mols[k];
+      const x = T[k] || {};
       if (!x.t) return;
       root.querySelectorAll(".ch-mol").forEach((el) => el.classList.toggle("on", +el.dataset.k === k));
-      const name = m ? (m.n[lang] || m.n.uk) : (x.n || "");
-      note.innerHTML = `<b>${name}</b>${m ? `<span class="ch-f">${formula(m.f)} · ${nf(m.w, lang)} ${ui.gmol}</span>` : ""}<p>${x.t}</p>${m ? `<a class="ch-src" href="https://pubchem.ncbi.nlm.nih.gov/compound/${m.cid}" target="_blank" rel="noopener">${ui.src}, CID ${m.cid}</a>` : ""}`;
+      note.innerHTML = `<b>${nameOf(k)}</b><p>${x.t}</p>`;
     };
     root.querySelectorAll(".ch-mode button").forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode)));
     root.querySelectorAll(".ch-mol.can").forEach((el) => {
@@ -319,6 +339,7 @@
       el.addEventListener("click", go);
       el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(+el.dataset.k); } });
     });
+    setMode(any3 ? "3d" : "2d");
     const first = v.pick !== undefined ? v.pick : flow.findIndex((f, k) => (T[k] || {}).t);
     if (first >= 0) pick(first);
     return () => { stops.forEach((s) => s()); };

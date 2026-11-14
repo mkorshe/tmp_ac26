@@ -26,8 +26,8 @@
         known: "Поширений варіант C677T робить фермент менш стабільним.{2} Дві його копії має приблизно кожен восьмий європеєць.{4} За однакового споживання фолієвої кислоти рівень фолату в крові таких людей у середньому лише на 16% нижчий.{3}{5}",
         not: "Це не діагноз і не привід змінювати форму чи дозу фолату.{5} Американська колегія медичної генетики дійшла висновку, що клінічна користь тестування MTHFR мінімальна.{6}",
         tip: [
-          { k: "Для всіх", s: "будь-який генотип", t: "Листова зелень, бобові та цитрусові щодня: фолат із їжі потрібен за будь-якого генотипу.", f: "Споживання фолієвої кислоти важить для рівня фолату в крові більше, ніж варіант MTHFR.{5}" },
-          { k: "Генотип TT", s: "дві копії варіанта", t: "Порада не змінюється: достатньо фолату з їжею. Замінювати фолієву кислоту іншими формами фолату через варіант не потрібно.", f: "За даними CDC, люди з варіантом MTHFR засвоюють усі форми фолату, включно з фолієвою кислотою.{5}" },
+          { k: "Для всіх", s: "будь-який генотип", t: "Листова зелень, бобові та цитрусові щодня: фолат із їжі потрібен за будь-якого генотипу.", f: "Споживання фолієвої кислоти важить для рівня фолату в крові більше, ніж варіант C677T.{5}" },
+          { k: "Генотип TT", s: "дві копії варіанта C677T", t: "Порада не змінюється: достатньо фолату з їжею. Замінювати фолієву кислоту іншими формами фолату через варіант не потрібно.", f: "За даними CDC, люди з варіантом MTHFR засвоюють усі форми фолату, включно з фолієвою кислотою.{5}" },
           { k: "Планування вагітності", s: "жінки, які можуть завагітніти", t: "400 мкг фолієвої кислоти щодня: рекомендація однакова для всіх, незалежно від варіанта MTHFR.", f: "Така доза підвищує рівень фолату в крові за будь-якого генотипу. Більшу дозу може порадити лише лікар.{5}" }
         ]
       },
@@ -38,8 +38,8 @@
         known: "The common C677T variant makes the enzyme less stable.{2} About one in eight Europeans carries two copies.{4} At the same folic acid intake, their blood folate is on average only 16% lower.{3}{5}",
         not: "This is not a diagnosis and not a reason to change the form or dose of folate.{5} The American College of Medical Genetics concluded that MTHFR testing has minimal clinical utility.{6}",
         tip: [
-          { k: "Everyone", s: "any genotype", t: "Leafy greens, legumes and citrus fruit every day: folate from food is needed whatever your genotype.", f: "Folic acid intake matters more for blood folate than an MTHFR variant does.{5}" },
-          { k: "TT genotype", s: "two copies of the variant", t: "The advice does not change: enough folate from food. There is no need to swap folic acid for other forms of folate because of the variant.", f: "According to the CDC, people with an MTHFR variant can process all types of folate, including folic acid.{5}" },
+          { k: "Everyone", s: "any genotype", t: "Leafy greens, legumes and citrus fruit every day: folate from food is needed whatever your genotype.", f: "Folic acid intake matters more for blood folate than the C677T variant does.{5}" },
+          { k: "TT genotype", s: "two copies of the C677T variant", t: "The advice does not change: enough folate from food. There is no need to swap folic acid for other forms of folate because of the variant.", f: "According to the CDC, people with an MTHFR variant can process all types of folate, including folic acid.{5}" },
           { k: "Planning a pregnancy", s: "women who could become pregnant", t: "400 mcg of folic acid a day: the recommendation is the same for everyone, regardless of MTHFR variant.", f: "That amount raises blood folate whatever the genotype. Only a doctor may advise a higher dose.{5}" }
         ]
       }
@@ -60,25 +60,25 @@
       uk: {
         title: "Молоко і слід еволюції",
         intro: "Друга за розміром: 242 мільйони пар нуклеотидів.{1} У людиноподібних мавп на її місці дві окремі хромосоми. У наших предків вони злилися, тому в людини 23 пари, а в шимпанзе 24.{2}{3}",
-        role: "LCT кодує лактазу, фермент, що розщеплює молочний цукор. Регуляторний варіант приблизно за 14 тисяч пар нуклеотидів від гена, у сусідньому MCM6, пов’язаний зі збереженням активності лактази в дорослому віці.{4}",
-        known: "У європейських вибірках цей варіант трапляється приблизно на кожній другій хромосомі, а на півночі Європи значно частіше.{5} Достатньо однієї копії: активність лактази знижується лише в тих, хто не має жодної.{4}",
+        role: "LCT кодує лактазу, фермент, що розщеплює молочний цукор. Регуляторний варіант C/T−13910 приблизно за 14 тисяч пар нуклеотидів від гена, у сусідньому MCM6, пов’язаний зі збереженням активності лактази в дорослому віці.{4}",
+        known: "У європейських вибірках його алель T трапляється приблизно на кожній другій хромосомі, а на півночі Європи значно частіше.{5} Достатньо однієї копії: активність лактази знижується лише в тих, хто не має жодної.{4}",
         not: "Генотип не вимірює, як ви переносите молоко. Більшість людей із мальабсорбцією лактози не має клінічної непереносимості, а чимало тих, хто вважає себе непереносним, лактозу засвоює.{8} Симптоми оцінює лікар, а не ДНК-звіт.",
         tip: [
           { k: "Для всіх", s: "будь-який генотип", t: "Не відмовляйтеся від молочного без потреби: це джерело кальцію та вітаміну D.", f: "Люди, які уникають молочного через справжню чи уявну непереносимість, часто отримують замало кальцію й вітаміну D. Здебільшого виключати молочне повністю не потрібно.{8}" },
-          { k: "Варіанта немає", s: "активність лактази знижується", t: "Починайте з порції до склянки молока за раз і орієнтуйтеся на самопочуття.", f: "12–15 г лактози (приблизно склянка молока) добре переносить більшість дорослих із непереносимістю чи мальабсорбцією лактози: висновок огляду 36 рандомізованих досліджень.{7}" },
-          { k: "Є хоча б одна копія", s: "лактаза лишається активною", t: "Обмежувати молочне через лактозу зазвичай немає підстав. Якщо симптоми все ж є, обговоріть їх із лікарем: причина може бути іншою.", f: "Варіант повністю збігався з біохімічно підтвердженою активністю лактази у фінських родинах і у вибірці з 236 людей із чотирьох популяцій.{4}" }
+          { k: "Генотип C/C", s: "без алеля T: активність лактази нижча", t: "Починайте з порції до склянки молока за раз і орієнтуйтеся на самопочуття.", f: "12–15 г лактози (приблизно склянка молока) добре переносить більшість дорослих із непереносимістю чи мальабсорбцією лактози: висновок огляду 36 рандомізованих досліджень.{7}" },
+          { k: "Є алель T", s: "одна чи дві копії: лактаза активна", t: "Обмежувати молочне через лактозу зазвичай немає підстав. Якщо симптоми все ж є, обговоріть їх із лікарем: причина може бути іншою.", f: "Варіант C/T−13910 повністю збігався з біохімічно підтвердженою активністю лактази у фінських родинах і у вибірці з 236 людей із чотирьох популяцій.{4}" }
         ]
       },
       en: {
         title: "Milk and a trace of evolution",
         intro: "The second largest: 242 million base pairs.{1} In the great apes its place is taken by two separate chromosomes. In our ancestors they fused, which is why humans have 23 pairs and chimpanzees 24.{2}{3}",
-        role: "LCT encodes lactase, the enzyme that breaks down milk sugar. A regulatory variant about 14 thousand base pairs from the gene, in the neighbouring MCM6, is linked to lactase staying active in adulthood.{4}",
-        known: "In European samples the variant is found on roughly every second chromosome, and far more often in northern Europe.{5} One copy is enough: lactase activity declines only in people who have none.{4}",
+        role: "LCT encodes lactase, the enzyme that breaks down milk sugar. The regulatory variant C/T−13910, about 14 thousand base pairs from the gene in the neighbouring MCM6, is linked to lactase staying active in adulthood.{4}",
+        known: "In European samples its T allele is found on roughly every second chromosome, and far more often in northern Europe.{5} One copy is enough: lactase activity declines only in people who have none.{4}",
         not: "Genotype does not measure how you tolerate milk. Most people with lactose malabsorption do not have clinical lactose intolerance, and many who think they are intolerant digest lactose well.{8} Symptoms are assessed by a doctor, not a DNA report.",
         tip: [
           { k: "Everyone", s: "any genotype", t: "Do not give up dairy without need: it is a source of calcium and vitamin D.", f: "People who avoid dairy because of real or perceived intolerance often get too little calcium and vitamin D. In most cases there is no need to cut dairy out completely.{8}" },
-          { k: "No variant", s: "lactase activity declines", t: "Start with up to a glass of milk at a time and go by how you feel.", f: "12–15 g of lactose (about a glass of milk) is well tolerated by most adults with lactose intolerance or malabsorption: the finding of a review of 36 randomised studies.{7}" },
-          { k: "At least one copy", s: "lactase stays active", t: "There is usually no reason to limit dairy because of lactose. If you still have symptoms, discuss them with a doctor: the cause may be something else.", f: "The variant matched biochemically verified lactase activity completely in Finnish families and in a sample of 236 people from four populations.{4}" }
+          { k: "C/C genotype", s: "no T allele: lactase activity declines", t: "Start with up to a glass of milk at a time and go by how you feel.", f: "12–15 g of lactose (about a glass of milk) is well tolerated by most adults with lactose intolerance or malabsorption: the finding of a review of 36 randomised studies.{7}" },
+          { k: "T allele present", s: "one or two copies: lactase stays active", t: "There is usually no reason to limit dairy because of lactose. If you still have symptoms, discuss them with a doctor: the cause may be something else.", f: "The C/T−13910 variant matched biochemically verified lactase activity completely in Finnish families and in a sample of 236 people from four populations.{4}" }
         ]
       }
     },
@@ -251,11 +251,11 @@
       en: { title: "Blood group", hook: "One gene, three main variants, four blood groups.{1} The ABO system was discovered in the early 20th century{4} and still turns up in genome-wide studies: from blood clotting{2} to iron metabolism.{3}" } },
     { d: 10, chr: "10", len: 133.8, cen: 39.8, genes: 730, gene: "TCF7L2", band: "10q25.2", pos: 113.0,
       viz: [{ id: "bars3d", after: "hook",
-        uk: { title: "Ризик за кількістю копій варіанта", sub: "Відносний ризик діабету 2 типу в дослідженні, яке відкрило цей зв’язок. Натисніть на стовпчик.", items: [
+        uk: { title: "Ризик за кількістю копій варіанта DG10S478", sub: "Відносний ризик діабету 2 типу в дослідженні, яке відкрило цей зв’язок. Натисніть на стовпчик.", items: [
           { k: "жодної копії", v: 1, t: "×1", n: "Точка відліку: люди без варіанта.{1}" },
           { k: "одна копія", v: 1.45, t: "×1,45", n: "З однією копією ризик у 1,45 раза вищий.{1}" },
           { k: "дві копії", v: 2.41, t: "×2,41", n: "З двома копіями ризик у 2,41 раза вищий. На рівні популяції з варіантом пов’язують 21% випадків.{1}" }] },
-        en: { title: "Risk by number of variant copies", sub: "Relative risk of type 2 diabetes in the study that discovered the link. Click a column.", items: [
+        en: { title: "Risk by number of copies of the DG10S478 variant", sub: "Relative risk of type 2 diabetes in the study that discovered the link. Click a column.", items: [
           { k: "no copies", v: 1, t: "×1", n: "The reference point: people without the variant.{1}" },
           { k: "one copy", v: 1.45, t: "×1.45", n: "With one copy the risk is 1.45 times higher.{1}" },
           { k: "two copies", v: 2.41, t: "×2.41", n: "With two copies the risk is 2.41 times higher. At population level, 21% of cases are attributed to the variant.{1}" }] } }],
@@ -271,10 +271,10 @@
       en: { title: "The fast-fibre protein", hook: "About one in five Europeans lacks α-actinin-3, a protein of fast muscle fibres.{1} It has no effect on health, yet this genotype is rare among elite sprinters.{1}{2} One of the chromosomes richest in well-known genes.{3}" } },
     { d: 12, chr: "12", len: 133.28, cen: 35.5, genes: 1030, gene: "ALDH2", band: "12q24.12", pos: 111.8,
       viz: [{ id: "share", after: "hook",
-        uk: { title: "Де поширений варіант ALDH2", groups: [
+        uk: { title: "Де поширений варіант ALDH2*2", groups: [
           { k: "Східна Азія", p: 40, t: "35–45%", l: "людей мають знижену активність ALDH2", n: "Після алкоголю в них накопичується ацетальдегід, і обличчя червоніє.{2}" },
           { k: "Решта світу", p: 0, t: "≈ 0", l: "варіант майже не трапляється", n: "За даними про 80 691 людину з 366 популяцій, варіант майже відсутній усюди, крім Східної Азії.{1}" }] },
-        en: { title: "Where the ALDH2 variant is common", groups: [
+        en: { title: "Where the ALDH2*2 variant is common", groups: [
           { k: "East Asia", p: 40, t: "35–45%", l: "of people have reduced ALDH2 activity", n: "After alcohol, acetaldehyde builds up in them and the face flushes.{2}" },
           { k: "Rest of the world", p: 0, t: "≈ 0", l: "the variant is almost never found", n: "Data on 80,691 people from 366 populations show the variant is essentially absent everywhere except East Asia.{1}" }] } }],
       uk: { title: "Рум’янець після келиха", hook: "Варіант ALDH2 сповільнює знешкодження ацетальдегіду, продукту розпаду алкоголю.{2} Він поширений у Східній Азії й майже не трапляється в європейців.{1}" },
@@ -296,21 +296,21 @@
         uk: { title: "Три запитання про DIO2", cards: [
           { q: "Т4 чи Т3?", a: "Дейодиназа 2 типу перетворює тироксин (Т4) на активний Т3 просто в тканинах, де він потрібен.{1}" },
           { q: "Хто сусід?", a: "Ген рецептора ТТГ розташований на тій самій хромосомі, у ділянці 14q31.{2}" },
-          { q: "Чи пов’язані сусіди?", a: "Варіанти обох генів лежать в одній ділянці хромосоми й трапляються разом частіше, ніж випадково.{3}" }] },
+          { q: "Чи пов’язані сусіди?", a: "Варіант Thr92Ala гена DIO2 і варіант D727E гена TSHR лежать в одній ділянці хромосоми й трапляються разом частіше, ніж випадково.{3}" }] },
         en: { title: "Three questions about DIO2", cards: [
           { q: "T4 or T3?", a: "Type 2 deiodinase converts thyroxine (T4) into active T3 right in the tissues where it is needed.{1}" },
           { q: "Who is the neighbour?", a: "The TSH receptor gene sits on the same chromosome, in region 14q31.{2}" },
-          { q: "Are the neighbours linked?", a: "Variants of both genes lie in the same region of the chromosome and occur together more often than by chance.{3}" }] } }],
+          { q: "Are the neighbours linked?", a: "The Thr92Ala variant of DIO2 and the D727E variant of TSHR lie in the same region of the chromosome and occur together more often than by chance.{3}" }] } }],
       uk: { title: "Останній крок гормону щитоподібної залози", hook: "Дейодиназа 2 типу перетворює тироксин (Т4) на активний трийодтиронін (Т3) безпосередньо у тканинах.{1} Поруч на хромосомі розташований і ген рецептора ТТГ.{2}{3}" },
       en: { title: "The last step of thyroid hormone", hook: "Type 2 deiodinase converts thyroxine (T4) into active triiodothyronine (T3) directly in the tissues.{1} The TSH receptor gene sits nearby on the same chromosome.{2}{3}" } },
     { d: 15, chr: "15", len: 101.99, cen: 19.0, genes: 610, gene: "CYP1A2", band: "15q24.1", pos: 74.75,
       viz: [{ id: "share", after: "hook",
         uk: { title: "Кофеїн у цифрах", groups: [
           { k: "Кофеїн", s: "що з ним стається", p: 95, t: "95%", l: "спожитого кофеїну переробляє CYP1A2", n: "Через варіанти гена швидкість цієї переробки в різних людей дуже різна.{1}" },
-          { k: "Люди", s: "хто має варіант", p: 54, t: "54%", l: "учасників контрольної групи мали «повільний» варіант", n: "Носіїв цього варіанта вважають повільними метаболізаторами кофеїну, решту швидкими.{2}" }] },
+          { k: "Люди", s: "хто має алель CYP1A2*1F", p: 54, t: "54%", l: "учасників контрольної групи мали «повільний» алель CYP1A2*1F", n: "Носіїв алеля CYP1A2*1F вважають повільними метаболізаторами кофеїну, решту швидкими.{2}" }] },
         en: { title: "Caffeine in numbers", groups: [
           { k: "Caffeine", s: "what happens to it", p: 95, t: "95%", l: "of ingested caffeine is processed by CYP1A2", n: "Because of gene variants, the speed of this processing differs widely between people.{1}" },
-          { k: "People", s: "who has the variant", p: 54, t: "54%", l: "of the control group carried the “slow” variant", n: "Carriers of this variant are classed as slow caffeine metabolisers, the rest as rapid.{2}" }] } }],
+          { k: "People", s: "who has the CYP1A2*1F allele", p: 54, t: "54%", l: "of the control group carried the “slow” CYP1A2*1F allele", n: "Carriers of the CYP1A2*1F allele are classed as slow caffeine metabolisers, the rest as rapid.{2}" }] } }],
       uk: { title: "Кавовий фермент", hook: "CYP1A2 відповідає за основну частину метаболізму кофеїну в печінці.{1} Поширений варіант пов’язаний зі швидшою чи повільнішою його переробкою.{2}{4} На цій же хромосомі ділянка, найтісніше пов’язана з кольором очей.{3}" },
       en: { title: "The coffee enzyme", hook: "CYP1A2 handles most caffeine metabolism in the liver.{1} A common variant is linked to faster or slower processing.{2}{4} The same chromosome holds the region most tightly linked to eye colour.{3}" } },
     { d: 16, chr: "16", len: 90.34, cen: 36.8, genes: 870, gene: "MC1R", band: "16q24.3", pos: 89.92,
@@ -338,19 +338,19 @@
         uk: { title: "Три запитання про MC4R", cards: [
           { q: "Що робить рецептор?", a: "Його активація зменшує споживання їжі: це і є сигнал «досить».{1}" },
           { q: "Де він працює?", a: "У гіпоталамусі: коли MC4R повертали в одне з його ядер, миші без цього гена переставали переїдати.{1}" },
-          { q: "А в людей?", a: "Поширені варіанти поруч із геном пов’язані з ІМТ у понад 77 тисяч людей{2} і з вищим споживанням енергії та жирів.{3}" }] },
+          { q: "А в людей?", a: "Поширений варіант rs17782313 поруч із геном пов’язаний з ІМТ у понад 77 тисяч людей{2} і з вищим споживанням енергії та жирів.{3}" }] },
         en: { title: "Three questions about MC4R", cards: [
           { q: "What does the receptor do?", a: "Its activation reduces food intake: that is the “enough” signal.{1}" },
           { q: "Where does it work?", a: "In the hypothalamus: when MC4R was restored in one of its nuclei, mice lacking the gene stopped overeating.{1}" },
-          { q: "And in people?", a: "Common variants near the gene are linked to BMI in more than 77,000 people{2} and to higher intakes of energy and fat.{3}" }] } }],
+          { q: "And in people?", a: "The common variant rs17782313 near the gene is linked to BMI in more than 77,000 people{2} and to higher intakes of energy and fat.{3}" }] } }],
       uk: { title: "Сигнал ситості", hook: "Рецептор меланокортину 4 у гіпоталамусі передає сигнал «досить».{1} Поширені варіанти поруч із геном пов’язані з апетитом та індексом маси тіла.{2}{3} Родич MC1R із 16 грудня, але з іншою професією.{4}" },
       en: { title: "The satiety signal", hook: "The melanocortin 4 receptor in the hypothalamus passes on the “enough” signal.{1} Common variants near the gene are linked to appetite and body mass index.{2}{3} A relative of MC1R from 16 December, with a different job.{4}" } },
     { d: 19, chr: "19", len: 58.62, cen: 26.2, genes: 1470, gene: "FUT2", band: "19q13.33", pos: 48.7,
       viz: [{ id: "share", after: "hook",
         uk: { title: "Скільки серед нас несекреторів", groups: [
-          { k: "FUT2", p: 20, t: "≈ 20%", l: "людей мають дві копії неробочого варіанта: це несекретори", n: "У шведському дослідженні несекретори виявилися повністю стійкими до симптомної інфекції одним із норовірусів.{5}{2}" }] },
+          { k: "FUT2", p: 20, t: "≈ 20%", l: "людей мають дві копії неробочого варіанта W143X: це несекретори", n: "У шведському дослідженні несекретори виявилися повністю стійкими до симптомної інфекції одним із норовірусів.{5}{2}" }] },
         en: { title: "How many of us are non-secretors", groups: [
-          { k: "FUT2", p: 20, t: "≈ 20%", l: "of people carry two copies of the non-working variant: they are non-secretors", n: "In a Swedish study, non-secretors proved completely resistant to symptomatic infection with one of the noroviruses.{5}{2}" }] } }],
+          { k: "FUT2", p: 20, t: "≈ 20%", l: "of people carry two copies of the non-working W143X variant: they are non-secretors", n: "In a Swedish study, non-secretors proved completely resistant to symptomatic infection with one of the noroviruses.{5}{2}" }] } }],
       uk: { title: "Секретори і несекретори", hook: "Найщільніша хромосома: найбільше генів на одиницю довжини.{1} Приблизно кожен п’ятий європеєць — «несекретор»:{5} це пов’язано зі складом мікробіому,{4} рівнем вітаміну B12{3} і стійкістю до частини норовірусів.{2}" },
       en: { title: "Secretors and non-secretors", hook: "The densest chromosome: the most genes per unit of length.{1} About one in five Europeans is a “non-secretor”:{5} this is linked to microbiome composition,{4} vitamin B12 levels{3} and resistance to some noroviruses.{2}" } },
     { d: 20, chr: "20", len: 64.44, cen: 28.1, genes: 540, gene: "GDF5", band: "20q11.22", pos: 35.44,
@@ -358,11 +358,11 @@
         uk: { title: "Три запитання про GDF5", cards: [
           { q: "Що робить GDF5?", a: "Потрібний для розвитку хряща й для того, щоб суглоб утворився в правильному місці.{1}" },
           { q: "А зріст?", a: "Поширені варіанти цієї ділянки змінюють зріст у середньому на 0,44 см.{3}" },
-          { q: "І суглоби?", a: "Варіант у регуляторній ділянці гена, який знижує його активність, пов’язаний з остеоартритом кульшового й колінного суглобів.{2}" }] },
+          { q: "І суглоби?", a: "Варіант +104T/C у регуляторній ділянці гена, який знижує його активність, пов’язаний з остеоартритом кульшового й колінного суглобів.{2}" }] },
         en: { title: "Three questions about GDF5", cards: [
           { q: "What does GDF5 do?", a: "It is needed for cartilage to develop and for a joint to form in the right place.{1}" },
           { q: "And height?", a: "Common variants in this region shift height by 0.44 cm on average.{3}" },
-          { q: "And joints?", a: "A variant in the gene’s regulatory region that lowers its activity is linked to osteoarthritis of the hip and knee.{2}" }] } }],
+          { q: "And joints?", a: "The +104T/C variant in the gene’s regulatory region, which lowers its activity, is linked to osteoarthritis of the hip and knee.{2}" }] } }],
       uk: { title: "Зріст і суглоби", hook: "Фактор росту GDF5 формує хрящ і суглоби.{1} Поширений варіант у його регуляторній ділянці пов’язаний водночас із трохи нижчим зростом{3} і вищою схильністю до остеоартриту.{2}{4}" },
       en: { title: "Height and joints", hook: "The growth factor GDF5 shapes cartilage and joints.{1} A common variant in its regulatory region is linked both to slightly shorter height{3} and to a higher likelihood of osteoarthritis.{2}{4}" } },
     { d: 21, chr: "21", len: 46.71, cen: 12.0, genes: 230, gene: "CBS", band: "21q22.3", pos: 43.05,
