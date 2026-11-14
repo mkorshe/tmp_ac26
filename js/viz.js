@@ -694,7 +694,9 @@
     return () => {};
   }
 
-  const RENDER = { folate, fusion, lactase, dpp, clock, telomere, bars3d, share, picker, flip, mech };
+  /* Хімічна схема (структурні формули, 3D-моделі, рівняння) живе в js/chem.js */
+  const chem = (stage, t, lang, W, ui, v) => window.Chem.render(stage, t, lang, W, v);
+  const RENDER = { folate, fusion, lactase, dpp, clock, telomere, bars3d, share, picker, flip, mech, chem };
   /* Позначки {n} у текстах графіка замінюються посиланнями на джерела дня; без обробника вони просто зникають */
   const strip = (s) => s.replace(/\{\d+\}/g, "");
   const deep = (v, f) => typeof v === "string" ? f(v) : Array.isArray(v) ? v.map((x) => deep(x, f)) : v && typeof v === "object" ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, deep(x, f)])) : v;
