@@ -249,10 +249,10 @@
     const top = 3, maxH = H - (fs + 6) - top, base = top + maxH, scale = maxH / 249;
     const bw = clamp(slot * 0.27, 3, 9), gap = clamp(slot * 0.09, 1.2, 4);
     const focusDay = now.today || Math.max(1, Math.min(now.day, CFG.last)) || 1;
-    let g = `<defs><linearGradient id="kGrad" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3C8DB6"/><stop offset="1" stop-color="#154B6B"/></linearGradient></defs>`;
+    let g = `<defs><linearGradient id="kGrad" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#1E658C"/><stop offset=".36" stop-color="#7CC8DE"/><stop offset="1" stop-color="#134866"/></linearGradient><linearGradient id="kGradT" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#E07B2A"/><stop offset=".36" stop-color="#FFD0A3"/><stop offset="1" stop-color="#C2621F"/></linearGradient></defs>`;
     DAYS.forEach((d, i) => {
       const cx = i * slot + slot / 2;
-      let inner = `<rect class="k-bg" x="${f1(i * slot + 1)}" y="0" width="${f1(slot - 2)}" height="${H}" rx="${f1(Math.min(9, slot / 2.6))}"/>`;
+      let inner = `<rect class="k-bg" x="${f1(i * slot + 1)}" y="0" width="${f1(slot - 2)}" height="${H}" rx="${f1(Math.min(4, slot / 4))}"/>`;
       if (d.chr === "MT") {
         const R = Math.min(bw + gap / 2 + 1, maxH / 4), sw = Math.max(2.2, bw * 0.48);
         inner += `<circle class="ring" cx="${f1(cx)}" cy="${f1(base - R - sw / 2)}" r="${f1(R)}" stroke-width="${f1(sw)}"/>`;
@@ -394,7 +394,7 @@
         <h2 class="m-title">${c.title}</h2>
         <div class="geneline"><em>${gene}</em><span>${L(d.band)}</span></div></div>`;
     const tomorrow = d.d === now.today && d.d < CFG.last ? `<p class="next">${lockIcon}${T.next(d.d + 1)}</p>` : "";
-    const vz = (slot) => (d.viz || []).filter((v) => v.after === slot && Viz.has(v.id)).map((v) => Viz.html(v.id, lang, m)).join("");
+    const vz = (slot) => (d.viz || []).map((v, k) => (v.after === slot && Viz.has(v.id) ? Viz.html(v, lang, m, k) : "")).join("");
     const body = d.ready
       ? `<div class="prose" style="margin-top:14px"><p>${m(c.intro)}</p></div>${vz("intro")}
           <div class="sect"><h4>${T.role}</h4><div class="prose"><p>${m(c.role)}</p></div></div>${vz("role")}
@@ -402,7 +402,7 @@
           <div class="callout"><b>${T.not}</b>${m(c.not)}</div>
           ${tipHTML(d, c, m)}
           ${refsHTML(d)}`
-      : `<p class="standfirst" style="margin-top:14px">${m(c.hook)}</p>${refsHTML(d)}`;
+      : `<p class="standfirst" style="margin-top:14px">${m(c.hook)}</p>${vz("hook")}${refsHTML(d)}`;
     /* На широкому екрані портрет хромосоми стоїть ліворуч і лишається на екрані під час читання;
        на вузькому порядок: заголовок, портрет, текст, інші гени */
     return `<div class="m-grid"><div class="col c-side">${ideo}</div><div class="col">${head}<div class="c-body">${body}${tomorrow}</div>${more}</div></div>`;
@@ -422,8 +422,8 @@
     if (!figs.length || typeof state.open !== "number") return;
     if (!force && figs.every((f) => +f.querySelector(".viz-stage").dataset.w === Math.max(260, Math.floor(f.querySelector(".viz-stage").clientWidth)))) return;
     stopViz();
-    const m = marker(dayOf(state.open));
-    figs.forEach((f) => vizStops.push(Viz.mount(f, lang, m)));
+    const d = dayOf(state.open), m = marker(d);
+    figs.forEach((f) => { const v = (d.viz || [])[+f.dataset.k]; if (v) vizStops.push(Viz.mount(f, lang, m, v)); });
   }
   function showSheet(html, narrow) {
     stopViz();

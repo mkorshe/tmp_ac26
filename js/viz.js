@@ -1,15 +1,60 @@
-/* «23 пари» · графіка: мініатюри хромосом, портрет хромосоми та інтерактивні графіки днів 1–5.
-   Кожен графік: Viz.mount(el, id, lang) повертає функцію, яка зупиняє анімацію. Числа звірено за джерелами, вказаними в підписах. */
+/* «23 пари» · об’ємна (3D) графіка: мініатюри й портрет хромосоми, інтерактивні графіки днів 1–5
+   та шаблонні інтерактивні елементи для днів 6–24 (стовпчики, частка зі 100, вибір алелів, картки-перевертні).
+   Об’єм дають спільні градієнти (#fx-…), тіні та нахил сцени за курсором. Числа звірено за джерелами в підписах. */
 (function () {
   "use strict";
   const reduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   const f1 = (n) => Math.round(n * 10) / 10;
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  const plain = (s) => String(s).replace(/<[^>]*>/g, "").replace(/\{\d+\}/g, "");
   const nf = (n, d, lang) => Number(n).toLocaleString(lang === "en" ? "en-GB" : "uk-UA", { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 }).replace(/ /g, " ");
   const PEACH = "#FF9D45", NAVY = "#0B2532", LINK = "#1E658C";
 
-  /* Плавна зміна числа */
+  /* ---------- Спільні градієнти й тіні ---------- */
+  function defs() {
+    if (document.getElementById("fx-defs")) return;
+    const lin = (id, x2, y2, stops) => `<linearGradient id="${id}" x1="0" y1="0" x2="${x2}" y2="${y2}">${stops.map((s) => `<stop offset="${s[0]}" stop-color="${s[1]}"${s[2] !== undefined ? ` stop-opacity="${s[2]}"` : ""}/>`).join("")}</linearGradient>`;
+    const rad = (id, stops) => `<radialGradient id="${id}" cx=".35" cy=".3" r=".8">${stops.map((s) => `<stop offset="${s[0]}" stop-color="${s[1]}"/>`).join("")}</radialGradient>`;
+    const box = document.createElement("div");
+    box.innerHTML = `<svg id="fx-defs" width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+      ${lin("fx-tube", 0, 1, [[0, "#CDEFF8"], [.26, "#7CC8DE"], [.64, "#2A77A0"], [1, "#134866"]])}
+      ${lin("fx-tube-peach", 0, 1, [[0, "#FFE6CC"], [.3, "#FFB575"], [.7, "#F08A43"], [1, "#C2621F"]])}
+      ${lin("fx-tube-grey", 0, 1, [[0, "#E6EEF2"], [.3, "#BACBD4"], [.7, "#8AA1AD"], [1, "#5F7786"]])}
+      ${lin("fx-tube-ice", 0, 1, [[0, "#FAFDFE"], [.4, "#D9E8EF"], [1, "#A9C6D4"]])}
+      ${lin("fx-cyl", 1, 0, [[0, "#1B5F86"], [.3, "#7CC8DE"], [.56, "#3C8DB6"], [1, "#114463"]])}
+      ${lin("fx-cyl-peach", 1, 0, [[0, "#D9772F"], [.3, "#FFD0A3"], [.56, "#FF9D45"], [1, "#B4541A"]])}
+      ${lin("fx-cyl-glass", 1, 0, [[0, "#fff", .6], [.22, "#fff", .14], [.8, "#fff", .06], [1, "#fff", .4]])}
+      ${lin("fx-milk", 1, 0, [[0, "#DCE9F0"], [.3, "#FFFFFF"], [.7, "#F1F7FA"], [1, "#C3D7E1"]])}
+      ${rad("fx-ball", [[0, "#DDF5FB"], [.38, "#5FB4CC"], [1, "#154B6B"]])}
+      ${rad("fx-ball-peach", [[0, "#FFF2E3"], [.38, "#FFB575"], [1, "#C2621F"]])}
+      ${rad("fx-ball-green", [[0, "#ECF9EC"], [.42, "#7CC68F"], [1, "#2F7D48"]])}
+      ${rad("fx-ball-ice", [[0, "#FFFFFF"], [.5, "#CFE3EC"], [1, "#97B6C6"]])}
+      ${rad("fx-ball-white", [[0, "#FFFFFF"], [.6, "#EAF4F9"], [1, "#B4CBD7"]])}
+      ${rad("fx-ball-red", [[0, "#FFDCD2"], [.36, "#E8614A"], [1, "#8E2415"]])}
+      <radialGradient id="fx-dome" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#D9E9F1"/></radialGradient>
+      <filter id="fx-soft" x="-40%" y="-80%" width="180%" height="260%"><feGaussianBlur stdDeviation="4"/></filter>
+    </defs></svg>`;
+    document.body.appendChild(box.firstChild);
+  }
+  const sh = (cx, cy, rx, ry, o) => `<ellipse cx="${f1(cx)}" cy="${f1(cy)}" rx="${f1(rx)}" ry="${f1(ry)}" fill="${NAVY}" opacity="${o || 0.2}" filter="url(#fx-soft)"/>`;
+  const ball = (cx, cy, r, g, cls) => `<circle${cls ? ` class="${cls}"` : ""} cx="${f1(cx)}" cy="${f1(cy)}" r="${f1(r)}" fill="url(#${g || "fx-ball"})"/>`;
+  const tube = (x, y, w, h, g) => `<rect x="${f1(x)}" y="${f1(y)}" width="${f1(w)}" height="${f1(h)}" rx="${f1(h / 2)}" fill="url(#${g || "fx-tube"})" stroke="rgba(11,37,50,.18)"/><rect x="${f1(x + h * 0.5)}" y="${f1(y + h * 0.16)}" width="${f1(Math.max(0, w - h))}" height="${f1(h * 0.14)}" rx="${f1(h * 0.07)}" fill="#fff" opacity=".5"/>`;
+
+  /* Сцена ледь нахиляється за курсором миші */
+  function tilt(stage) {
+    const sc = stage.querySelector(".fx-scene");
+    if (!sc || reduce) return () => {};
+    const mv = (e) => {
+      if (e.pointerType !== "mouse") return;
+      const r = stage.getBoundingClientRect();
+      sc.style.setProperty("--tx", f1(((e.clientX - r.left) / r.width - 0.5) * 12));
+      sc.style.setProperty("--ty", f1(-((e.clientY - r.top) / r.height - 0.5) * 9));
+    };
+    const out = () => { sc.style.setProperty("--tx", 0); sc.style.setProperty("--ty", 0); };
+    stage.addEventListener("pointermove", mv); stage.addEventListener("pointerleave", out);
+    return () => { stage.removeEventListener("pointermove", mv); stage.removeEventListener("pointerleave", out); };
+  }
   function tween(from, to, ms, step) {
     if (reduce || from === to) { step(to); return () => {}; }
     let raf, t0 = null;
@@ -47,19 +92,21 @@
     pair.forEach(([len, cen], k) => {
       const h = Math.max(14, len * scale), x = 6 + k * (w + gap), y = H - 2 - h;
       g += `<path d="${chromPath(x, y, w, h, cen / len)}" fill="${o.fill}" opacity="${o.op}"/>`;
+      if (o.hero) g += `<rect x="${x + 2.4}" y="${f1(y + 5)}" width="2.4" height="${f1(Math.max(2, h - 10))}" rx="1.2" fill="#fff" opacity=".4"/>`;
       if (o.hero && k === 0 && d.pos) g += `<circle cx="${x - 1}" cy="${f1(y + (d.pos / len) * h)}" r="4" fill="${PEACH}" stroke="#fff" stroke-width="1.2"/>`;
     });
     return `<svg viewBox="0 0 ${6 + 2 * w + gap + 4} ${H}" preserveAspectRatio="xMaxYMax meet" aria-hidden="true">${g}</svg>`;
   }
-  /* Портрет хромосоми в картці дня. t: підписи потрібною мовою, topicIdx: 2 для української, 3 для англійської */
+  /* Портрет хромосоми в картці дня */
   function ideogram(d, map, W, t, topicIdx, gene, band) {
-    let g = `<defs><linearGradient id="ideoGrad" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#A9E6F3"/><stop offset=".5" stop-color="#5FB4CC"/><stop offset="1" stop-color="#3C8DB6"/></linearGradient></defs>`;
+    defs();
+    let g = "";
     if (d.chr === "MT") {
       const cx = W / 2, R = Math.min(84, W * 0.22), cy = R + 22;
-      g += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="url(#ideoGrad)" stroke-width="22"/>`;
-      for (let k = 0; k < 37; k++) { const a = (k / 37) * Math.PI * 2 - Math.PI / 2; g += `<line x1="${f1(cx + Math.cos(a) * (R - 11))}" y1="${f1(cy + Math.sin(a) * (R - 11))}" x2="${f1(cx + Math.cos(a) * (R + 11))}" y2="${f1(cy + Math.sin(a) * (R + 11))}" stroke="${NAVY}" stroke-width="1.8" opacity=".55"/>`; }
+      g += `${sh(cx, cy + R + 16, R * 0.9, 7, 0.4)}<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="url(#fx-tube)" stroke-width="22"/><circle cx="${cx}" cy="${cy}" r="${R + 6}" fill="none" stroke="#fff" stroke-width="2" opacity=".35"/>`;
+      for (let k = 0; k < 37; k++) { const a = (k / 37) * Math.PI * 2 - Math.PI / 2; g += `<line x1="${f1(cx + Math.cos(a) * (R - 11))}" y1="${f1(cy + Math.sin(a) * (R - 11))}" x2="${f1(cx + Math.cos(a) * (R + 11))}" y2="${f1(cy + Math.sin(a) * (R + 11))}" stroke="${NAVY}" stroke-width="1.8" opacity=".5"/>`; }
       g += `<text x="${cx}" y="${cy + 2}" text-anchor="middle" style="font-family:var(--font-head);font-size:26px;font-weight:300" fill="#fff">${t.mtBp}</text><text x="${cx}" y="${cy + 22}" text-anchor="middle" style="font-family:var(--font-body);font-size:12px" fill="rgba(255,255,255,.8)">${t.bp}</text>`;
-      return `<svg class="anim" width="${W}" height="${f1(cy + R + 22)}" viewBox="0 0 ${W} ${f1(cy + R + 22)}" role="img" aria-label="${esc(t.mt)}">${g}</svg>`;
+      return `<svg class="anim" width="${W}" height="${f1(cy + R + 26)}" viewBox="0 0 ${W} ${f1(cy + R + 26)}" role="img" aria-label="${esc(t.mt)}">${g}</svg>`;
     }
     const tracks = d.chr2 ? [[d.chr, d.len, d.cen, true], [d.chr2, d.len2, d.cen2, false]] : [[d.chr, d.len, d.cen, true]];
     const full = tracks[0][1], h = 30, x0 = 4, usable = W - 8;
@@ -69,7 +116,9 @@
       const a = Math.max(x0 + r, xc - 10), b = Math.min(x0 + w - r, xc + 10);
       g += `<text x="${x0}" y="${y - 10}" style="font-family:var(--font-body);font-size:12px" fill="rgba(255,255,255,.8)">${d.chr2 ? name + " · " : ""}${t.pArm}</text>`;
       if (w > 260) g += `<text x="${f1(x0 + w)}" y="${y - 10}" text-anchor="end" style="font-family:var(--font-body);font-size:12px" fill="rgba(255,255,255,.8)">${t.qArm}</text>`;
-      g += `<path d="M${x0 + r},${y} L${f1(a)},${y} Q${f1(xc)},${y + pinch} ${f1(b)},${y} L${f1(x0 + w - r)},${y} a${r},${r} 0 0 1 0,${h} L${f1(b)},${y + h} Q${f1(xc)},${y + h - pinch} ${f1(a)},${y + h} L${x0 + r},${y + h} a${r},${r} 0 0 1 0,${-h} Z" fill="url(#ideoGrad)" stroke="rgba(255,255,255,.35)"/>`;
+      g += sh(x0 + w / 2, y + h + 7, w * 0.46, 5, 0.45);
+      g += `<path d="M${x0 + r},${y} L${f1(a)},${y} Q${f1(xc)},${y + pinch} ${f1(b)},${y} L${f1(x0 + w - r)},${y} a${r},${r} 0 0 1 0,${h} L${f1(b)},${y + h} Q${f1(xc)},${y + h - pinch} ${f1(a)},${y + h} L${x0 + r},${y + h} a${r},${r} 0 0 1 0,${-h} Z" fill="url(#fx-tube)" stroke="rgba(255,255,255,.35)"/>`;
+      g += `<rect x="${f1(x0 + r)}" y="${y + 4.5}" width="${f1(Math.max(0, a - x0 - r - 4))}" height="3.4" rx="1.7" fill="#fff" opacity=".55"/><rect x="${f1(b + 4)}" y="${y + 4.5}" width="${f1(Math.max(0, x0 + w - r - b - 4))}" height="3.4" rx="1.7" fill="#fff" opacity=".55"/>`;
       (map[name] || []).forEach((v, i) => {
         const x = f1(x0 + (v[0] / len) * w);
         g += `<line class="fadein" style="--i:${i * 3}" x1="${x}" x2="${x}" y1="${y + 3}" y2="${y + h - 3}" stroke="${NAVY}" stroke-width="2" opacity=".62"><title>${esc(v[1])}: ${esc(v[topicIdx])}</title></line>`;
@@ -77,16 +126,16 @@
       if (hasHero && d.pos) {
         const x = f1(x0 + (d.pos / len) * w), right = x < W / 2;
         g += `<line x1="${x}" x2="${x}" y1="${y - 5}" y2="${y + h + 20}" stroke="${PEACH}" stroke-width="1.8"/>`;
-        g += `<circle class="pulse" cx="${x}" cy="${y + h / 2}" r="6" fill="${PEACH}"/><circle cx="${x}" cy="${y + h / 2}" r="6" fill="${PEACH}" stroke="${NAVY}" stroke-width="2.2"/>`;
-        g += `<text x="${x + (right ? 9 : -9)}" y="${y + h + 26}" text-anchor="${right ? "start" : "end"}" style="font-family:var(--font-head);font-style:italic;font-weight:600;font-size:19px" fill="#FFB575">${esc(gene)}</text>`;
-        g += `<text x="${x + (right ? 9 : -9)}" y="${y + h + 43}" text-anchor="${right ? "start" : "end"}" style="font-family:var(--font-body);font-size:12px" fill="rgba(255,255,255,.8)">${esc(band)}</text>`;
+        g += `<circle class="pulse" cx="${x}" cy="${y + h / 2}" r="6" fill="${PEACH}"/>${ball(x, y + h / 2, 7, "fx-ball-peach")}`;
+        g += `<text x="${x + (right ? 10 : -10)}" y="${y + h + 26}" text-anchor="${right ? "start" : "end"}" style="font-family:var(--font-head);font-style:italic;font-weight:600;font-size:19px" fill="#FFB575">${esc(gene)}</text>`;
+        g += `<text x="${x + (right ? 10 : -10)}" y="${y + h + 43}" text-anchor="${right ? "start" : "end"}" style="font-family:var(--font-body);font-size:12px" fill="rgba(255,255,255,.8)">${esc(band)}</text>`;
       }
       y += h + (hasHero ? 84 : 26);
     });
     return `<svg class="anim" width="${W}" height="${f1(y - 26)}" viewBox="0 0 ${W} ${f1(y - 26)}" role="img" aria-label="${esc(t.chromosome + " " + d.chr)}">${g}</svg>`;
   }
 
-  /* ---------- Тексти графіків ---------- */
+  /* ---------- Тексти графіків днів 1–5 ---------- */
   const TXT = {
     folate: {
       uk: { title: "Той самий раціон, три генотипи", sub: "Оберіть генотип за варіантом C677T і подивіться, як змінюється рівень фолату в еритроцитах за однакового споживання.",
@@ -171,110 +220,118 @@
         src: "Schematic: one segment stands for five divisions. Basis for the estimate: Allsopp et al., PNAS, 1992{8} (fibroblasts in culture)." }
     }
   };
+  const UI = {
+    uk: { flip: "Натисніть на картку, щоб перевернути її." },
+    en: { flip: "Click a card to turn it over." }
+  };
   const tiles = (arr) => `<div class="viz-tiles">${arr.map((x) => `<div><b>${x[0]}</b><span>${x[1]}</span></div>`).join("")}</div>`;
   const playIcon = `<svg viewBox="0 0 16 16" aria-hidden="true"><path class="i-play" d="M5 3.2v9.6L12.6 8z" fill="currentColor"/><path class="i-pause" d="M4.5 3h2.6v10H4.5zM8.9 3h2.6v10H8.9z" fill="currentColor"/></svg>`;
 
   /* ---------- 1. MTHFR: той самий раціон, три генотипи ---------- */
   function folate(stage, t, lang, W) {
-    const H = 196, LEVEL = [100, 92, 84], SPEED = [1, 0.8, 0.62], SHARE = [40.6, 45.9, 13.5];
-    const sx = 34, ex = Math.round(W * 0.43), tw = 54, tx = W - tw - 12, ty = 30, th = 132, cy = 96, er = 30;
+    const H = 214, LEVEL = [100, 92, 84], SPEED = [1, 0.8, 0.62], SHARE = [40.6, 45.9, 13.5], N = 16;
+    const sx = 36, ex = Math.round(W * 0.43), cy = 104, er = 27, rx = er + 13, ryR = rx * 0.34;
+    const tw = 58, tx = W - tw - 14, ry = 9, yT = 42, yB = 178, hh = yB - yT, cxT = tx + tw / 2;
     let dots = "";
-    const N = 16;
-    for (let i = 0; i < N; i++) dots += `<circle class="fl-dot" r="3.4"/>`;
+    for (let i = 0; i < N; i++) dots += `<circle class="fl-dot" r="4.2"/>`;
     stage.innerHTML = `
       <div class="seg3" role="group" aria-label="${t.group}">${t.g.map((g, i) => `<button type="button" aria-pressed="${i === 0}"><b>${g[0]}</b><small>${g[1]}</small></button>`).join("")}</div>
-      <svg class="fl" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(t.title)}">
-        <defs>
-          <linearGradient id="flTank" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#FFC48C"/><stop offset="1" stop-color="#F08A43"/></linearGradient>
-          <clipPath id="flClip"><rect x="${tx}" y="${ty}" width="${tw}" height="${th}" rx="14"/></clipPath>
-        </defs>
-        <line x1="${sx}" x2="${tx}" y1="${cy}" y2="${cy}" stroke="#D5E6EE" stroke-width="14" stroke-linecap="round"/>
+      <svg class="fl fx-scene" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(t.title)}">
+        ${sh(sx, cy + 32, 22, 5)}${sh(ex, cy + er + 12, er, 6)}${sh(cxT, yB + ry + 8, tw * 0.55, 6, 0.26)}
+        ${tube(sx, cy - 7, tx - sx + 8, 14, "fx-tube-ice")}
+        <path class="fl-ring" d="M${ex - rx},${cy} A${rx},${f1(ryR)} 0 0 1 ${ex + rx},${cy}"/>
         <g class="fl-dots">${dots}</g>
-        <circle cx="${sx}" cy="${cy}" r="24" fill="#E3F3E6" stroke="#5DAE74" stroke-width="2"/>
-        <path d="M${sx - 9},${cy + 7} C${sx - 10},${cy - 7} ${sx + 2},${cy - 12} ${sx + 10},${cy - 10} C${sx + 11},${cy + 2} ${sx + 3},${cy + 10} ${sx - 9},${cy + 7} Z M${sx - 9},${cy + 8} L${sx + 5},${cy - 5}" fill="#5DAE74" stroke="#2F7D48" stroke-width="1.3" stroke-linejoin="round"/>
-        <text class="vz-lab" x="${sx - 24}" y="${cy + 40}">${t.food}</text>
-        <g transform="translate(${ex} ${cy})">
-          <circle class="fl-ring" r="${er + 7}" fill="none" stroke="${LINK}" stroke-width="2.4" stroke-dasharray="7 9" stroke-linecap="round"/>
-          <circle r="${er}" fill="#fff" stroke="${LINK}" stroke-width="2.2"/>
-          <text x="0" y="5" text-anchor="middle" style="font-family:var(--font-head);font-style:italic;font-weight:700;font-size:14px" fill="${NAVY}">MTHFR</text>
-        </g>
-        <text class="vz-lab" x="${ex}" y="${cy + er + 34}" text-anchor="middle">${t.enzyme}</text>
-        <text class="vz-lab vz-peach" x="${f1((ex + er + tx) / 2)}" y="${cy - 16}" text-anchor="middle">${t.active}</text>
-        <rect x="${tx}" y="${ty}" width="${tw}" height="${th}" rx="14" fill="#F1F7FA" stroke="#B9CFDA" stroke-width="1.6"/>
-        <g clip-path="url(#flClip)"><rect class="fl-fill" x="${tx}" y="${ty}" width="${tw}" height="${th}" fill="url(#flTank)"/></g>
-        <line x1="${tx - 8}" x2="${tx + tw + 6}" y1="${f1(ty + th * 0.14)}" y2="${f1(ty + th * 0.14)}" stroke="${NAVY}" stroke-width="1.2" stroke-dasharray="3 3"/>
-        <text class="vz-lab" x="${tx - 12}" y="${f1(ty + th * 0.14 + 4)}" text-anchor="end">${t.ref}</text>
-        <text class="fl-val" x="${tx + tw / 2}" y="${ty - 8}" text-anchor="middle">100%</text>
-        <text class="vz-lab" x="${tx + tw + 6}" y="${ty + th + 18}" text-anchor="end">${t.tank}</text>
+        ${ball(sx, cy, 24, "fx-ball-green")}
+        <path d="M${sx - 9},${cy + 7} C${sx - 10},${cy - 7} ${sx + 2},${cy - 12} ${sx + 10},${cy - 10} C${sx + 11},${cy + 2} ${sx + 3},${cy + 10} ${sx - 9},${cy + 7} Z M${sx - 9},${cy + 8} L${sx + 5},${cy - 5}" fill="#fff" fill-opacity=".85" stroke="#2F7D48" stroke-width="1.2" stroke-linejoin="round"/>
+        <text class="vz-lab" x="${sx - 24}" y="${cy + 52}">${t.food}</text>
+        ${ball(ex, cy, er, "fx-ball")}
+        <text x="${ex}" y="${cy + 5}" text-anchor="middle" style="font-family:var(--font-head);font-style:italic;font-weight:700;font-size:13.5px" fill="#fff">MTHFR</text>
+        <path class="fl-ring" d="M${ex - rx},${cy} A${rx},${f1(ryR)} 0 0 0 ${ex + rx},${cy}"/>
+        <text class="vz-lab" x="${ex}" y="${cy + er + 36}" text-anchor="middle">${t.enzyme}</text>
+        <text class="vz-lab vz-peach" x="${f1((ex + rx + tx) / 2)}" y="${cy - 18}" text-anchor="middle">${t.active}</text>
+        <path d="M${tx},${yT} V${yB} A${tw / 2},${ry} 0 0 0 ${tx + tw},${yB} V${yT}" fill="url(#fx-cyl-glass)" stroke="#9DBBCB" stroke-width="1.4"/>
+        <path class="fl-liq" fill="url(#fx-cyl-peach)"/>
+        <ellipse class="fl-top" cx="${cxT}" rx="${tw / 2 - 2.5}" ry="${ry - 1.5}" fill="#FFD9B3"/>
+        <ellipse cx="${cxT}" cy="${yT}" rx="${tw / 2}" ry="${ry}" fill="rgba(255,255,255,.35)" stroke="#9DBBCB" stroke-width="1.4"/>
+        <rect x="${tx + 6}" y="${yT + 12}" width="4" height="${hh - 26}" rx="2" fill="#fff" opacity=".55"/>
+        <line x1="${tx - 8}" x2="${tx + tw + 6}" y1="${f1(yB - hh * 0.86)}" y2="${f1(yB - hh * 0.86)}" stroke="${NAVY}" stroke-width="1.2" stroke-dasharray="3 3"/>
+        <text class="vz-lab" x="${tx - 12}" y="${f1(yB - hh * 0.86 + 4)}" text-anchor="end">${t.ref}</text>
+        <text class="fl-val" x="${cxT}" y="${yT - 16}" text-anchor="middle">100%</text>
+        <text class="vz-lab" x="${tx + tw + 6}" y="${yB + ry + 24}" text-anchor="end">${t.tank}</text>
       </svg>
       <p class="viz-read" aria-live="polite"></p>
       <div class="fl-dist"><span>${t.dist}</span><div class="fl-bar">${SHARE.map((s, i) => `<i style="flex:${s}" data-i="${i}"></i>`).join("")}</div><div class="fl-keys">${SHARE.map((s, i) => `<button type="button" data-i="${i}"><b>${t.g[i][0]}</b> ${nf(s, 1, lang)}%</button>`).join("")}</div></div>`;
-    const fill = stage.querySelector(".fl-fill"), val = stage.querySelector(".fl-val"), read = stage.querySelector(".viz-read"), ring = stage.querySelector(".fl-ring");
-    const circles = Array.from(stage.querySelectorAll(".fl-dot")), bars = Array.from(stage.querySelectorAll(".fl-bar i")), keys = Array.from(stage.querySelectorAll(".fl-keys button"));
-    let g = 0, cur = 100, stopNum = () => {}, raf = 0, last = 0, ph = circles.map((_, i) => i / N), rot = 0;
+    const liq = stage.querySelector(".fl-liq"), top = stage.querySelector(".fl-top"), val = stage.querySelector(".fl-val"), read = stage.querySelector(".viz-read");
+    const rings = Array.from(stage.querySelectorAll(".fl-ring")), circles = Array.from(stage.querySelectorAll(".fl-dot"));
+    const bars = Array.from(stage.querySelectorAll(".fl-bar i")), keys = Array.from(stage.querySelectorAll(".fl-keys button"));
+    let g = 0, cur = 100, stopNum = () => {}, raf = 0, last = 0, ph = circles.map((_, i) => i / N), off = 0;
+    const level = (v) => {
+      const yL = yB - hh * 0.86 * v / 100;
+      liq.setAttribute("d", `M${tx + 2.5},${f1(yL)} V${yB} A${tw / 2 - 2.5},${ry - 1.5} 0 0 0 ${tx + tw - 2.5},${yB} V${f1(yL)} Z`);
+      top.setAttribute("cy", f1(yL)); val.textContent = Math.round(v) + "%";
+    };
     const place = () => {
       circles.forEach((c, i) => {
         const p = ph[i], x = sx + 26 + p * (tx - sx - 26), after = x > ex;
-        const hide = (x > ex - er - 4 && x < ex + er + 4) || (after && g === 2 && i % 4 === 0) || (after && g === 1 && i % 8 === 0);
-        c.setAttribute("cx", f1(x)); c.setAttribute("cy", f1(cy + Math.sin(p * 18 + i) * 3));
-        c.setAttribute("fill", after ? PEACH : "#5DAE74"); c.setAttribute("opacity", hide ? 0 : 1);
+        const hide = (x > ex - er - 2 && x < ex + er + 2) || (after && g === 2 && i % 4 === 0) || (after && g === 1 && i % 8 === 0);
+        c.setAttribute("cx", f1(x)); c.setAttribute("cy", f1(cy + Math.sin(p * 18 + i) * 2.5));
+        c.setAttribute("fill", after ? "url(#fx-ball-peach)" : "url(#fx-ball-green)"); c.setAttribute("opacity", hide ? 0 : 1);
       });
-      ring.setAttribute("transform", `rotate(${f1(rot)})`);
+      rings.forEach((r) => r.setAttribute("stroke-dashoffset", f1(off)));
     };
     const frame = (ts) => {
       raf = requestAnimationFrame(frame);
       const dt = Math.min(60, ts - (last || ts)); last = ts;
-      ph = ph.map((p) => (p + dt * 0.00011 * SPEED[g]) % 1); rot = (rot + dt * 0.05 * SPEED[g]) % 360;
+      ph = ph.map((p) => (p + dt * 0.00011 * SPEED[g]) % 1); off = (off - dt * 0.03 * SPEED[g]) % 17;
       place();
     };
     const set = (i) => {
       g = i;
-      fill.style.transform = `scaleY(${f1(LEVEL[i] * 0.86) / 100})`;
-      stopNum(); stopNum = tween(cur, LEVEL[i], 700, (v) => { cur = v; val.textContent = Math.round(v) + "%"; });
+      stopNum(); stopNum = tween(cur, LEVEL[i], 700, (v) => { cur = v; level(v); });
       read.textContent = t.read[i];
       bars.forEach((b, k) => b.classList.toggle("on", k === i));
       keys.forEach((b, k) => b.classList.toggle("on", k === i));
     };
     const pick = seg(stage, ".seg3 button", set);
     keys.forEach((b, k) => b.addEventListener("click", () => pick(k)));
-    set(0); place();
+    level(100); set(0); place();
     if (!reduce) raf = requestAnimationFrame(frame);
     return () => { cancelAnimationFrame(raf); stopNum(); };
   }
 
   /* ---------- 2а. Хромосома 2: злиття ---------- */
   function fusion(stage, t, lang, W) {
-    const H = 128, gap = 30, x0 = 16, L = W - 2 * x0 - gap, la = L * 113.6 / 242.19, lb = L - la, y = 44, h = 24, r = h / 2, cap = 9;
+    const H = 134, gap = 30, x0 = 16, L = W - 2 * x0 - gap, la = L * 113.6 / 242.19, lb = L - la, y = 46, h = 26, r = h / 2, cap = 10;
     const rod = (x, len, cf, cls) => {
       const xc = x + len * cf, a = Math.max(x + r, xc - 8), b = Math.min(x + len - r, xc + 8);
-      return `<path class="${cls}" d="M${f1(x + r)},${y} L${f1(a)},${y} Q${f1(xc)},${y + 6} ${f1(b)},${y} L${f1(x + len - r)},${y} a${r},${r} 0 0 1 0,${h} L${f1(b)},${y + h} Q${f1(xc)},${y + h - 6} ${f1(a)},${y + h} L${f1(x + r)},${y + h} a${r},${r} 0 0 1 0,${-h} Z"/>`;
+      return `<path class="${cls}" d="M${f1(x + r)},${y} L${f1(a)},${y} Q${f1(xc)},${y + 6} ${f1(b)},${y} L${f1(x + len - r)},${y} a${r},${r} 0 0 1 0,${h} L${f1(b)},${y + h} Q${f1(xc)},${y + h - 6} ${f1(a)},${y + h} L${f1(x + r)},${y + h} a${r},${r} 0 0 1 0,${-h} Z"/>`
+        + `<rect x="${f1(x + r)}" y="${y + 4}" width="${f1(Math.max(0, a - x - r - 4))}" height="3.2" rx="1.6" fill="#fff" opacity=".5"/><rect x="${f1(b + 4)}" y="${y + 4}" width="${f1(Math.max(0, x + len - r - b - 4))}" height="3.2" rx="1.6" fill="#fff" opacity=".5"/>`;
     };
     const capL = (x) => `<path d="M${f1(x + cap)},${y} L${f1(x + r)},${y} a${r},${r} 0 0 0 0,${h} L${f1(x + cap)},${y + h} Z"/>`;
     const capR = (x) => `<path d="M${f1(x - cap)},${y} L${f1(x - r)},${y} a${r},${r} 0 0 1 0,${h} L${f1(x - cap)},${y + h} Z"/>`;
     const bx = x0 + la + gap, oldCen = 0.15, lct = (135.85 - 113.6) / 128.59;
     stage.innerHTML = `
       <div class="seg3 two" role="group" aria-label="${t.group}"><button type="button" aria-pressed="true"><b>${t.apes[0]}</b><small>${t.apes[1]}</small></button><button type="button" aria-pressed="false"><b>${t.human[0]}</b><small>${t.human[1]}</small></button></div>
-      <svg class="fu" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(t.title)}">
-        <defs><linearGradient id="fuGrad" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#8FD6E8"/><stop offset="1" stop-color="#2A77A0"/></linearGradient></defs>
+      <svg class="fu fx-scene" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(t.title)}">
+        ${sh(W / 2, y + h + 9, W * 0.44, 6, 0.2)}
         <g class="fu-a">
           ${rod(x0, la, 93.9 / 113.6, "fu-rod")}
           <g class="fu-tel">${capL(x0)}</g><g class="fu-tel fu-in">${capR(x0 + la)}</g>
           <text class="fu-name" x="${f1(x0 + la / 2)}" y="${y - 12}" text-anchor="middle">2A</text>
-          <text class="vz-lab" x="${f1(x0 + la * 93.9 / 113.6)}" y="${y + h + 17}" text-anchor="middle">${t.cen}</text>
+          <text class="vz-lab" x="${f1(x0 + la * 93.9 / 113.6)}" y="${y + h + 22}" text-anchor="middle">${t.cen}</text>
         </g>
         <g class="fu-b">
-          ${rod(bx, lb, oldCen, "fu-rod fu-rod-b")}
-          <rect class="fu-smooth" x="${f1(bx + lb * oldCen - 10)}" y="${y}" width="20" height="${h}" fill="url(#fuGrad)"/>
+          ${rod(bx, lb, oldCen, "fu-rod")}
+          <rect class="fu-smooth" x="${f1(bx + lb * oldCen - 10)}" y="${y}" width="20" height="${h}" fill="url(#fx-tube)"/>
           <g class="fu-tel fu-in">${capL(bx)}</g><g class="fu-tel">${capR(bx + lb)}</g>
           <text class="fu-name" x="${f1(bx + lb / 2)}" y="${y - 12}" text-anchor="middle">2B</text>
-          <g class="fu-lct"><line x1="${f1(bx + lb * lct)}" x2="${f1(bx + lb * lct)}" y1="${y - 6}" y2="${y + h + 4}" stroke="${PEACH}" stroke-width="2"/><circle cx="${f1(bx + lb * lct)}" cy="${y + h / 2}" r="5" fill="${PEACH}" stroke="${NAVY}" stroke-width="1.8"/><text x="${f1(bx + lb * lct + 8)}" y="${y - 10}" style="font-family:var(--font-head);font-style:italic;font-weight:700;font-size:13px" fill="#B4541A">LCT</text></g>
+          <g class="fu-lct"><line x1="${f1(bx + lb * lct)}" x2="${f1(bx + lb * lct)}" y1="${y - 6}" y2="${y + h + 4}" stroke="${PEACH}" stroke-width="2"/>${ball(bx + lb * lct, y + h / 2, 6, "fx-ball-peach")}<text x="${f1(bx + lb * lct + 9)}" y="${y - 10}" style="font-family:var(--font-head);font-style:italic;font-weight:700;font-size:13px" fill="#B4541A">LCT</text></g>
         </g>
-        <g class="fu-join"><rect x="${f1(W / 2 - r - 2)}" y="${y}" width="${f1(2 * r + 4)}" height="${h}" fill="url(#fuGrad)"/><path d="M${f1(W / 2 - r - 2)},${y} h${f1(2 * r + 4)} M${f1(W / 2 - r - 2)},${y + h} h${f1(2 * r + 4)}" stroke="rgba(11,37,50,.3)" stroke-width="1" fill="none"/><rect x="${f1(W / 2 - 3)}" y="${y}" width="6" height="${h}" fill="${PEACH}" stroke="#B95A1B" stroke-width="1"/></g>
-        <text class="fu-h2" x="${W / 2}" y="${y - 26}" text-anchor="middle">${t.hum2}</text>
+        <g class="fu-join"><rect x="${f1(W / 2 - r - 2)}" y="${y}" width="${f1(2 * r + 4)}" height="${h}" fill="url(#fx-tube)"/><path d="M${f1(W / 2 - r - 2)},${y} h${f1(2 * r + 4)} M${f1(W / 2 - r - 2)},${y + h} h${f1(2 * r + 4)}" stroke="rgba(11,37,50,.28)" stroke-width="1" fill="none"/><rect x="${f1(W / 2 - r - 2)}" y="${y + 4}" width="${f1(2 * r + 4)}" height="3.2" fill="#fff" opacity=".5"/><rect x="${f1(W / 2 - 3)}" y="${y}" width="6" height="${h}" fill="url(#fx-tube-peach)" stroke="#B95A1B" stroke-width="1"/></g>
+        <text class="fu-h2" x="${W / 2}" y="${y - 28}" text-anchor="middle">${t.hum2}</text>
       </svg>
       <ul class="fu-leg"><li><i class="k-tel"></i>${t.tel}</li><li class="fu-only-h"><i class="k-scar"></i>${t.scar}</li><li class="fu-only-h"><i class="k-old"></i>${t.old}</li></ul>`;
-    const svg = stage.querySelector(".fu");
-    svg.style.setProperty("--shift", f1(gap / 2) + "px");
+    stage.querySelector(".fu").style.setProperty("--shift", f1(gap / 2) + "px");
     const set = (i) => stage.classList.toggle("is-human", i === 1);
     const pick = seg(stage, ".seg3 button", set);
     set(0);
@@ -282,35 +339,47 @@
     return () => clearTimeout(timer);
   }
 
-  /* ---------- 2б. Лактаза: де варіант поширений ---------- */
+  /* ---------- 2б. Лактаза: скляні склянки ---------- */
   function lactase(stage, t, lang) {
     const DATA = [
       [[92.9, 99, 73.7], [90.1, 91, 72.0], [85.9, 99, 59.1], [68.2, 107, 45.8], [15.9, 107, 8.9]],
       [[69.4, 503, 50.8], [36.9, 347, 21.6], [20.9, 489, 11.3], [4.8, 661, 2.7], [0, 504, 0]]
     ];
+    const xl = (y) => 5 + (y - 10) / 86 * 7;
+    const glass = `<svg viewBox="0 0 60 104" aria-hidden="true">
+        <ellipse cx="30" cy="100" rx="20" ry="3.4" fill="#04121A" opacity=".5"/>
+        <path d="M5,10 L12,96 A18,4 0 0 0 48,96 L55,10 Z" fill="rgba(255,255,255,.1)"/>
+        <path class="lc-m" fill="url(#fx-milk)"/><ellipse class="lc-s" cx="30" ry="4" fill="#FFFFFF"/>
+        <path class="lc-rim" d="M5,10 L12,96 A18,4 0 0 0 48,96 L55,10"/><ellipse class="lc-rim" cx="30" cy="10" rx="25" ry="5"/>
+        <path d="M11,20 L16,86" stroke="#fff" stroke-width="2.6" opacity=".4" stroke-linecap="round"/>
+      </svg>`;
     stage.innerHTML = `
       <div class="seg3 two" role="group" aria-label="${t.group}">${t.tabs.map((x, i) => `<button type="button" aria-pressed="${i === 0}"><b>${x}</b></button>`).join("")}</div>
-      <div class="lc-panel"><div class="lc-row">${[0, 1, 2, 3, 4].map((i) => `<button type="button" class="lc-item" data-i="${i}"><b class="lc-val">0%</b><span class="lc-glass"><span class="lc-in"><span class="lc-milk"></span></span></span><span class="lc-name"></span></button>`).join("")}</div></div>
+      <div class="lc-panel"><div class="lc-row">${[0, 1, 2, 3, 4].map((i) => `<button type="button" class="lc-item" data-i="${i}"><b class="lc-val">0%</b>${glass}<span class="lc-name"></span></button>`).join("")}</div></div>
       <p class="viz-read" aria-live="polite"></p>
       <p class="viz-note lc-note" hidden>${t.note}</p>`;
     const items = Array.from(stage.querySelectorAll(".lc-item")), read = stage.querySelector(".viz-read"), note = stage.querySelector(".lc-note");
-    let tab = 0, sel = 0, stops = [];
+    const curP = [0, 0, 0, 0, 0];
+    let tab = 0, stops = [];
     const names = () => (tab === 0 ? t.eu : t.world);
-    const show = (i) => { sel = i; items.forEach((el, k) => el.classList.toggle("on", k === i)); const d = DATA[tab][i]; read.textContent = t.detail(names()[i], nf(d[1], 0, lang), nf(d[2], 0, lang)); };
+    const pour = (el, p) => {
+      const yL = 96 - (p / 100) * 80, l = xl(yL), r = 60 - l, s = el.querySelector(".lc-s");
+      el.querySelector(".lc-m").setAttribute("d", `M${f1(l)},${f1(yL)} L12,96 A18,4 0 0 0 48,96 L${f1(r)},${f1(yL)} Z`);
+      s.setAttribute("cy", f1(yL)); s.setAttribute("rx", f1((r - l) / 2)); s.setAttribute("opacity", p < 0.5 ? 0 : 1);
+      el.querySelector(".lc-val").textContent = Math.round(p) + "%";
+    };
+    const show = (i) => { items.forEach((el, k) => el.classList.toggle("on", k === i)); const d = DATA[tab][i]; read.textContent = t.detail(names()[i], nf(d[1], 0, lang), nf(d[2], 0, lang)); };
     const set = (k) => {
       tab = k; stops.forEach((s) => s()); stops = [];
       items.forEach((el, i) => {
-        const d = DATA[k][i], val = el.querySelector(".lc-val");
         el.querySelector(".lc-name").textContent = names()[i];
-        el.querySelector(".lc-milk").style.height = d[0] + "%";
-        el.style.setProperty("--i", i);
-        stops.push(tween(parseFloat(val.textContent) || 0, d[0], 900, (v) => { val.textContent = Math.round(v) + "%"; }));
+        stops.push(tween(curP[i], DATA[k][i][0], 900 + i * 80, (v) => { curP[i] = v; pour(el, v); }));
       });
       note.hidden = k !== 1;
       show(0);
     };
     seg(stage, ".seg3 button", set);
-    items.forEach((el, i) => el.addEventListener("click", () => show(i)));
+    items.forEach((el, i) => { pour(el, 0); el.addEventListener("click", () => show(i)); });
     const timer = setTimeout(() => set(0), 60);
     return () => { clearTimeout(timer); stops.forEach((s) => s()); };
   }
@@ -318,16 +387,16 @@
   /* ---------- 3. PPARG: програма профілактики діабету ---------- */
   function dpp(stage, t, lang, W) {
     const RATE = [11.0, 7.8, 4.8], CASES = [11, 8, 5], CUT = ["", "−31%", "−58%"];
-    const cols = W >= 480 ? 25 : 20, rows = 100 / cols, cw = W / cols, ch = Math.min(26, cw * 1.25), sc = Math.min(1, cw / 20);
+    const cols = W >= 480 ? 25 : 20, rows = 100 / cols, cw = W / cols, ch = Math.min(28, cw * 1.3), sc = Math.min(1.05, cw / 19);
     let people = "";
     for (let i = 0; i < 100; i++) {
       const cx = (i % cols) * cw + cw / 2, cy = Math.floor(i / cols) * ch + ch / 2;
-      people += `<g class="dp-p" style="--i:${i}" transform="translate(${f1(cx)} ${f1(cy)}) scale(${f1(sc * 10) / 10})"><circle cy="-6" r="3.6"/><path d="M-5.4,8 v-3.6 a5.4,5.4 0 0 1 10.8,0 V8 Z"/></g>`;
+      people += `<g class="dp-p" style="--i:${i}" transform="translate(${f1(cx)} ${f1(cy)}) scale(${Math.round(sc * 100) / 100})"><ellipse cx="0" cy="9.4" rx="6" ry="1.6" fill="${NAVY}" opacity=".14"/><path d="M-5.6,8.6 v-3.4 a5.6,5.6 0 0 1 11.2,0 V8.6 Z"/><circle cy="-6" r="4"/></g>`;
     }
     stage.innerHTML = `
       <div class="seg3" role="group" aria-label="${t.group}">${t.arms.map((a, i) => `<button type="button" aria-pressed="${i === 0}"><b>${a}</b></button>`).join("")}</div>
       <div class="dp-read"><b class="dp-num">11,0</b><span>${t.unit}</span><em class="dp-cut" hidden></em></div>
-      <svg class="dp" width="${W}" height="${f1(rows * ch)}" viewBox="0 0 ${W} ${f1(rows * ch)}" role="img" aria-label="${esc(t.unit)}">${people}</svg>
+      <svg class="dp fx-scene" width="${W}" height="${f1(rows * ch)}" viewBox="0 0 ${W} ${f1(rows * ch)}" role="img" aria-label="${esc(t.unit)}">${people}</svg>
       <p class="viz-read" aria-live="polite"></p>
       <div class="dp-scale"><h4>${t.scale}</h4>
         <div class="dp-row"><span class="dp-lab">${t.gene}<b>${t.geneV}</b></span><div class="dp-track"><i class="dp-pos" style="--w:25"></i></div></div>
@@ -350,52 +419,57 @@
 
   /* ---------- 4. CLOCK: доба всередині клітини ---------- */
   function clock(stage, t, lang, W) {
-    const wide = W >= 520, D = wide ? 270 : Math.min(W, 300), c = D / 2, R = c - 22, TAU = Math.PI * 2;
+    const wide = W >= 520, D = wide ? 270 : Math.min(W, 300), c = D / 2, R = c - 24, TAU = Math.PI * 2;
     const act = (h) => 0.5 + 0.5 * Math.cos(TAU * (h - 12) / 24), prot = (h) => 0.5 + 0.5 * Math.cos(TAU * (h - 19) / 24);
     const ang = (h) => TAU * (h - 12) / 24 - Math.PI / 2;          // 12:00 угорі, 00:00 унизу
     const pt = (h, r) => [c + Math.cos(ang(h)) * r, c + Math.sin(ang(h)) * r];
     const polar = (fn, r0, amp) => { let d = ""; for (let i = 0; i <= 96; i++) { const h = i / 4, p = pt(h, r0 + amp * fn(h)); d += (i ? "L" : "M") + f1(p[0]) + "," + f1(p[1]); } return d + "Z"; };
-    const rA = R * 0.56, aA = R * 0.3, rP = R * 0.2, aP = R * 0.3;
+    const rA = R * 0.52, aA = R * 0.3, rP = R * 0.18, aP = R * 0.3;
     let ring = "";
     for (let i = 0; i < 48; i++) {
-      const h0 = i / 2, h1 = h0 + 0.5, k = 0.5 + 0.5 * Math.cos(TAU * (h0 + 0.25 - 12) / 24);
-      const mix = (a, b) => Math.round(a + (b - a) * k), col = `rgb(${mix(13, 255)},${mix(45, 214)},${mix(64, 150)})`;
-      const p0 = pt(h0, R), p1 = pt(h1 + 0.02, R);
-      ring += `<path d="M${f1(p0[0])},${f1(p0[1])} A${R},${R} 0 0 1 ${f1(p1[0])},${f1(p1[1])}" stroke="${col}" stroke-width="14" fill="none"/>`;
+      const h0 = i / 2, k = 0.5 + 0.5 * Math.cos(TAU * (h0 + 0.25 - 12) / 24);
+      const mix = (a, b) => Math.round(a + (b - a) * k), col = `rgb(${mix(13, 255)},${mix(45, 206)},${mix(64, 140)})`;
+      const p0 = pt(h0, R), p1 = pt(h0 + 0.52, R);
+      ring += `<path d="M${f1(p0[0])},${f1(p0[1])} A${R},${R} 0 0 1 ${f1(p1[0])},${f1(p1[1])}" stroke="${col}" stroke-width="15" fill="none"/>`;
     }
     let marks = "";
-    [0, 6, 12, 18].forEach((h) => { const p = pt(h, R + 15); marks += `<text class="ck-h" x="${f1(p[0])}" y="${f1(p[1] + 4)}" text-anchor="middle">${String(h).padStart(2, "0")}</text>`; });
-    for (let h = 0; h < 24; h++) { const a = pt(h, R - 10), b = pt(h, R - (h % 6 === 0 ? 17 : 13)); marks += `<line x1="${f1(a[0])}" y1="${f1(a[1])}" x2="${f1(b[0])}" y2="${f1(b[1])}" stroke="rgba(11,37,50,.3)" stroke-width="${h % 6 === 0 ? 1.6 : 1}"/>`; }
+    [0, 6, 12, 18].forEach((h) => { const p = pt(h, R + 18); marks += `<text class="ck-h" x="${f1(p[0])}" y="${f1(p[1] + 4)}" text-anchor="middle">${String(h).padStart(2, "0")}</text>`; });
+    for (let h = 0; h < 24; h++) { const a = pt(h, R - 11), b = pt(h, R - (h % 6 === 0 ? 18 : 14)); marks += `<line x1="${f1(a[0])}" y1="${f1(a[1])}" x2="${f1(b[0])}" y2="${f1(b[1])}" stroke="rgba(11,37,50,.3)" stroke-width="${h % 6 === 0 ? 1.6 : 1}"/>`; }
     stage.innerHTML = `
       <div class="ck-wrap${wide ? " wide" : ""}">
         <svg class="ck" width="${D}" height="${D}" viewBox="0 0 ${D} ${D}" role="slider" tabindex="0" aria-label="${t.hand}" aria-valuemin="0" aria-valuemax="24" aria-valuenow="8">
-          ${ring}${marks}
-          <path d="${polar(act, rA, aA)}" fill="rgba(30,101,140,.16)" stroke="${LINK}" stroke-width="2"/>
-          <path d="${polar(prot, rP, aP)}" fill="rgba(255,157,69,.3)" stroke="#E07B2A" stroke-width="2"/>
-          <line class="ck-hand" x1="${c}" y1="${c}" x2="${c}" y2="${c}" stroke="${NAVY}" stroke-width="2.4" stroke-linecap="round"/>
-          <circle class="ck-da" r="5.5" fill="${LINK}" stroke="#fff" stroke-width="2"/>
-          <circle class="ck-dp" r="5.5" fill="#E07B2A" stroke="#fff" stroke-width="2"/>
-          <circle class="ck-knob" r="11" fill="#fff" stroke="${NAVY}" stroke-width="2.4"/>
-          <circle cx="${c}" cy="${c}" r="4" fill="${NAVY}"/>
+          ${sh(c, D - 2, R * 0.82, 9, 0.28)}
+          <circle cx="${c}" cy="${c + 3}" r="${R + 9}" fill="#9DBBCB"/>
+          <circle cx="${c}" cy="${c}" r="${R + 9}" fill="url(#fx-dome)" stroke="rgba(11,37,50,.16)"/>
+          ${ring}
+          <circle cx="${c}" cy="${c}" r="${R - 8}" fill="url(#fx-dome)"/><circle cx="${c}" cy="${c}" r="${R - 8}" fill="none" stroke="rgba(11,37,50,.14)" stroke-width="3"/>
+          ${marks}
+          <path d="${polar(act, rA, aA)}" fill="rgba(30,101,140,.18)" stroke="${LINK}" stroke-width="2.2"/>
+          <path d="${polar(prot, rP, aP)}" fill="rgba(255,157,69,.34)" stroke="#E07B2A" stroke-width="2.2"/>
+          <line class="ck-hs" x1="${c + 2}" y1="${c + 3}" x2="${c}" y2="${c}" stroke="${NAVY}" stroke-width="3" stroke-linecap="round" opacity=".18"/>
+          <line class="ck-hand" x1="${c}" y1="${c}" x2="${c}" y2="${c}" stroke="${NAVY}" stroke-width="2.6" stroke-linecap="round"/>
+          ${ball(0, 0, 6.5, "fx-ball", "ck-da")}${ball(0, 0, 6.5, "fx-ball-peach", "ck-dp")}
+          <circle class="ck-ks" r="12" fill="${NAVY}" opacity=".2"/><circle class="ck-knob" r="12" fill="url(#fx-ball-white)" stroke="${NAVY}" stroke-width="2.2"/>
+          ${ball(c, c, 6, "fx-ball")}
         </svg>
         <div class="ck-side">
           <div class="ck-time"><b>08:00</b><span></span></div>
           <p class="viz-read" aria-live="polite"></p>
           <div class="ck-bars">
-            <div><span><i style="background:${LINK}"></i>${t.a}</span><div class="ck-track"><i class="ck-ba" style="background:${LINK}"></i></div></div>
-            <div><span><i style="background:#E07B2A"></i>${t.p}</span><div class="ck-track"><i class="ck-bp" style="background:#E07B2A"></i></div></div>
+            <div><span><i style="background:${LINK}"></i>${t.a}</span><div class="ck-track"><i class="ck-ba"></i></div></div>
+            <div><span><i style="background:#E07B2A"></i>${t.p}</span><div class="ck-track"><i class="ck-bp"></i></div></div>
           </div>
           <button type="button" class="viz-btn ck-play"><span class="ic">${playIcon}</span><span class="tx">${t.play}</span></button>
         </div>
       </div>
       ${tiles(t.tiles)}`;
-    const svg = stage.querySelector(".ck"), hand = stage.querySelector(".ck-hand"), knob = stage.querySelector(".ck-knob"), da = stage.querySelector(".ck-da"), dp = stage.querySelector(".ck-dp");
+    const svg = stage.querySelector(".ck"), hand = stage.querySelector(".ck-hand"), hs = stage.querySelector(".ck-hs"), knob = stage.querySelector(".ck-knob"), ks = stage.querySelector(".ck-ks"), da = stage.querySelector(".ck-da"), dp = stage.querySelector(".ck-dp");
     const time = stage.querySelector(".ck-time b"), phName = stage.querySelector(".ck-time span"), read = stage.querySelector(".viz-read"), ba = stage.querySelector(".ck-ba"), bp = stage.querySelector(".ck-bp"), btn = stage.querySelector(".ck-play");
     let h = 8, playing = false, raf = 0, last = 0, lastPh = -1;
     const draw = () => {
       const k = pt(h, R), a = pt(h, rA + aA * act(h)), p = pt(h, rP + aP * prot(h));
-      hand.setAttribute("x2", f1(k[0])); hand.setAttribute("y2", f1(k[1]));
-      knob.setAttribute("cx", f1(k[0])); knob.setAttribute("cy", f1(k[1]));
+      hand.setAttribute("x2", f1(k[0])); hand.setAttribute("y2", f1(k[1])); hs.setAttribute("x2", f1(k[0] + 2)); hs.setAttribute("y2", f1(k[1] + 3));
+      knob.setAttribute("cx", f1(k[0])); knob.setAttribute("cy", f1(k[1])); ks.setAttribute("cx", f1(k[0] + 1.5)); ks.setAttribute("cy", f1(k[1] + 3));
       da.setAttribute("cx", f1(a[0])); da.setAttribute("cy", f1(a[1])); dp.setAttribute("cx", f1(p[0])); dp.setAttribute("cy", f1(p[1]));
       const mins = Math.round(h * 60) % 1440;
       time.textContent = String(Math.floor(mins / 60)).padStart(2, "0") + ":" + String(mins % 60).padStart(2, "0");
@@ -404,8 +478,8 @@
       if (ph !== lastPh) { lastPh = ph; phName.textContent = t.ph[ph][0]; read.textContent = t.ph[ph][1]; svg.setAttribute("aria-valuetext", time.textContent + ", " + t.ph[ph][0]); }
       svg.setAttribute("aria-valuenow", f1(h));
     };
-    const setPlay = (on) => { playing = on; btn.classList.toggle("is-on", on); btn.querySelector(".tx").textContent = on ? t.pause : t.play; last = 0; cancelAnimationFrame(raf); if (on) raf = requestAnimationFrame(frame); };
     const frame = (ts) => { raf = requestAnimationFrame(frame); const dt = Math.min(60, ts - (last || ts)); last = ts; h = (h + dt * 24 / 14000) % 24; draw(); };
+    const setPlay = (on) => { playing = on; btn.classList.toggle("is-on", on); btn.querySelector(".tx").textContent = on ? t.pause : t.play; last = 0; cancelAnimationFrame(raf); if (on) raf = requestAnimationFrame(frame); };
     const fromEvent = (e) => { const r = svg.getBoundingClientRect(), x = e.clientX - r.left - r.width / 2, y = e.clientY - r.top - r.height / 2; h = ((Math.atan2(y, x) + Math.PI / 2) / TAU * 24 + 12 + 48) % 24; draw(); };
     let drag = false;
     svg.addEventListener("pointerdown", (e) => { drag = true; setPlay(false); try { svg.setPointerCapture(e.pointerId); } catch (x) { /* старі браузери */ } fromEvent(e); e.preventDefault(); });
@@ -421,21 +495,22 @@
 
   /* ---------- 5. TERT: лічильник поділів ---------- */
   function telomere(stage, t, lang, W) {
-    const big = W >= 480, NB = 10, MAX = 50, bw = clamp((W - 150) / (2 * NB) - 2, 5, 15), step = bw + 2, capW = NB * step, y = 34, h = big ? 42 : 30, r = h / 2, H = y + h + 40;
+    const big = W >= 480, NB = 10, MAX = 50, bw = clamp((W - 150) / (2 * NB) - 2, 5, 15), step = bw + 2, capW = NB * step, y = 36, h = big ? 42 : 30, r = h / 2, H = y + h + 44;
     const bodyX = 6 + capW + 4, bodyW = W - 2 * bodyX, xc = bodyX + bodyW * 0.27, LET = "TTAGGG";
     let beads = "";
     for (let side = 0; side < 2; side++) for (let i = 0; i < NB; i++) {
       const x = side === 0 ? bodyX - 4 - (i + 1) * step + 2 : bodyX + bodyW + 4 + i * step;
-      beads += `<g class="tl-bead" data-k="${i}" style="--i:${i}"><rect x="${f1(x)}" y="${y + 2}" width="${f1(bw)}" height="${h - 4}" rx="${f1(Math.min(4, bw / 2))}"/>${bw >= 8.5 ? `<text x="${f1(x + bw / 2)}" y="${f1(y + h / 2 + (big ? 4.5 : 3.5))}" text-anchor="middle" font-size="${big ? 11 : 8.5}">${LET[(side === 0 ? NB - 1 - i : i) % 6]}</text>` : ""}</g>`;
+      beads += `<g class="tl-bead" data-k="${i}"><rect x="${f1(x)}" y="${y + 2}" width="${f1(bw)}" height="${h - 4}" rx="${f1(Math.min(3, bw / 2))}"/><rect x="${f1(x + 1)}" y="${y + 5}" width="${f1(bw - 2)}" height="2.6" rx="1.3" fill="#fff" opacity=".55"/>${bw >= 8.5 ? `<text x="${f1(x + bw / 2)}" y="${f1(y + h / 2 + (big ? 5 : 4))}" text-anchor="middle" font-size="${big ? 11 : 8.5}">${LET[(side === 0 ? NB - 1 - i : i) % 6]}</text>` : ""}</g>`;
     }
     const a = Math.max(bodyX + r, xc - 9), b = Math.min(bodyX + bodyW - r, xc + 9);
     stage.innerHTML = `
-      <svg class="tl" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(t.title)}">
-        <defs><linearGradient id="tlGrad" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#8FD6E8"/><stop offset="1" stop-color="#2A77A0"/></linearGradient></defs>
+      <svg class="tl fx-scene" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(t.title)}">
+        ${sh(W / 2, y + h + 9, W * 0.42, 6, 0.22)}
         <path class="tl-body" d="M${f1(bodyX + r)},${y} L${f1(a)},${y} Q${f1(xc)},${y + 7} ${f1(b)},${y} L${f1(bodyX + bodyW - r)},${y} a${r},${r} 0 0 1 0,${h} L${f1(b)},${y + h} Q${f1(xc)},${y + h - 7} ${f1(a)},${y + h} L${f1(bodyX + r)},${y + h} a${r},${r} 0 0 1 0,${-h} Z"/>
+        <rect x="${f1(b + 6)}" y="${y + 5}" width="${f1(Math.max(0, bodyX + bodyW - r - b - 6))}" height="4" rx="2" fill="#fff" opacity=".5"/>
         ${beads}
-        <g class="tl-enz"><circle cx="${f1(bodyX - 4 - capW / 2)}" cy="${y - 14}" r="8"/><circle cx="${f1(bodyX + bodyW + 4 + capW / 2)}" cy="${y - 14}" r="8"/><path d="M${f1(bodyX - 4 - capW / 2)},${y - 6} v6 M${f1(bodyX + bodyW + 4 + capW / 2)},${y - 6} v6"/></g>
-        <text class="vz-lab tl-state" x="${W / 2}" y="${y + h + 26}" text-anchor="middle"></text>
+        <g class="tl-enz"><circle cx="${f1(bodyX - 4 - capW / 2)}" cy="${y - 16}" r="9"/><circle cx="${f1(bodyX + bodyW + 4 + capW / 2)}" cy="${y - 16}" r="9"/><path d="M${f1(bodyX - 4 - capW / 2)},${y - 7} v7 M${f1(bodyX + bodyW + 4 + capW / 2)},${y - 7} v7"/></g>
+        <text class="vz-lab tl-state" x="${W / 2}" y="${y + h + 32}" text-anchor="middle"></text>
       </svg>
       <div class="tl-ctl">
         <label class="tl-range"><span>${t.div}: <b class="tl-n">0</b></span><input type="range" min="0" max="${MAX}" step="1" value="0" aria-label="${t.div}"></label>
@@ -454,7 +529,6 @@
       stage.classList.toggle("is-on", on); stage.classList.toggle("is-dead", dead);
       state.textContent = on ? t.kept : d === 0 ? t.full : t.lost(nf(d / 10, 1, lang));
       read.textContent = on ? t.on : dead ? t.end : "";
-      range.style.setProperty("--p", (d / MAX * 100) + "%");
     };
     const setPlay = (p) => {
       playing = p; clearInterval(timer); btn.classList.toggle("is-on", p);
@@ -469,23 +543,108 @@
     return () => { clearTimeout(auto); clearInterval(timer); };
   }
 
-  const RENDER = { folate, fusion, lactase, dpp, clock, telomere };
+  /* ---------- Шаблон: об’ємні стовпчики (items: [{k, v, t, n}]) ---------- */
+  function bars3d(stage, t, lang, W) {
+    const n = t.items.length, H = 226, base = 166, maxH = 108, slot = W / n, bw = Math.min(76, slot * 0.46), ry = bw * 0.17, vmax = Math.max.apply(null, t.items.map((x) => x.v));
+    let g = sh(W / 2, base + 14, W * 0.44, 9, 0.1);
+    t.items.forEach((it, i) => {
+      const cx = slot * i + slot / 2, h = Math.max(7, it.v / vmax * maxH), x = cx - bw / 2, y = base - h, ks = String(it.k).split("|");
+      g += `<g class="b3" data-i="${i}" style="--i:${i}" tabindex="0" role="button" aria-label="${esc(plain(ks.join(" ") + ": " + it.t))}">
+        ${sh(cx, base + 5, bw * 0.62, 6, 0.24)}
+        <g class="b3-g"><path class="b3-side" d="M${f1(x)},${f1(y)} V${base} A${f1(bw / 2)},${f1(ry)} 0 0 0 ${f1(x + bw)},${base} V${f1(y)} Z"/><ellipse class="b3-top" cx="${f1(cx)}" cy="${f1(y)}" rx="${f1(bw / 2)}" ry="${f1(ry)}"/><rect x="${f1(x + bw * 0.16)}" y="${f1(y + ry)}" width="${f1(bw * 0.09)}" height="${f1(Math.max(0, h - ry * 1.4))}" rx="2" fill="#fff" opacity=".35"/></g>
+        <text class="b3-v" x="${f1(cx)}" y="${f1(y - ry - 8)}">${it.t}</text>
+        ${ks.map((s, j) => `<text class="b3-k" x="${f1(cx)}" y="${f1(base + ry + 22 + j * 14)}">${s}</text>`).join("")}
+        <rect x="${f1(cx - slot / 2)}" y="0" width="${f1(slot)}" height="${H}" fill="transparent"/></g>`;
+    });
+    stage.innerHTML = `<svg class="fx-scene" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="group" aria-label="${esc(plain(t.title))}">${g}</svg><p class="viz-read" aria-live="polite"></p>`;
+    const bars = Array.from(stage.querySelectorAll(".b3")), read = stage.querySelector(".viz-read");
+    const pick = (i) => { bars.forEach((b, k) => b.classList.toggle("on", k === i)); read.innerHTML = t.items[i].n; };
+    bars.forEach((b, i) => {
+      b.addEventListener("click", () => pick(i));
+      b.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(i); } });
+    });
+    pick(t.pick === undefined ? n - 1 : t.pick);
+    const grow = setTimeout(() => stage.classList.add("is-in"), 80);
+    return () => clearTimeout(grow);
+  }
+
+  /* ---------- Шаблон: частка зі 100 (groups: [{k, s, p, t, l, n}]) ---------- */
+  function share(stage, t, lang, W) {
+    const cols = W >= 480 ? 25 : 20, rows = 100 / cols, cw = W / cols, r = Math.min(9, cw * 0.4), ch = cw * 1.04;
+    let balls = "";
+    for (let i = 0; i < 100; i++) balls += `<circle class="sh-b" style="--i:${i}" cx="${f1((i % cols) * cw + cw / 2)}" cy="${f1(Math.floor(i / cols) * ch + ch / 2)}" r="${f1(r)}"/>`;
+    const ng = t.groups.length;
+    stage.innerHTML = `
+      <div class="seg3${ng === 1 ? " one" : ng === 2 ? " two" : ""}" role="group">${t.groups.map((x, i) => `<button type="button" aria-pressed="${i === 0}"><b>${x.k}</b>${x.s ? `<small>${x.s}</small>` : ""}</button>`).join("")}</div>
+      <div class="sh-read"><b></b><span></span></div>
+      <svg class="fx-scene" width="${W}" height="${f1(rows * ch)}" viewBox="0 0 ${W} ${f1(rows * ch)}" role="img" aria-label="${esc(plain(t.title))}">${balls}</svg>
+      <p class="viz-read" aria-live="polite"></p>`;
+    const all = Array.from(stage.querySelectorAll(".sh-b")), big = stage.querySelector(".sh-read b"), lab = stage.querySelector(".sh-read span"), read = stage.querySelector(".viz-read");
+    const set = (i) => {
+      const x = t.groups[i];
+      all.forEach((b, k) => b.classList.toggle("on", k < Math.round(x.p)));
+      big.textContent = x.t; lab.textContent = x.l; read.innerHTML = x.n;
+    };
+    seg(stage, ".seg3 button", set);
+    set(0);
+    return () => {};
+  }
+
+  /* ---------- Шаблон: два алелі → група крові ---------- */
+  function picker(stage, t) {
+    const AL = ["A", "B", "O"], sel = [0, 2];
+    const row = (i) => `<div class="pk-row"><span>${t.rows[i]}</span><div class="seg3" data-r="${i}" role="group" aria-label="${esc(t.rows[i])}">${AL.map((x, k) => `<button type="button" aria-pressed="${k === sel[i]}"><b>${x}</b></button>`).join("")}</div></div>`;
+    stage.innerHTML = `
+      <div class="pk"><div class="pk-rows">${row(0)}${row(1)}</div>
+        <div class="pk-out"><svg class="fx-scene" width="120" height="136" viewBox="0 0 120 136" role="img">
+          ${sh(60, 126, 34, 7, 0.26)}
+          <path d="M60,6 C60,6 22,54 22,84 a38,38 0 0 0 76,0 C98,54 60,6 60,6 Z" fill="url(#fx-ball-red)"/>
+          <path d="M44,58 C38,70 36,80 38,90" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none" opacity=".45"/>
+          <text class="pk-letter" x="60" y="100"></text></svg><small>${t.out}</small></div></div>
+      <p class="viz-read" aria-live="polite"></p>`;
+    const letter = stage.querySelector(".pk-letter"), read = stage.querySelector(".viz-read"), svg = stage.querySelector("svg");
+    const draw = () => {
+      const s = [AL[sel[0]], AL[sel[1]]], g = s.includes("A") && s.includes("B") ? "AB" : s.includes("A") ? "A" : s.includes("B") ? "B" : "O";
+      letter.textContent = g; svg.setAttribute("aria-label", t.out + ": " + g); read.innerHTML = t.n[g];
+    };
+    [0, 1].forEach((i) => seg(stage, `[data-r="${i}"] button`, (k) => { sel[i] = k; draw(); }));
+    draw();
+    return () => {};
+  }
+
+  /* ---------- Шаблон: картки-перевертні (cards: [{q, a}]) ---------- */
+  function flip(stage, t, lang, W, ui) {
+    stage.innerHTML = `<p class="fc-hint">${ui.flip}</p><div class="fc-row">${t.cards.map((c, i) => `<div class="fc" role="button" tabindex="0" aria-pressed="false"><span class="fc-in"><span class="fc-f"><i>${i + 1}</i><b>${c.q}</b></span><span class="fc-b"><span>${c.a}</span></span></span></div>`).join("")}</div>`;
+    Array.from(stage.querySelectorAll(".fc")).forEach((el) => {
+      const turn = () => el.setAttribute("aria-pressed", String(el.getAttribute("aria-pressed") !== "true"));
+      el.addEventListener("click", (e) => { if (!e.target.closest("a")) turn(); });
+      el.addEventListener("keydown", (e) => { if ((e.key === "Enter" || e.key === " ") && !e.target.closest("a")) { e.preventDefault(); turn(); } });
+    });
+    return () => {};
+  }
+
+  const RENDER = { folate, fusion, lactase, dpp, clock, telomere, bars3d, share, picker, flip };
   /* Позначки {n} у текстах графіка замінюються посиланнями на джерела дня; без обробника вони просто зникають */
   const strip = (s) => s.replace(/\{\d+\}/g, "");
   const deep = (v, f) => typeof v === "string" ? f(v) : Array.isArray(v) ? v.map((x) => deep(x, f)) : v && typeof v === "object" ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, deep(x, f)])) : v;
+  const texts = (v, lang, mark) => deep(v[lang] || v.uk || (TXT[v.id] && (TXT[v.id][lang] || TXT[v.id].uk)), mark || strip);
+
   window.Viz = {
     nf, miniChrom, ideogram,
     has: (id) => !!RENDER[id],
-    /* Розмітка картки графіка; сам графік монтується після вставлення в сторінку */
-    html(id, lang, mark) {
-      const t = deep(TXT[id][lang] || TXT[id].uk, mark || strip);
-      return `<figure class="viz viz-${id}" data-viz="${id}"><h3>${t.title}</h3><p class="sub">${t.sub}</p><div class="viz-stage"></div><figcaption>${t.src}</figcaption></figure>`;
+    /* v: опис графіка з дня ({id, after, uk?, en?}); k: його номер у списку дня */
+    html(v, lang, mark, k) {
+      const t = texts(v, lang, mark);
+      return `<figure class="viz viz-${v.id}" data-viz="${v.id}" data-k="${k || 0}"><h3>${t.title}</h3>${t.sub ? `<p class="sub">${t.sub}</p>` : ""}<div class="viz-stage"></div>${t.src ? `<figcaption>${t.src}</figcaption>` : ""}</figure>`;
     },
-    mount(fig, lang, mark) {
-      const id = fig.dataset.viz, stage = fig.querySelector(".viz-stage"), t = deep(TXT[id][lang] || TXT[id].uk, mark || strip);
-      const W = Math.max(260, Math.floor(stage.clientWidth));
+    mount(fig, lang, mark, v) {
+      defs();
+      const stage = fig.querySelector(".viz-stage"), W = Math.max(260, Math.floor(stage.clientWidth));
       stage.dataset.w = W;
-      return RENDER[id](stage, t, lang, W) || (() => {});
+      stage.className = "viz-stage";
+      const stop = RENDER[v.id](stage, texts(v, lang, mark), lang, W, UI[lang] || UI.uk) || (() => {});
+      const untilt = v.id === "clock" ? () => {} : tilt(stage);
+      return () => { stop(); untilt(); };
     }
   };
 })();
