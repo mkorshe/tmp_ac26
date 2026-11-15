@@ -1,0 +1,59 @@
+/* «23 пари» · практичні 3D-лічильники: келих із напоєм (день 12) і чашки з кофеїном (день 15) */
+.viz-drink .viz-stage, .viz-caffeine .viz-stage { container-type: inline-size; }
+.pr-kind { margin-bottom: 12px; }
+.pr-main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); gap: 16px; align-items: center; }
+
+/* сцена */
+.pr-stage { position: relative; height: 310px; border-radius: 8px; overflow: hidden; touch-action: pan-y; cursor: grab;
+  background: radial-gradient(120% 90% at 50% 18%, #FFFFFF 0%, #EAF4F9 58%, #D3E6F0 100%); border: 1px solid var(--line-2); box-shadow: inset 0 1px 0 #fff, 0 2px 0 rgba(11, 37, 50, .08); }
+.pr-stage:active { cursor: grabbing; }
+.pr-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.pr-floor { position: absolute; left: 50%; bottom: 7%; width: 44%; height: 16px; transform: translateX(-50%); border-radius: 50%; background: rgba(11, 37, 50, .2); filter: blur(7px); }
+.pr-drag { position: absolute; right: 8px; bottom: 6px; font-size: 10.5px; color: var(--muted); pointer-events: none; }
+.pr-stage.no3 { display: none; }
+.pr-stage.pr-wide { height: 220px; margin-bottom: 12px; }
+.pr-wide .pr-floor { width: 70%; bottom: 12%; }
+
+/* керування */
+.pr-range { display: block; }
+.pr-range span { font-size: 13px; color: var(--ink-2); }
+.pr-range b { font-weight: 800; font-size: 16px; color: var(--navy-900); font-variant-numeric: tabular-nums; }
+.pr-range input { display: block; width: 100%; height: 26px; margin: 6px 0 0; accent-color: var(--link); }
+.pr-step { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 13px; color: var(--ink-2); }
+.pr-step span { margin-right: auto; }
+.pr-step b { min-width: 56px; text-align: center; font-weight: 800; font-size: 16px; color: var(--navy-900); font-variant-numeric: tabular-nums; }
+.pr-step button, .pr-c button { width: 30px; height: 30px; border-radius: 6px; color: #fff; font-size: 18px; line-height: 1; background: linear-gradient(180deg, #1D4C66, #133547); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), 0 2px 0 #071A24; transition: background .2s, transform .1s, box-shadow .1s; }
+.pr-step button:hover, .pr-c button:hover { background: linear-gradient(180deg, #2A7BA6, #1E658C); }
+.pr-step button:active, .pr-c button:active { transform: translateY(2px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), 0 0 0 #071A24; }
+
+/* результат */
+.pr-out { margin-top: 14px; padding: 12px 14px; border-radius: 8px; background: var(--ice); border-left: 3px solid var(--peach-500); }
+.pr-g { font-family: var(--font-head); font-weight: 600; font-size: 28px; line-height: 1.1; color: var(--navy-900); font-variant-numeric: tabular-nums; }
+.pr-gl { margin-left: 8px; font-size: 13px; color: var(--ink-2); }
+.pr-units { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 9px; }
+.pr-units i { width: 28px; height: 12px; border-radius: 6px; background: linear-gradient(90deg, var(--peach-500) calc(var(--f) * 100%), rgba(19, 53, 71, .14) 0); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 1px 0 rgba(11, 37, 50, .2); }
+.pr-n { margin-top: 8px; font-size: 13px; line-height: 1.45; color: var(--ink); }
+.pr-well { margin-top: 12px; padding: 11px 14px; border-radius: 8px; background: linear-gradient(180deg, #133547, #0B2532); color: #EAF6FB; font-size: 13.5px; font-weight: 600; line-height: 1.5; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), 0 2px 0 #071A24; }
+.pr-well b { color: #FFC98F; }
+.pr-how { margin-top: 8px; font-size: 12px; line-height: 1.45; color: var(--muted); }
+
+/* чашки */
+.pr-count { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.pr-c { padding: 9px 8px 10px; border-radius: 8px; text-align: center; background: linear-gradient(180deg, #FFFFFF, #F1F8FC); border: 1px solid var(--line-2); box-shadow: inset 0 1px 0 #fff, 0 2px 0 rgba(11, 37, 50, .08); }
+.pr-c > b { display: block; font-weight: 800; font-size: 13.5px; line-height: 1.2; color: var(--navy-900); }
+.pr-c small { display: block; margin-top: 2px; font-size: 11.5px; line-height: 1.3; color: var(--muted); }
+.pr-c { display: flex; flex-direction: column; }
+.pr-c span { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: auto; padding-top: 8px; }
+.pr-c em { min-width: 18px; font-style: normal; font-weight: 800; font-size: 18px; color: var(--navy-900); font-variant-numeric: tabular-nums; }
+.pr-bar { position: relative; height: 14px; margin: 28px 0 0; border-radius: 7px; background: rgba(19, 53, 71, .12); box-shadow: inset 0 1px 2px rgba(11, 37, 50, .2); }
+.pr-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 7px; background: linear-gradient(180deg, #5FB4CC, #1E658C); transition: width .35s var(--ease); }
+.pr-caf.over .pr-fill { background: linear-gradient(180deg, #FFB575, #D9772F); }
+.pr-bar u { position: absolute; top: -6px; bottom: -6px; width: 2px; background: var(--navy-900); text-decoration: none; }
+.pr-bar u em { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); margin-bottom: 2px; font-style: normal; font-size: 11px; font-weight: 700; color: var(--navy-900); white-space: nowrap; }
+.pr-bed { margin-top: 14px; }
+
+@container (max-width: 470px) {
+  .pr-main { grid-template-columns: minmax(0, 1fr); }
+  .pr-stage { height: 270px; }
+  .pr-stage.pr-wide { height: 190px; }
+}

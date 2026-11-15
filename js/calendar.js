@@ -36,6 +36,7 @@
       start: "Старт 1 грудня", inDays: (n) => `через ${n} ${pluralUk(n, ["день", "дні", "днів"])}`, todayLbl: "Сьогодні", cal: "Календар", allOpen: "відкрито",
       preview: "Перегляд:", exitPreview: "Вийти з перегляду дати",
       chromosome: "Хромосома", pair: "Пара", bonusDay: "Бонусний день", bonus: "Бонус", xy: "X і Y", mt: "мтДНК", mtShort: "мт", mtFull: "Мітохондріальна ДНК", mtLower: "мітохондріальна ДНК", chrLower: "хромосома",
+      star: (n) => `Позначити ${n} грудня зірочкою`, unstar: (n) => `Зняти зірочку з ${n} грудня`, starOn: (n) => `${n} грудня позначено зірочкою`, starOff: (n) => `Зірочку з ${n} грудня знято`,
       read: "Читати", shutAria: (n) => `Зачинити віконце ${n} грудня`, insideAria: (n, k, g) => `${n} грудня: ${k}, ${g}. Читати`,
       willOpen: (n) => `Відчиниться ${n} грудня`, closeDoor: "Зачинити віконце", openDoor: "Відчинити віконце",
       kLocked: "Ще зачинено", kOpen: (g) => `Відчинено: ${g}`, kAvail: "Можна відчиняти",
@@ -73,6 +74,7 @@
       start: "Starts 1 December", inDays: (n) => `in ${n} ${n === 1 ? "day" : "days"}`, todayLbl: "Today", cal: "Calendar", allOpen: "all open",
       preview: "Preview:", exitPreview: "Leave date preview",
       chromosome: "Chromosome", pair: "Pair", bonusDay: "Bonus day", bonus: "Bonus", xy: "X and Y", mt: "mtDNA", mtShort: "mt", mtFull: "Mitochondrial DNA", mtLower: "mitochondrial DNA", chrLower: "chromosome",
+      star: (n) => `Star ${n} December`, unstar: (n) => `Remove the star from ${n} December`, starOn: (n) => `${n} December starred`, starOff: (n) => `Star removed from ${n} December`,
       read: "Read", shutAria: (n) => `Close the door for ${n} December`, insideAria: (n, k, g) => `${n} December: ${k}, ${g}. Read`,
       willOpen: (n) => `Opens on ${n} December`, closeDoor: "Close the door", openDoor: "Open the door",
       kLocked: "Still closed", kOpen: (g) => `Opened: ${g}`, kAvail: "Ready to open",
@@ -143,6 +145,11 @@
   let opened = new Set();
   try { opened = new Set((JSON.parse(localStorage.getItem(KEY) || "[]") || []).filter((n) => Number.isInteger(n) && n >= 1 && n <= CFG.last)); } catch (e) { /* приватний режим */ }
   const persist = () => { try { localStorage.setItem(KEY, JSON.stringify([...opened])); } catch (e) { /* приватний режим */ } };
+  /* Зірочки: дні, які читач позначив для себе. Зберігаються окремо від відчинених віконець */
+  let stars = new Set();
+  try { stars = new Set((JSON.parse(localStorage.getItem(CFG.storeKey + ":stars") || "[]") || []).filter((n) => Number.isInteger(n) && n >= 1 && n <= CFG.last)); } catch (e) { /* приватний режим */ }
+  const persistStars = () => { try { localStorage.setItem(CFG.storeKey + ":stars", JSON.stringify([...stars])); } catch (e) { /* приватний режим */ } };
+  const starIcon = `<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5l2 4.1 4.5.6-3.3 3.1.8 4.5L8 11.6l-4 2.2.8-4.5L1.5 6.2 6 5.6z"/></svg>`;
   const state = { open: null, layout: null, kW: 0, kH: 0 };
 
   const dayOf = (n) => DAYS.find((x) => x.d === n);
@@ -167,6 +174,7 @@
     return `<div class="win" style="--i:${i}" data-win="${d.d}">
       <button class="inside" data-read="${d.d}" tabindex="-1"></button>
       <button class="shut" data-shut="${d.d}" tabindex="-1" aria-label="${T.shutAria(d.d)}">×</button>
+      <button class="star" data-star="${d.d}" aria-pressed="false">${starIcon}</button>
       <button class="flap" data-flap="${d.d}">
         <span class="f-chr">${Viz.miniChrom(d, { fill: "#fff", op: 0.36, hero: false })}</span>
         <span class="f-num">${d.d}</span>
@@ -180,7 +188,10 @@
     el.classList.toggle("locked", locked);
     el.classList.toggle("open", open);
     el.classList.toggle("today", n === now.today);
-    const inside = $(".inside", el), shut = $(".shut", el), flap = $(".flap", el);
+    el.classList.toggle("starred", stars.has(n));
+    const inside = $(".inside", el), shut = $(".shut", el), flap = $(".flap", el), star = $(".star", el);
+    star.setAttribute("aria-pressed", String(stars.has(n)));
+    star.setAttribute("aria-label", stars.has(n) ? T.unstar(n) : T.star(n));
     if (locked) inside.innerHTML = "";                       // вміст майбутніх днів у сторінку не потрапляє
     else if (!inside.firstChild) inside.innerHTML = insideHTML(d);
     [inside, shut].forEach((b) => { if (open) b.removeAttribute("tabindex"); else b.setAttribute("tabindex", "-1"); });
@@ -241,7 +252,7 @@
     const c1 = Math.max(y + r, y + h * cf - z), c2 = Math.max(c1, Math.min(yb - r, y + h * cf + z)), yc = (c1 + c2) / 2;
     return `M${f1(x)},${f1(y + r)} a${f1(r)},${f1(r)} 0 0 1 ${f1(w)},0 L${f1(x + w)},${f1(c1)} Q${f1(x + w - p)},${f1(yc)} ${f1(x + w)},${f1(c2)} L${f1(x + w)},${f1(yb - r)} a${f1(r)},${f1(r)} 0 0 1 ${f1(-w)},0 L${f1(x)},${f1(c2)} Q${f1(x + p)},${f1(yc)} ${f1(x)},${f1(c1)} Z`;
   }
-  const kState = (n) => (isLocked(n) ? "locked" : isOpen(n) ? "open" : "avail") + (n === now.today ? " today" : "");
+  const kState = (n) => (isLocked(n) ? "locked" : isOpen(n) ? "open" : "avail") + (n === now.today ? " today" : "") + (stars.has(n) ? " starred" : "");
   const kAria = (d) => `${T.date(d.d)}: ${d.bonus ? T.mtLower : T.chrLower + " " + chrName(d)}. ${isLocked(d.d) ? T.kLocked : isOpen(d.d) ? T.kOpen(L(d.gene)) : T.kAvail}`;
   function renderKaryo() {
     const el = $("#karyo"), W = Math.floor(el.clientWidth), H = Math.floor(el.clientHeight);
@@ -265,6 +276,7 @@
           inner += `<path class="body" d="${kPath(x, base - h, bw, h, cen / len)}"/>`;
         });
       }
+      inner += `<path class="k-star" transform="translate(${f1(cx)},${f1(base - 4.5)}) scale(${slot >= 17 ? 0.62 : 0.5})" d="M0-7l2.1 4.3 4.7.7-3.4 3.3.8 4.7L0 3.8-4.2 6l.8-4.7-3.4-3.3 4.7-.7z"/>`;
       inner += `<text class="k-lab" x="${f1(cx)}" y="${H - 4}" font-size="${fs}">${d.chr === "MT" ? T.mtShort : d.chr2 ? "XY" : d.chr}</text>`;
       g += `<g class="k ${kState(d.d)}" data-k="${d.d}" role="button" tabindex="${d.d === focusDay ? 0 : -1}" aria-label="${kAria(d)}">${inner}</g>`;
     });
@@ -415,7 +427,7 @@
       ? `<div class="prose" style="margin-top:14px"><p>${m(c.intro)}</p></div>${vz("intro")}
           <div class="sect"><h4>${T.role}</h4><div class="prose"><p>${m(c.role)}</p></div></div>${vz("role")}
           <div class="sect"><h4>${T.known}</h4><div class="prose"><p>${m(c.known)}</p></div></div>${vz("known")}
-          <div class="callout"><b>${T.not}</b>${m(c.not)}</div>
+          <div class="callout"><b>${T.not}</b>${m(c.not)}</div>${vz("not")}
           ${tipHTML(d, c, m)}${vz("hook")}
           ${refsHTML(d)}${blogHTML(d)}`
       : `<p class="standfirst" style="margin-top:14px">${m(c.hook)}</p>${vz("role")}${vz("hook")}${refsHTML(d)}${blogHTML(d)}`;
@@ -461,12 +473,14 @@
         <span class="m-day">${T.date(n)}</span>
         <span class="m-sub">${T.wdf[wday(n)]}${T.special[n] ? " · " + T.special[n] : ""}</span>
         <span class="sp"></span>
+        <button class="icon-btn star-btn" id="star" aria-pressed="${stars.has(n)}" aria-label="${stars.has(n) ? T.unstar(n) : T.star(n)}">${starIcon}</button>
         <button class="icon-btn" id="prev" aria-label="${T.prevBtn}" ${idx <= 0 ? "disabled" : ""}><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg></button>
         <button class="icon-btn" id="next" aria-label="${T.nextBtn}" ${idx < 0 || idx >= avail.length - 1 ? "disabled" : ""}><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg></button>
         ${closeBtn()}
       </div>
       <div class="m-body">${cardHTML(d)}<p class="disc">${T.disclaimer}</p></div>`);
     $("#overlay").setAttribute("aria-label", `${T.date(n)}: ${kick(d)}`);
+    $("#star").addEventListener("click", () => toggleStar(n));
     $("#prev").addEventListener("click", () => { if (idx > 0) openCard(avail[idx - 1]); });
     $("#next").addEventListener("click", () => { if (idx >= 0 && idx < avail.length - 1) openCard(avail[idx + 1]); });
     mountIdeo(); mountViz(true); mountTip(); mountMore();
@@ -501,6 +515,16 @@
   }
 
   let toastT;
+  function toggleStar(n) {
+    if (stars.has(n)) stars.delete(n); else stars.add(n);
+    persistStars();
+    const w = winEl(n);
+    if (w) paintWin(w);
+    paintKaryo();
+    const b = $("#star");
+    if (b && state.open === n) { b.setAttribute("aria-pressed", String(stars.has(n))); b.setAttribute("aria-label", stars.has(n) ? T.unstar(n) : T.star(n)); }
+    toast(stars.has(n) ? T.starOn(n) : T.starOff(n));
+  }
   function toast(msg) {
     const t = $("#toast"); t.textContent = msg; t.classList.add("show");
     clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 2600);
@@ -510,7 +534,8 @@
   $("#wins").addEventListener("click", (e) => {
     const q = (s) => e.target.closest(s);
     let el;
-    if ((el = q("[data-flap]"))) { const n = +el.dataset.flap; if (isLocked(n)) refuse(n); else setWin(n, !opened.has(n), true); }
+    if ((el = q("[data-star]"))) toggleStar(+el.dataset.star);
+    else if ((el = q("[data-flap]"))) { const n = +el.dataset.flap; if (isLocked(n)) refuse(n); else setWin(n, !opened.has(n), true); }
     else if ((el = q("[data-shut]"))) { setWin(+el.dataset.shut, false); const f = $(`#wins [data-flap="${el.dataset.shut}"]`); if (f) f.focus({ preventScroll: true }); }
     else if ((el = q("[data-read]"))) openCard(+el.dataset.read);
   });

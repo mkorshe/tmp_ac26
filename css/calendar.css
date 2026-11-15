@@ -372,3 +372,19 @@ img { display: block; max-width: 100%; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   #snow { display: none; }
 }
+
+/* Зірочка: позначка дня, який читач хоче запам’ятати */
+.star { position: absolute; top: clamp(4px, 5cqmin, 9px); right: clamp(4px, 5cqmin, 9px); width: clamp(20px, 17cqmin, 26px); height: clamp(20px, 17cqmin, 26px); display: grid; place-items: center; border-radius: 6px; z-index: 4; color: rgba(255, 255, 255, .5); transition: color .2s, transform .15s, right .25s; }
+.star svg { width: 78%; height: 78%; fill: none; stroke: currentColor; stroke-width: 1.3; stroke-linejoin: round; }
+.star:hover { color: #fff; transform: scale(1.14); }
+.star:focus-visible { outline: 2px solid var(--peach-500); outline-offset: 1px; }
+.win.open .star { right: calc(clamp(4px, 5cqmin, 9px) * 2 + clamp(20px, 17cqmin, 26px)); color: rgba(19, 53, 71, .42); }
+.win.open .star:hover { color: var(--navy-900); }
+.win.starred .star, .win.open.starred .star { color: #FFC94A; }
+.win.starred .star svg { fill: currentColor; stroke: #8A5A00; stroke-width: .9; filter: drop-shadow(0 1px 1px rgba(11, 37, 50, .35)); }
+.star-btn svg { fill: none; stroke: currentColor; stroke-width: 1.3; stroke-linejoin: round; }
+.star-btn[aria-pressed="true"] { background: #FFF6DA; border-color: #E2B33A; color: #C88A00; }
+.star-btn[aria-pressed="true"] svg { fill: #FFC94A; stroke: #8A5A00; stroke-width: .9; }
+.k .k-star { display: none; fill: #FFC94A; stroke: #fff; stroke-width: 1.6; paint-order: stroke; }
+.k.starred .k-star { display: block; }
+@media (max-width: 460px) { .m-head .m-sub { display: none; } }

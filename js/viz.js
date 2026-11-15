@@ -696,10 +696,13 @@
 
   /* Хімічна схема (структурні формули, 3D-моделі, рівняння) живе в js/chem.js */
   const chem = (stage, t, lang, W, ui, v) => window.Chem.render(stage, t, lang, W, v);
-  const RENDER = { folate, fusion, lactase, dpp, clock, telomere, bars3d, share, picker, flip, mech, chem };
+  /* Практичні 3D-лічильники (келих, чашки) живуть у js/practice.js */
+  const drink = (stage, t, lang, W, ui, v) => window.Practice.drink(stage, t, lang, W, v);
+  const caffeine = (stage, t, lang, W, ui, v) => window.Practice.caffeine(stage, t, lang, W, v);
+  const RENDER = { folate, fusion, lactase, dpp, clock, telomere, bars3d, share, picker, flip, mech, chem, drink, caffeine };
   /* Позначки {n} у текстах графіка замінюються посиланнями на джерела дня; без обробника вони просто зникають */
   const strip = (s) => s.replace(/\{\d+\}/g, "");
-  const deep = (v, f) => typeof v === "string" ? f(v) : Array.isArray(v) ? v.map((x) => deep(x, f)) : v && typeof v === "object" ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, deep(x, f)])) : v;
+  const deep = (v, f) => typeof v === "string" ? f(v) : typeof v === "function" ? (...a) => deep(v(...a), f) : Array.isArray(v) ? v.map((x) => deep(x, f)) : v && typeof v === "object" ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, deep(x, f)])) : v;
   const texts = (v, lang, mark) => deep(v[lang] || v.uk || (TXT[v.id] && (TXT[v.id][lang] || TXT[v.id].uk)), mark || strip);
 
   window.Viz = {
