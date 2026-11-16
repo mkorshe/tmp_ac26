@@ -144,11 +144,12 @@
   const KEY = CFG.storeKey + (preview ? ":preview" : "");
   let opened = new Set();
   try { opened = new Set((JSON.parse(localStorage.getItem(KEY) || "[]") || []).filter((n) => Number.isInteger(n) && n >= 1 && n <= CFG.last)); } catch (e) { /* приватний режим */ }
-  const persist = () => { try { localStorage.setItem(KEY, JSON.stringify([...opened])); } catch (e) { /* приватний режим */ } };
+  const TG = window.AdventTG || null;                                  // календар усередині Telegram (js/tg.js)
+  const persist = () => { try { localStorage.setItem(KEY, JSON.stringify([...opened])); } catch (e) { /* приватний режим */ } if (TG && !preview) TG.cloudSave("opened", JSON.stringify([...opened])); };
   /* Зірочки: дні, які читач позначив для себе. Зберігаються окремо від відчинених віконець */
   let stars = new Set();
   try { stars = new Set((JSON.parse(localStorage.getItem(CFG.storeKey + ":stars") || "[]") || []).filter((n) => Number.isInteger(n) && n >= 1 && n <= CFG.last)); } catch (e) { /* приватний режим */ }
-  const persistStars = () => { try { localStorage.setItem(CFG.storeKey + ":stars", JSON.stringify([...stars])); } catch (e) { /* приватний режим */ } };
+  const persistStars = () => { try { localStorage.setItem(CFG.storeKey + ":stars", JSON.stringify([...stars])); } catch (e) { /* приватний режим */ } if (TG) TG.cloudSave("stars", JSON.stringify([...stars])); };
   const starIcon = `<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5l2 4.1 4.5.6-3.3 3.1.8 4.5L8 11.6l-4 2.2.8-4.5L1.5 6.2 6 5.6z"/></svg>`;
   const state = { open: null, layout: null, kW: 0, kH: 0 };
 
@@ -230,6 +231,7 @@
   function setWin(n, open, focus) {
     if (open) opened.add(n); else opened.delete(n);
     persist();
+    if (open && TG) TG.haptic("light");
     const el = winEl(n);
     if (el) paintWin(el);
     paintKaryo(); renderMeta();
@@ -459,6 +461,7 @@
     sheet.className = "sheet" + (narrow ? " narrow" : "");
     sheet.innerHTML = html;
     $("#overlay").classList.add("open");
+    if (TG) TG.back(true);
     $("#close").addEventListener("click", closeModal);
     $(".m-body", sheet).scrollTop = 0;
     $("#close").focus({ preventScroll: true });
@@ -509,6 +512,7 @@
     if (state.open === null) return;
     stopViz();
     $("#overlay").classList.remove("open");
+    if (TG) TG.back(false);
     const back = state.open === "info" ? $("#info") : $(`#wins [data-win="${state.open}"] .inside`);
     state.open = null;
     if (back) back.focus({ preventScroll: true });
@@ -518,6 +522,7 @@
   function toggleStar(n) {
     if (stars.has(n)) stars.delete(n); else stars.add(n);
     persistStars();
+    if (TG) TG.haptic("light");
     const w = winEl(n);
     if (w) paintWin(w);
     paintKaryo();
@@ -658,4 +663,20 @@
   renderKaryo();
   paint();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { state.kW = 0; onResize(); });
+
+  /* ---------- Усередині Telegram ---------- */
+  if (TG && TG.inside) {
+    TG.init({ closeCard: closeModal });
+    // відчинені віконця й зірочки зберігаються в хмарі Telegram, тож вони однакові на всіх пристроях людини
+    if (!preview) TG.cloudLoad(["opened", "stars"], (v) => {
+      const merge = (set, raw) => { let ch = false; try { (JSON.parse(raw || "[]") || []).forEach((n) => { if (Number.isInteger(n) && n >= 1 && n <= CFG.last && !set.has(n)) { set.add(n); ch = true; } }); } catch (e) { /* зіпсований запис ігноруємо */ } return ch; };
+      const a = merge(opened, v.opened), b = merge(stars, v.stars);
+      if (a) persist();
+      if (b) persistStars();
+      if (a || b) paint();
+    });
+    // перехід із нагадування бота: одразу відчиняємо потрібний день
+    const sd = TG.startDay;
+    if (sd && dayOf(sd) && !isLocked(sd)) { setWin(sd, true); setTimeout(() => openCard(sd), 400); }
+  }
 })();
