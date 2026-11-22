@@ -129,7 +129,7 @@
     19: ["фукозилтрансфераза 2", "fucosyltransferase 2", "фермент", "enzyme"],
     20: ["фактор росту й диференціації 5", "growth differentiation factor 5", "сигнальний білок", "signalling protein"],
     21: ["цистатіонін-β-синтаза", "cystathionine β-synthase", "фермент", "enzyme"],
-    22: ["катехол-О-метилтрансфераза", "catechol-O-methyltransferase", "фермент", "enzyme"],
+    22: ["катехол-O-метилтрансфераза", "catechol-O-methyltransferase", "фермент", "enzyme"],
     23: ["рецептор андрогенів", "androgen receptor", "рецептор гормонів", "hormone receptor"],
     24: ["13 білків, 22 транспортні РНК і 2 рибосомні РНК", "13 proteins, 22 transfer RNAs and 2 ribosomal RNAs", "37 генів", "37 genes"]
   };

@@ -35,7 +35,7 @@
         li: ["A new door every day from 1 to 24 December", "A reminder at the time that suits you", "Genetics in plain words, with links to the research"], b: "Open in Telegram",
         n: "Already registered? Open the bot and tap the “Calendar” button." }
       : { k: "Адвент-календар Apixmed Prism", h: "«23 пари» відкривається в Telegram", p: "Зареєструйтеся в боті одним дотиком, і календар відкриється просто в Telegram.",
-        li: ["Нове віконце щодня з 1 по 24 грудня", "Нагадування у зручний для вас час", "Генетика простими словами з посиланнями на дослідження"], b: "Відкрити в Telegram",
+        li: ["Нове віконце щодня від 1 до 24 грудня", "Нагадування у зручний для вас час", "Генетика простими словами з посиланнями на дослідження"], b: "Відкрити в Telegram",
         n: "Уже зареєстровані? Відкрийте бота й натисніть кнопку «Календар»." };
     document.documentElement.classList.add("tg-gate");
     const el = document.createElement("div");

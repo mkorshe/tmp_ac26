@@ -22,7 +22,7 @@ window.ADVENT_GENES = {
   "en": "enzyme that activates and inactivates thyroid hormones by removing iodine"
  },
  "PCSK9": {
-  "uk": "білок, що спрямовує рецептори LDL на розщеплення в клітині",
+  "uk": "білок, що спрямовує рецептори ЛПНЩ на розщеплення в клітині",
   "en": "protein that directs LDL receptors to degradation inside the cell"
  },
  "LEPR": {
@@ -98,12 +98,12 @@ window.ADVENT_GENES = {
   "en": "enzyme that converts testosterone into dihydrotestosterone"
  },
  "CYP1B1": {
-  "uk": "фермент цитохрому P450, що окиснює естрогени та сторонні сполуки",
+  "uk": "фермент родини цитохромів P450, що окиснює естрогени та сторонні сполуки",
   "en": "cytochrome P450 enzyme that oxidises oestrogens and foreign compounds"
  },
  "THADA": {
-  "uk": "білок з армадило-повторами, ймовірно причетний до апоптозу",
-  "en": "armadillo-repeat protein probably involved in apoptosis"
+  "uk": "білок з армадило-повторами, що разом із ферментом FTSJ1 метилює транспортні РНК",
+  "en": "armadillo-repeat protein that works with the enzyme FTSJ1 to methylate transfer RNAs"
  },
  "ABCG8": {
   "uk": "половина транспортера ABCG5/ABCG8, що виводить стероли в жовч",
@@ -346,7 +346,7 @@ window.ADVENT_GENES = {
   "en": "elastin, the elastic-fibre protein that gives tissues their stretch"
  },
  "POR": {
-  "uk": "оксидоредуктаза, що передає електрони ферментам цитохрому P450",
+  "uk": "оксидоредуктаза, що передає електрони ферментам родини цитохромів P450",
   "en": "oxidoreductase that donates electrons to cytochrome P450 enzymes"
  },
  "WNT16": {
@@ -446,8 +446,8 @@ window.ADVENT_GENES = {
   "en": "transcription factor of the Wnt pathway involved in glucose homeostasis"
  },
  "ARMS2": {
-  "uk": "невеликий секретований білок позаклітинного матриксу судинної оболонки ока",
-  "en": "small secreted protein of the extracellular matrix in the eye’s choroid"
+  "uk": "невеликий білок із нез’ясованою функцією, виявлений у сітківці та плаценті",
+  "en": "small protein of unclear function, detected in the retina and placenta"
  },
  "HTRA1": {
   "uk": "секретована серинова протеаза, що розщеплює IGF-зв’язувальні білки",
@@ -570,8 +570,8 @@ window.ADVENT_GENES = {
   "en": "vascular endothelial growth factor receptor (VEGFR-1), a tyrosine kinase"
  },
  "KL-VS": {
-  "uk": "мембранний білок klotho, корецептор гормону FGF23; KL-VS — варіант гена KL",
-  "en": "klotho membrane protein, a co-receptor for hormone FGF23; KL-VS is a KL variant"
+  "uk": "мембранний білок Klotho, корецептор гормону FGF23; KL-VS — варіант гена KL",
+  "en": "Klotho membrane protein, a co-receptor for the hormone FGF23; KL-VS is a KL variant"
  },
  "SIX6": {
   "uk": "гомеобоксний транскрипційний фактор, причетний до розвитку ока",
@@ -598,7 +598,7 @@ window.ADVENT_GENES = {
   "en": "melanosome membrane protein (OCA2) and neighbouring HERC2 holding its regulator"
  },
  "SLC24A5": {
-  "uk": "калій-залежний натрій-кальцієвий обмінник у мембранах меланосом",
+  "uk": "калійзалежний натрій-кальцієвий обмінник у мембранах меланосом",
   "en": "potassium-dependent sodium/calcium exchanger in melanosome membranes"
  },
  "CYP19A1": {
@@ -710,7 +710,7 @@ window.ADVENT_GENES = {
   "en": "secreted protein that inhibits lipoprotein lipase and regulates lipid metabolism"
  },
  "CYP4F2": {
-  "uk": "фермент цитохрому P450, що окиснює лейкотрієн B4 та вітаміни K і E",
+  "uk": "фермент родини цитохромів P450, що окиснює лейкотрієн B4 та вітаміни K і E",
   "en": "cytochrome P450 enzyme that oxidises leukotriene B4 and vitamins K and E"
  },
  "TM6SF2": {
@@ -719,7 +719,7 @@ window.ADVENT_GENES = {
  },
  "APOE": {
   "uk": "аполіпопротеїн E — білок ліпопротеїнів, що зв’язує їх із рецепторами клітин",
-  "en": "apolipoprotein E, a lipoprotein protein that binds them to cell receptors"
+  "en": "apolipoprotein E, a protein component of lipoproteins that binds them to cell receptors"
  },
  "CKM": {
   "uk": "м’язова креатинкіназа, що відновлює АТФ із фосфокреатину",
@@ -730,11 +730,11 @@ window.ADVENT_GENES = {
   "en": "sulfotransferase that attaches sulfate groups to steroids and bile acids"
  },
  "FUT2": {
-  "uk": "фермент, що утворює розчинні антигени груп крові AB0 у слині та слизу",
-  "en": "enzyme that makes soluble ABO blood group antigens in saliva and mucus"
+  "uk": "фермент, від якого залежить поява розчинних антигенів груп крові ABO у слині та слизу",
+  "en": "enzyme that determines whether soluble ABO blood group antigens appear in saliva and mucus"
  },
  "KLK3": {
-  "uk": "простатспецифічний антиген — протеаза, що розріджує сім’яну рідину",
+  "uk": "простатоспецифічний антиген — протеаза, що розріджує сім’яну рідину",
   "en": "prostate-specific antigen, a protease that liquefies seminal fluid"
  },
  "MBOAT7": {

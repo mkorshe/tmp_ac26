@@ -363,7 +363,7 @@
         none: "Жодного напою з кофеїном.",
         ok: "У межах орієнтира: до 400 мг на день не пов’язують із небажаними ефектами у здорових дорослих.{6}{r1}",
         over: "Понад орієнтир 400 мг на день для здорових дорослих.{6}{r1} Варто прибрати одну-дві порції.",
-        last: (h) => `Остання кава — не пізніше <b>${h}</b>: навіть за 6 годин до сну кофеїн помітно порушував сон.{7}`,
+        last: (h) => `Остання кава — не пізніше <b>${h}</b>: навіть за 6 годин до сну 400 мг кофеїну помітно порушували сон.{7}`,
         how: "Вміст кофеїну в порції — орієнтовні значення EFSA; у вашій чашці він залежить від сорту й способу приготування.{r1} Під час вагітності орієнтир нижчий: 200 мг за оцінкою EFSA{r1} і 300 мг за оглядом досліджень.{6} Межу варто обговорити з лікарем." },
       en: { title: "Your caffeine for the day", sub: "Add the drinks you have in a day and compare the total with the guide for healthy adults.",
         kinds: [["Filter coffee", "200 ml cup · 90 mg"], ["Espresso", "60 ml · 80 mg"], ["Black tea", "220 ml cup · 50 mg"]], alt: "3D cups with drinks", drag: "drag to rotate",
@@ -371,7 +371,7 @@
         none: "No drinks with caffeine.",
         ok: "Within the guide: up to 400 mg a day is not linked to adverse effects in healthy adults.{6}{r1}",
         over: "Above the 400 mg a day guide for healthy adults.{6}{r1} It is worth dropping a serving or two.",
-        last: (h) => `Last coffee no later than <b>${h}</b>: even 6 hours before bed, caffeine noticeably disrupted sleep.{7}`,
+        last: (h) => `Last coffee no later than <b>${h}</b>: even 6 hours before bed, 400 mg of caffeine noticeably disrupted sleep.{7}`,
         how: "Caffeine per serving uses EFSA’s guide values; in your cup it depends on the beans and the brewing method.{r1} In pregnancy the guide is lower: 200 mg in EFSA’s assessment{r1} and 300 mg in a review of studies.{6} It is worth discussing the limit with a doctor." } }
   };
   const deep = (v, f) => typeof v === "string" ? f(v) : typeof v === "function" ? (...a) => f(v(...a)) : Array.isArray(v) ? v.map((x) => deep(x, f)) : v && typeof v === "object" ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, deep(x, f)])) : v;

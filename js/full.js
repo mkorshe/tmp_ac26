@@ -54,7 +54,7 @@
    "intro": "171 мільйон пар нуклеотидів і близько 1 050 генів.{13} Тут же гени обміну заліза, ліпопротеїну(a) та рецептора естрогену.",
    "role": "HLA — це не один ген, а група генів головного комплексу гістосумісності.{3} Їхні білки показують імунним клітинам фрагменти білків, зокрема мікробних, і так допомагають відрізняти своє від чужого.{2}{3}",
    "known": "Целіакія — одна з найповніше вивчених хвороб, пов’язаних з HLA.{4} Серед 1 008 європейців із целіакією варіанти HLA-DQ2 або DQ8 мали всі, крім 61, а зовсім без «половинки» DQ2 було лише четверо.{5} У дослідженні 463 пацієнтів, направлених на біопсію, негативний результат HLA-типування виключав целіакію.{6}",
-   "not": "Мати DQ2 чи DQ8 — не діагноз: серед дітей з однією копією DQ2 целіакія до п’яти років розвинулася в 3%, із двома копіями в 11%.{7} Діагноз ставлять за антитілами в крові та біопсією слизової кишки, а не за генотипом.{8}",
+   "not": "Мати DQ2 чи DQ8 — не діагноз: серед дітей з однією копією DQ2 целіакія до п’яти років розвинулася в 3%, із двома копіями — в 11%.{7} Діагноз ставлять за антитілами в крові та біопсією слизової оболонки кишки, а не за генотипом.{8}",
    "tip": [
     {
      "k": "Для всіх",
@@ -66,13 +66,13 @@
      "k": "Є DQ2 або DQ8",
      "s": "генотип",
      "t": "Порада не змінюється: без симптомів і діагнозу безглютенова дієта не потрібна. Генотип лише показує, що целіакія можлива.",
-     "f": "Навіть у групі найвищого ризику, з DQ2 і DQ8 водночас, целіакію мав 1 із 7, а без варіантів ризику 1 із 2 518: розрахунок за даними 437 хворих дітей і 551 людини контрольної групи за поширеності 1 на 100.{10}"
+     "f": "Навіть у групі найвищого ризику, з DQ2 і DQ8 водночас, целіакію мав 1 із 7, а без варіантів ризику — 1 із 2 518: розрахунок за даними 437 хворих дітей і 551 людини контрольної групи за поширеності 1 на 100.{10}"
     },
     {
      "k": "Целіакія в родині",
      "s": "група ризику",
      "t": "Обговоріть обстеження з лікарем. До аналізів не прибирайте глютен із раціону: без нього результат може бути хибно негативним.",
-     "f": "Целіакію мали 7,5% із 10 252 родичів першого ступеня, найчастіше сестри й доньки хворих (1 із 7 та 1 із 8).{11} У дорослих із целіакією на безглютеновій дієті антитіла помітно зростали лише на 28-й день після повернення глютену.{12}"
+     "f": "Целіакію мали 7,5% із 10 252 родичів першого ступеня, найчастіше сестри й доньки хворих (1 із 7 та 1 із 8).{11} У дорослих із целіакією на безглютеновій дієті глютен повертали на 14 днів, але рівень антитіл помітно зріс лише на 28-й день від початку.{12}"
     }
    ],
    "tipNote": "Дані про глютен і серце спостережні: вони показують зв’язок, а не доведену причину."
@@ -99,7 +99,7 @@
      "k": "Coeliac in the family",
      "s": "risk group",
      "t": "Discuss testing with a doctor. Do not cut gluten out of your diet before the tests: without it the result may be falsely negative.",
-     "f": "Coeliac disease was found in 7.5% of 10,252 first-degree relatives, most often sisters and daughters (1 in 7 and 1 in 8).{11} In adults with coeliac disease on a gluten-free diet, antibodies rose markedly only by day 28 of a return to gluten.{12}"
+     "f": "Coeliac disease was found in 7.5% of 10,252 first-degree relatives, most often sisters and daughters (1 in 7 and 1 in 8).{11} In adults with coeliac disease on a gluten-free diet, gluten was reintroduced for 14 days, but antibody levels rose markedly only by day 28 from the start.{12}"
     }
    ],
    "tipNote": "The data on gluten and the heart are observational: they show an association, not a proven cause."
@@ -143,7 +143,7 @@
    "intro": "159 мільйонів пар нуклеотидів і близько 990 генів.{10} Тут також гени глюкози натще, лептину й апетиту та щільності кісток.",
    "role": "TAS2R38 кодує один із рецепторів гіркого смаку родини TAS2R.{1} Він реагує на сполуки з хімічною групою N-C=S: фенілтіокарбамід (ФТК), пропілтіоурацил і споріднений із ними гойтрин із капустяних овочів.{2}{3}",
    "known": "Два поширені варіанти гена називають PAV («чутливий») і AVI («нечутливий»): люди з двома копіями AVI відчувають гіркоту пропілтіоурацилу слабше, ніж носії хоча б однієї копії PAV.{3}{4} Для ФТК варіанти гена пояснюють 55–85% відмінностей у чутливості між людьми.{1} Для гойтрину цей показник лише близько 16%: рецептор PAV реагує на нього слабко, а рецептор AVI не реагує зовсім.{3}",
-   "not": "Генотип не визначає, скільки овочів ви їсте. У данському дослідженні 500 людей варіанти TAS2R38 не були пов’язані зі споживанням капустяних,{5} а серед 26 090 канадців різниця у споживанні овочів між людьми з «чутливими» та «нечутливими» варіантами була мінімальною.{6}",
+   "not": "Генотип не визначає, скільки овочів ви їсте. У данському дослідженні 500 людей варіанти TAS2R38 не були пов’язані зі споживанням капустяних,{5} а серед 26 090 канадців різниця в споживанні овочів між людьми з «чутливими» та «нечутливими» варіантами була мінімальною.{6}",
    "tip": [
     {
      "k": "Для всіх",
@@ -161,7 +161,7 @@
      "k": "Дитина не їсть овочі",
      "s": "життєва ситуація",
      "t": "Пропонуйте той самий овоч знову й знову маленькими порціями: звикання працює за будь-якої чутливості до гіркого.",
-     "f": "172 дитини 3–5 років десять днів поспіль куштували пюре з ріпи. Споживання й уподобання зросли, а генотип TAS2R38 і чутливість до гіркого на результат не вплинули.{9}"
+     "f": "172 дитини 3–5 років десять днів поспіль куштували пюре з ріпи. Споживання зросло, і страва стала подобатися дітям більше, а генотип TAS2R38 і чутливість до гіркого на результат не вплинули.{9}"
     }
    ],
    "tipNote": "Дані про овочі й смертність спостережні, а дослідження з дітьми невеликі: це зв’язок, а не доведена причина."
@@ -246,7 +246,7 @@
      "k": "Варіант HindIII",
      "s": "генотип LPL",
      "t": "Порада не змінюється: рух пов’язаний із кращим ліпідним профілем за будь-якого генотипу HindIII. Куріння варто кинути всім.",
-     "f": "Серед 520 чоловіків зв’язок активності з нижчими тригліцеридами й вищим ЛПВЩ-холестерином був однаковим за різних генотипів поліморфізму HindIII гена LPL. Найгірший профіль мали малорухливі курці з одним із них, у фізично активних він був помітно кращим.{8}"
+     "f": "Серед 520 чоловіків зв’язок активності з нижчими тригліцеридами й вищим ЛПВЩ-холестерином був однаковим за різних генотипів поліморфізму HindIII гена LPL. Найгірший профіль мали малорухливі курці з генотипом H+H+, у фізично активних курців із цим генотипом він був помітно кращим.{8}"
     }
    ],
    "tipNote": "Це невеликі та спостережні дослідження: вони показують зв’язок, а не особистий прогноз."
@@ -273,7 +273,7 @@
      "k": "HindIII variant",
      "s": "LPL genotype",
      "t": "The advice does not change: activity is linked to a better lipid profile whatever the HindIII genotype. Quitting smoking is worthwhile for everyone.",
-     "f": "Among 520 men, the link between activity and lower triglycerides and higher HDL cholesterol was the same across genotypes of the LPL HindIII polymorphism. Sedentary smokers with one of them had the worst profile; in physically active ones it was considerably better.{8}"
+     "f": "Among 520 men, the link between activity and lower triglycerides and higher HDL cholesterol was the same across genotypes of the LPL HindIII polymorphism. Sedentary smokers with the H+H+ genotype had the worst profile; in physically active smokers with the same genotype it was considerably better.{8}"
     }
    ],
    "tipNote": "These are small and observational studies: they show an association, not a personal forecast."
@@ -333,7 +333,7 @@
      "k": "Група A, B або AB",
      "s": "будь-яка група, крім O",
      "t": "Порада та сама, що й для групи O: рух, здорова маса тіла, без куріння. Про тромбози у вас чи в родині розкажіть лікареві.",
-     "f": "У двох когортах (62 073 жінки й 27 428 чоловіків, понад 20 років спостереження) ризик ішемічної хвороби серця за груп A, B та AB був вищий у 1,06, 1,15 та 1,23 раза, ніж за групи O.{7}"
+     "f": "У двох когортах (62 073 жінки й 27 428 чоловіків, понад 20 років спостереження) ризик ішемічної хвороби серця за груп A, B та AB був вищий у 1,06, 1,15 та 1,23 раза, ніж за групи O (для групи A різниця статистично не значуща).{7}"
     },
     {
      "k": "Довго сидите",
@@ -359,8 +359,8 @@
     {
      "k": "Group A, B or AB",
      "s": "any group except O",
-     "t": "The advice is the same as for group O: stay active, keep a healthy weight, do not smoke. Tell your doctor about any clots in you or your family.",
-     "f": "In two cohorts (62,073 women and 27,428 men, more than 20 years of follow-up), the risk of coronary heart disease with groups A, B and AB was 1.06, 1.15 and 1.23 times higher than with group O.{7}"
+     "t": "The advice is the same as for group O: stay active, keep a healthy weight, do not smoke. Tell your doctor about any blood clots you or your relatives have had.",
+     "f": "In two cohorts (62,073 women and 27,428 men, more than 20 years of follow-up), the risk of coronary heart disease with groups A, B and AB was 1.06, 1.15 and 1.23 times higher than with group O (for group A the difference was not statistically significant).{7}"
     },
     {
      "k": "Long hours sitting",
@@ -401,20 +401,20 @@
   "uk": {
    "intro": "134 мільйони пар нуклеотидів і близько 730 генів.{8} Тут також гени всмоктування вітаміну B12, довжини теломер і вікової макулярної дегенерації.",
    "role": "TCF7L2 кодує транскрипційний фактор сигнального шляху Wnt: білок, що керує зчитуванням інших генів.{1} В острівцях підшлункової залози від нього залежать вироблення, дозрівання та секреція інсуліну.{2}",
-   "known": "Варіант ризику, який позначають DG10S478, поширений: у дослідженні, що відкрило цей зв’язок, одну його копію мали 38% людей, дві копії 7%.{1} Ризик діабету 2 типу в них був вищий в 1,45 та 2,41 раза відповідно.{1} Сусідній варіант rs7903146 пов’язаний зі слабшою секрецією інсуліну, а не з гіршою чутливістю тканин до нього.{3}{4}",
+   "known": "Варіант ризику в ділянці ДНК, яку позначають DG10S478, поширений: у дослідженні, що відкрило цей зв’язок, одну його копію мали 38% людей, дві копії — 7%.{1} Ризик діабету 2 типу в них був вищий в 1,45 та 2,41 раза відповідно.{1} Сусідній варіант rs7903146 пов’язаний зі слабшою секрецією інсуліну, а не з гіршою чутливістю тканин до нього.{3}{4}",
    "not": "Це не діагноз: варіант зсуває ймовірність, але не визначає, чи розвинеться діабет.{1}{4} Чи є порушення обміну глюкози, показує аналіз крові, а не генотип.",
    "tip": [
     {
      "k": "Для всіх",
      "s": "будь-який генотип",
-     "t": "Швидка ходьба щонайменше 2,5 години на тиждень: простий спосіб знизити ризик діабету 2 типу.",
+     "t": "Швидка ходьба щонайменше 2,5 години на тиждень — простий спосіб знизити ризик діабету 2 типу.",
      "f": "В огляді 10 когортних досліджень (301 221 учасник) регулярна помірна активність була пов’язана з нижчим на 31% ризиком діабету 2 типу, а регулярна швидка ходьба, зазвичай від 2,5 години на тиждень, із нижчим на 30%.{5}"
     },
     {
      "k": "Генотип TT",
      "s": "варіант rs7903146, дві копії",
      "t": "Порада та сама, і вона працює: у програмах зміни способу життя різниця в ризику між генотипами майже зникала.",
-     "f": "У Програмі профілактики діабету люди з генотипом TT (варіант rs7903146) мали в 1,81 раза вищий ризик діабету в групі плацебо і в 1,15 раза в групі зміни способу життя.{4} У фінському дослідженні (сусідній варіант rs12255372): у 2,85 раза в контрольній групі й без зв’язку в групі втручання.{6}"
+     "f": "У Програмі профілактики діабету люди з генотипом TT (варіант rs7903146) мали в 1,81 раза вищий ризик діабету, ніж люди з генотипом CC, у групі плацебо і в 1,15 раза в групі зміни способу життя.{4} У фінському дослідженні (сусідній варіант rs12255372): у 2,85 раза в контрольній групі й без зв’язку в групі втручання.{6}"
     },
     {
      "k": "Предіабет",
@@ -428,7 +428,7 @@
   "en": {
    "intro": "134 million base pairs and about 730 genes.{8} Also here: genes for vitamin B12 absorption, telomere length and age-related macular degeneration.",
    "role": "TCF7L2 encodes a transcription factor of the Wnt signalling pathway: a protein that controls the reading of other genes.{1} In the islets of the pancreas, the production, processing and secretion of insulin depend on it.{2}",
-   "known": "The risk variant, known as DG10S478, is common: in the study that discovered the link, 38% of people carried one copy and 7% two copies.{1} Their risk of type 2 diabetes was 1.45 and 2.41 times higher respectively.{1} The neighbouring variant rs7903146 is linked to weaker insulin secretion, not to poorer tissue sensitivity to insulin.{3}{4}",
+   "known": "The risk variant at a DNA marker known as DG10S478 is common: in the study that discovered the link, 38% of people carried one copy and 7% two copies.{1} Their risk of type 2 diabetes was 1.45 and 2.41 times higher respectively.{1} The neighbouring variant rs7903146 is linked to weaker insulin secretion, not to poorer tissue sensitivity to insulin.{3}{4}",
    "not": "This is not a diagnosis: the variant shifts the probability but does not determine whether diabetes will develop.{1}{4} Whether glucose metabolism is impaired is shown by a blood test, not by genotype.",
    "tip": [
     {
@@ -441,7 +441,7 @@
      "k": "TT genotype",
      "s": "rs7903146 variant, two copies",
      "t": "The advice is the same, and it works: in lifestyle programmes the difference in risk between genotypes almost disappeared.",
-     "f": "In the Diabetes Prevention Program, people with the TT genotype (rs7903146 variant) had a 1.81-fold higher risk of diabetes on placebo and a 1.15-fold higher risk with lifestyle change.{4} In the Finnish study (the neighbouring rs12255372 variant): 2.85-fold in the control group and no link in the intervention group.{6}"
+     "f": "In the Diabetes Prevention Program, people with the TT genotype (rs7903146 variant) had a 1.81-fold higher risk of diabetes than people with the CC genotype on placebo and a 1.15-fold higher risk with lifestyle change.{4} In the Finnish study (the neighbouring rs12255372 variant): 2.85-fold in the control group and no link in the intervention group.{6}"
     },
     {
      "k": "Prediabetes",
@@ -511,7 +511,7 @@
     {
      "k": "Everyone",
      "s": "any genotype",
-     "t": "Add strength exercises: even 30–60 minutes a week are linked to a lower risk of disease.",
+     "t": "Add strength exercises: even 30–60 minutes a week is linked to a lower risk of disease.",
      "f": "In a meta-analysis of 16 cohort studies, muscle-strengthening activities were linked to a 10–17% lower risk of death from any cause, cardiovascular disease and diabetes. The largest effect on mortality came at 30–60 minutes a week.{5}"
     },
     {
@@ -560,13 +560,13 @@
    "intro": "133 мільйони пар нуклеотидів і близько 1 030 генів: від рецептора вітаміну D та фактора росту IGF-1 до ділянки, пов’язаної з менопаузою.{7}",
    "role": "ALDH2 кодує мітохондріальну альдегіддегідрогеназу, один із найважливіших ферментів обміну алкоголю.{1} Вона знешкоджує ацетальдегід, проміжний продукт розпаду етанолу, переважно в печінці.{2}",
    "known": "Варіант ALDH2*504Lys, який ще називають ALDH2*2, діє вже в одній копії: вона різко знижує активність ферменту, а дві копії прибирають її зовсім.{1} Після алкоголю в носіїв накопичується ацетальдегід: червоніє обличчя, частішає серцебиття, з’являються нудота й головний біль.{2} Тому люди з двома копіями п’ють значно менше, і в метааналізі систолічний тиск у чоловіків без варіанта був на 7,44 мм рт. ст. вищий, ніж у них.{3}",
-   "not": "Варіант ALDH2*2 не показує, скільки людина п’є і чи є в неї проблеми зі здоров’ям: він лише змінює реакцію на алкоголь.{2} А його відсутність, як майже в усіх за межами Східної Азії, не робить алкоголь безпечним: рівень споживання з найменшою шкодою для здоров’я дорівнює нулю.{1}{4}",
+   "not": "Варіант ALDH2*2 не показує, скільки людина п’є і чи є в неї проблеми зі здоров’ям: він змінює реакцію на алкоголь, а в тих, хто п’є, пов’язаний із вищим ризиком хвороб.{2} А його відсутність, як майже в усіх за межами Східної Азії, не робить алкоголь безпечним: рівень споживання з найменшою шкодою для здоров’я дорівнює нулю.{1}{4}",
    "tip": [
     {
      "k": "Для всіх",
      "s": "будь-який генотип",
      "t": "Що менше алкоголю, то краще для здоров’я.",
-     "f": "Аналіз даних 195 країн за 1990–2016 роки: рівень споживання алкоголю, за якого шкода для здоров’я найменша, дорівнював нулю стандартних порцій (по 10 г чистого спирту) на тиждень.{4}"
+     "f": "Аналіз даних 195 країн і територій за 1990–2016 роки: рівень споживання алкоголю, за якого шкода для здоров’я найменша, дорівнював нулю стандартних порцій (по 10 г чистого спирту) на тиждень.{4}"
     },
     {
      "k": "Є варіант ALDH2*2",
@@ -578,7 +578,7 @@
      "k": "Немає ALDH2*2",
      "s": "обличчя не червоніє",
      "t": "Алкоголь від цього не безпечніший. Порада та сама: що менше, то краще.",
-     "f": "У китайському дослідженні з генетичними даними 161 498 людей помірне споживання не захищало від інсульту: у чоловіків його ризик зростав у 1,27–1,58 раза на кожні 280 г алкоголю на тиждень.{6}"
+     "f": "У китайському дослідженні з генетичними даними 161 498 людей помірне споживання не захищало від інсульту: у чоловіків його ризик зростав у 1,27–1,58 раза (залежно від типу інсульту) на кожні 280 г алкоголю на тиждень.{6}"
     }
    ],
    "tipNote": "Це дані спостережних і генетичних досліджень великих груп: вони не є особистим прогнозом."
@@ -587,13 +587,13 @@
    "intro": "133 million base pairs and about 1,030 genes: from the vitamin D receptor and the growth factor IGF-1 to a region linked to the menopause.{7}",
    "role": "ALDH2 encodes mitochondrial aldehyde dehydrogenase, one of the most important enzymes in alcohol metabolism.{1} It clears acetaldehyde, an intermediate product of ethanol breakdown, mainly in the liver.{2}",
    "known": "The ALDH2*504Lys variant, also known as ALDH2*2, acts even in a single copy: one copy sharply reduces enzyme activity and two abolish it.{1} After alcohol, acetaldehyde builds up in carriers: the face flushes, the heart beats faster, and nausea and headache follow.{2} People with two copies therefore drink far less, and in a meta-analysis men without the variant had systolic blood pressure 7.44 mmHg higher than they did.{3}",
-   "not": "The ALDH2*2 variant does not show how much a person drinks or whether they have health problems: it only changes the reaction to alcohol.{2} And its absence, as in almost everyone outside East Asia, does not make alcohol safe: the level of consumption that minimises harm to health is zero.{1}{4}",
+   "not": "The ALDH2*2 variant does not show how much a person drinks or whether they have health problems: it changes the reaction to alcohol and, in those who drink, is linked to a higher risk of disease.{2} And its absence, as in almost everyone outside East Asia, does not make alcohol safe: the level of consumption that minimises harm to health is zero.{1}{4}",
    "tip": [
     {
      "k": "Everyone",
      "s": "any genotype",
      "t": "The less alcohol, the better for your health.",
-     "f": "An analysis of data from 195 countries for 1990–2016: the level of alcohol consumption that minimised harm to health was zero standard drinks (10 g of pure alcohol each) a week.{4}"
+     "f": "An analysis of data from 195 countries and territories for 1990–2016: the level of alcohol consumption that minimised harm to health was zero standard drinks (10 g of pure alcohol each) a week.{4}"
     },
     {
      "k": "ALDH2*2 variant",
@@ -605,7 +605,7 @@
      "k": "No ALDH2*2",
      "s": "the face does not flush",
      "t": "That does not make alcohol any safer. The advice is the same: the less, the better.",
-     "f": "In a Chinese study with genetic data on 161,498 people, moderate drinking did not protect against stroke: in men its risk rose 1.27–1.58-fold for every 280 g of alcohol a week.{6}"
+     "f": "In a Chinese study with genetic data on 161,498 people, moderate drinking did not protect against stroke: in men its risk rose 1.27–1.58-fold (depending on the type of stroke) for every 280 g of alcohol a week.{6}"
     }
    ],
    "tipNote": "These are data from observational and genetic studies of large groups: they are not a personal forecast."
@@ -672,7 +672,7 @@
    "intro": "114 million base pairs and about 320 genes, among them a gene linked to pre-eclampsia.{10} Its gene density is one of the lowest among human chromosomes.{5}",
    "role": "KL encodes the Klotho protein: its membrane-bound form binds fibroblast growth factor 23, while the soluble form circulates in the blood{1} and acts as a hormone.{4} In mice with Klotho removed from the kidneys, levels of phosphate, calcium and the active form of vitamin D rose.{1}",
    "known": "The KL-VS allele combines six variants that always occur together; two of them change amino acids in the protein.{2} People with two copies of KL-VS were under-represented among the elderly in three populations (combined odds ratio 2.59).{2} Carriers of one copy, by contrast, had higher Klotho in the blood and better cognitive test results.{3}",
-   "not": "KL-VS is not a forecast of longevity or mental sharpness: later studies gave conflicting results.{6}{7} In the Aberdeen Birth Cohort of 1936, carriers of one copy lived not longer but shorter than people without the variant.{7}",
+   "not": "KL-VS is not a forecast of longevity or mental sharpness: later studies gave conflicting results.{6}{7} In the Aberdeen Birth Cohort of 1936, carriers of one copy had shorter, not longer, survival than people without the variant.{7}",
    "tip": [
     {
      "k": "Everyone",
@@ -744,7 +744,7 @@
      "k": "Приймаєте тироксин",
      "s": "замісна терапія",
      "t": "Не змінюйте лікування через варіант DIO2. Якщо симптоми лишаються попри нормальні аналізи, обговоріть це з лікарем.",
-     "f": "Дослідження 552 пацієнтів пов’язало варіант із гіршим самопочуттям на тироксині, але автори зазначили, що результат потребує відтворення.{5} Серед 364 людей на замісній терапії в іншій когорті зв’язку не знайшли.{4}"
+     "f": "Дослідження 552 пацієнтів пов’язало варіант із гіршим самопочуттям під час лікування тироксином, але автори зазначили, що результат потребує відтворення.{5} Серед 364 людей, які отримували замісну терапію, в іншій когорті зв’язку не знайшли.{4}"
     }
    ]
   },
@@ -799,22 +799,26 @@
      "en": "Ensembl, GRCh38 genome assembly: chromosome 15"
     },
     "https://www.ensembl.org/Homo_sapiens/Location/Chromosome?r=15"
+   ],
+   [
+    "Thorn et al., Pharmacogenet Genomics, 2012",
+    "https://pubmed.ncbi.nlm.nih.gov/21989077/"
    ]
   ],
   "uk": {
    "intro": "102 мільйони пар нуклеотидів і близько 610 генів: від пігментації шкіри й ароматази, що утворює естрогени, до генів, пов’язаних із нікотиновою залежністю.{9}",
    "role": "CYP1A2 кодує фермент родини цитохромів P450.{2} Він переробляє 95% спожитого кофеїну{1} і бере участь у метаболізмі низки ліків.{4}",
-   "known": "Поширений варіант у першому інтроні гена (заміна C на A в позиції 734), імовірно, визначає, наскільки фермент пришвидшується під дією тютюнового диму: серед 236 людей різниця між генотипами проявилася лише в курців.{4} У дослідженні 4 028 жителів Коста-Рики чотири й більше чашок кави на день були пов’язані з вищими в 1,64 раза шансами інфаркту тільки в носіїв «повільного» алеля CYP1A2*1F.{2} Але серед 347 077 учасників UK Biobank генотип CYP1A2 не змінював зв’язку кави із серцево-судинними хворобами.{5}",
+   "known": "Поширений варіант у першому інтроні гена відомий як CYP1A2*1F, або rs762551.{10} Ця заміна C на A в позиції 734, імовірно, визначає, наскільки фермент пришвидшується під дією тютюнового диму: серед 236 людей різниця між генотипами проявилася лише в курців.{4} У дослідженні 4 028 жителів Коста-Рики чотири й більше чашок кави на день були пов’язані з вищими в 1,64 раза шансами інфаркту тільки в носіїв «повільного» алеля C.{2} Але серед 347 077 учасників UK Biobank генотип CYP1A2 не змінював зв’язку кави із серцево-судинними хворобами.{5}",
    "not": "Генотип не визначає «вашу» норму кави: на швидкість переробки кофеїну впливають також вік, стать і гормони, куріння, ожиріння, харчування і хвороби печінки.{1} Сам варіант не був пов’язаний із серцево-судинними хворобами.{5}",
    "tip": [
     {
      "k": "Для всіх",
      "s": "здорові дорослі",
      "t": "До 400 мг кофеїну на день; під час вагітності менше, межу обговоріть із лікарем. Остання кава щонайменше за 6 годин до сну.",
-     "f": "Огляд 381 дослідження не пов’язав із небажаними ефектами до 400 мг кофеїну на день у здорових дорослих і до 300 мг у вагітних.{6} Водночас 400 мг навіть за 6 годин до сну помітно порушували сон.{7}"
+     "f": "Огляд 381 дослідження не пов’язав споживання до 400 мг кофеїну на день у здорових дорослих і до 300 мг у вагітних із небажаними ефектами.{6} Водночас 400 мг навіть за 6 годин до сну помітно порушували сон.{7}"
     },
     {
-     "k": "Алель CYP1A2*1F",
+     "k": "Алель C гена CYP1A2",
      "s": "«повільний» варіант",
      "t": "Порада та сама: помірність. Окремої межі для носіїв варіанта дослідження надійно не встановили.",
      "f": "Серед 347 077 учасників UK Biobank понад 6 чашок кави на день були пов’язані з вищими на 22% шансами серцево-судинних хвороб, ніж 1–2 чашки, і генотип CYP1A2 цього не змінював.{5}"
@@ -831,7 +835,7 @@
   "en": {
    "intro": "102 million base pairs and about 610 genes: from skin pigmentation and aromatase, which makes oestrogens, to genes linked to nicotine dependence.{9}",
    "role": "CYP1A2 encodes an enzyme of the cytochrome P450 family.{2} It processes 95% of ingested caffeine{1} and takes part in the metabolism of a number of medicines.{4}",
-   "known": "A common variant in the first intron of the gene (a C-to-A change at position 734) probably determines how far the enzyme speeds up under tobacco smoke: among 236 people the difference between genotypes showed only in smokers.{4} In a study of 4,028 people in Costa Rica, four or more cups of coffee a day were linked to 1.64-fold higher odds of a heart attack only in carriers of the “slow” CYP1A2*1F allele.{2} But among 347,077 UK Biobank participants, CYP1A2 genotype did not change the link between coffee and cardiovascular disease.{5}",
+   "known": "A common variant in the first intron of the gene is known as CYP1A2*1F, or rs762551.{10} This C-to-A change at position 734 probably determines how far the enzyme speeds up under tobacco smoke: among 236 people the difference between genotypes showed only in smokers.{4} In a study of 4,028 people in Costa Rica, four or more cups of coffee a day were linked to 1.64-fold higher odds of a heart attack only in carriers of the “slow” C allele.{2} But among 347,077 UK Biobank participants, CYP1A2 genotype did not change the link between coffee and cardiovascular disease.{5}",
    "not": "Genotype does not set “your” coffee limit: the speed of caffeine processing also depends on age, sex and hormones, smoking, obesity, diet and liver disease.{1} The variant itself was not linked to cardiovascular disease.{5}",
    "tip": [
     {
@@ -841,7 +845,7 @@
      "f": "A review of 381 studies did not link up to 400 mg of caffeine a day in healthy adults, or up to 300 mg in pregnant women, to adverse effects.{6} Yet 400 mg taken even 6 hours before bedtime disrupted sleep significantly.{7}"
     },
     {
-     "k": "CYP1A2*1F allele",
+     "k": "C allele of CYP1A2",
      "s": "the “slow” variant",
      "t": "The advice is the same: moderation. Studies have not reliably established a separate limit for carriers of the variant.",
      "f": "Among 347,077 UK Biobank participants, more than 6 cups of coffee a day were linked to 22% higher odds of cardiovascular disease than 1–2 cups, and CYP1A2 genotype did not change this.{5}"
@@ -885,7 +889,7 @@
   "uk": {
    "intro": "90 мільйонів пар нуклеотидів і близько 870 генів, серед яких гени апетиту й маси тіла, ЛПВЩ-холестерину та навіть типу вушної сірки.{9}",
    "role": "MC1R кодує рецептор на меланоцитах, клітинах, що виробляють пігмент.{1} Через нього меланоцитстимулювальний гормон посилює синтез чорного еумеланіну, який захищає шкіру від ультрафіолету; рудий феомеланін, навпаки, може сприяти її пошкодженню.{1}",
-   "known": "Варіантів MC1R відомо багато; з рудим волоссям пов’язали насамперед три: Arg151Cys, Arg160Trp і Asp294His.{10} Варіанти MC1R знайшли в понад 80% людей із рудим волоссям або світлою шкірою, яка погано засмагає, і менш ніж у 20% людей із каштановим чи чорним волоссям.{1} З одним варіантом ризик веснянок утричі вищий, із двома — в 11 разів, незалежно від типу шкіри й кольору волосся.{2}",
+   "known": "Варіантів MC1R відомо багато; з рудим волоссям пов’язали насамперед три: Arg151Cys, Arg160Trp і Asp294His.{10} У першому дослідженні 1995 року варіанти MC1R знайшли в понад 80% людей із рудим волоссям або світлою шкірою, яка погано засмагає, і менш ніж у 20% людей із каштановим чи чорним волоссям.{1} З одним варіантом ризик веснянок утричі вищий, із двома — в 11 разів, незалежно від типу шкіри й кольору волосся.{2}",
    "not": "Це не діагноз: варіанти MC1R мали й люди з темним волоссям, а серед тих, хто добре засмагає, їх знаходили менш ніж у 4%.{1} І навпаки, темне волосся не означає, що варіанта немає: у людей без рудого волосся ступінь засмаги теж залежав від кількості варіантів гена.{8}",
    "tip": [
     {
@@ -898,13 +902,13 @@
      "k": "Руде волосся",
      "s": "зазвичай два варіанти MC1R",
      "t": "Порада та сама, але запас менший: не чекайте, доки шкіра почервоніє. Після порогової дози вона реагує на сонце сильніше.",
-     "f": "У досліді з 20 рудими й 20 нерудими людьми мінімальна доза ультрафіолету, що спричиняє почервоніння, не відрізнялася (44 і 40 мДж/см²), але за більших доз шкіра рудих червоніла інтенсивніше. Два варіанти MC1R мали 89% рудих, чий ген прочитали.{7}"
+     "f": "У досліді з 20 рудими й 20 нерудими людьми мінімальна доза ультрафіолету, що спричиняє почервоніння, істотно не відрізнялася (медіани 44 і 40 мДж/см²), але за більших доз шкіра рудих червоніла інтенсивніше. Два варіанти MC1R мали 89% рудих, чий ген прочитали.{7}"
     },
     {
      "k": "Один варіант MC1R",
      "s": "волосся може бути темним",
      "t": "Орієнтуйтеся на те, як шкіра засмагає, а не на колір волосся. Якщо засмага береться погано, захищайтеся так само ретельно, як руді.",
-     "f": "Варіанти MC1R мали менш ніж 20% людей із каштановим чи чорним волоссям.{1} У людей без рудого волосся ступінь засмаги після повторного перебування на сонці залежав від кількості варіантів: носії одного були посередині.{8}"
+     "f": "У загальній вибірці ірландців хоча б один варіант MC1R мали 75% людей, і серед них було багато темноволосих.{10} У людей без рудого волосся ступінь засмаги після повторного перебування на сонці залежав від кількості варіантів: носії одного були посередині.{8}"
     }
    ],
    "tipNote": "Дані про варіанти MC1R і реакцію шкіри на сонце показують зв’язок у групах людей, а не особистий прогноз."
@@ -925,13 +929,13 @@
      "k": "Red hair",
      "s": "usually two MC1R variants",
      "t": "The advice is the same, but the margin is smaller: do not wait until the skin turns red. Past the threshold dose it reacts to the sun more strongly.",
-     "f": "In an experiment with 20 red-haired and 20 other people, the minimal ultraviolet dose that causes redness did not differ (44 and 40 mJ/cm²), but at higher doses redheads’ skin reddened more intensely. 89% of the redheads sequenced had two MC1R variants.{7}"
+     "f": "In an experiment with 20 red-haired and 20 other people, the minimal ultraviolet dose that causes redness did not differ significantly (medians 44 and 40 mJ/cm²), but at higher doses redheads’ skin reddened more intensely. 89% of the redheads sequenced had two MC1R variants.{7}"
     },
     {
      "k": "One MC1R variant",
      "s": "hair may be dark",
      "t": "Go by how your skin tans, not by your hair colour. If it tans poorly, protect it as carefully as redheads do.",
-     "f": "Fewer than 20% of people with brown or black hair carried MC1R variants.{1} In people without red hair, the degree of tanning after repeated sun exposure depended on the number of variants: carriers of one were in between.{8}"
+     "f": "In a general Irish sample 75% of people carried at least one MC1R variant, many of them dark-haired.{10} In people without red hair, the degree of tanning after repeated sun exposure depended on the number of variants: carriers of one were in between.{8}"
     }
    ],
    "tipNote": "The data on MC1R variants and the skin’s response to the sun show an association in groups of people, not a personal forecast."
@@ -970,13 +974,13 @@
   "uk": {
    "intro": "83 мільйони пар нуклеотидів і близько 1 200 генів, серед яких гени, пов’язані з кістками та сполучною тканиною, рівнем тестостерону й астмою.{9}",
    "role": "ACE кодує ангіотензинперетворювальний фермент.{3} Він перетворює ангіотензин I на ангіотензин II, що звужує судини, і руйнує брадикінін, який їх розширює, тому відіграє ключову роль у регуляції тонусу судин.{3}",
-   "known": "Поліморфізм I/D — це наявність (I) чи відсутність (D) у гені фрагмента завдовжки близько 250 пар нуклеотидів; він пояснює 47% відмінностей у рівні ферменту в крові.{1} Алель I пов’язують із витривалістю, алель D із силою та потужністю.{2} У метааналізі генотип II був пов’язаний із результатами у видах спорту на витривалість: відношення шансів 1,35.{4}",
-   "not": "Генотип ACE не прогнозує спортивних результатів: серед 192 чоловіків, елітних спортсменів у видах на витривалість, алель I траплявся не частіше, ніж серед 189 чоловіків, які не тренуються.{5} Результат у спорті складається з багатьох генів, тренувань і умов, тож один варіант його не визначає.",
+   "known": "Поліморфізм I/D — це наявність (I) чи відсутність (D) у гені фрагмента завдовжки 287 пар нуклеотидів{4}; він пояснює 47% відмінностей у рівні ферменту в крові.{1} Алель I пов’язують із витривалістю, алель D із силою та потужністю.{2} У метааналізі генотип II був пов’язаний із результатами у видах спорту на витривалість: відношення шансів 1,35.{4}",
+   "not": "Генотип ACE не прогнозує спортивних результатів: серед 192 чоловіків, елітних спортсменів у видах на витривалість, алель I траплявся не частіше, ніж серед 189 чоловіків, які не тренуються.{5} Результат у спорті залежить від багатьох генів, тренувань і умов, тож один варіант його не визначає.",
    "tip": [
     {
      "k": "Для всіх",
      "s": "будь-який генотип",
-     "t": "Рухайтеся регулярно: аеробні навантаження на кшталт ходьби, бігу, велосипеда чи плавання знижують артеріальний тиск.",
+     "t": "Рухайтеся регулярно: аеробні навантаження на кшталт ходьби, бігу, їзди на велосипеді чи плавання знижують артеріальний тиск.",
      "f": "Метааналіз 93 рандомізованих досліджень (5 223 учасники): тренування на витривалість знижували систолічний тиск у середньому на 3,5 мм рт. ст., а діастолічний на 2,5 мм рт. ст.{6}"
     },
     {
@@ -996,7 +1000,7 @@
   "en": {
    "intro": "83 million base pairs and about 1,200 genes, among them genes linked to bones and connective tissue, testosterone levels and asthma.{9}",
    "role": "ACE encodes angiotensin-converting enzyme.{3} It converts angiotensin I into angiotensin II, which narrows blood vessels, and breaks down bradykinin, which widens them, so it plays a key role in regulating vascular tone.{3}",
-   "known": "The I/D polymorphism is the presence (I) or absence (D) of a fragment about 250 base pairs long in the gene; it explains 47% of the variation in blood levels of the enzyme.{1} The I allele is linked to endurance, the D allele to strength and power.{2} In a meta-analysis the II genotype was associated with performance in endurance sports: odds ratio 1.35.{4}",
+   "known": "The I/D polymorphism is the presence (I) or absence (D) of a fragment 287 base pairs long in the gene{4}; it explains 47% of the variation in blood levels of the enzyme.{1} The I allele is linked to endurance, the D allele to strength and power.{2} In a meta-analysis the II genotype was associated with performance in endurance sports: odds ratio 1.35.{4}",
    "not": "ACE genotype does not predict sporting results: among 192 elite male endurance athletes the I allele was no more common than among 189 sedentary men.{5} Sporting results come from many genes, training and circumstances, so a single variant does not decide them.",
    "tip": [
     {
@@ -1045,7 +1049,7 @@
   "uk": {
    "intro": "80 мільйонів пар нуклеотидів і близько 270 генів; окрім MC4R, тут є ділянка, пов’язана з харчовою алергією.{8}",
    "role": "MC4R кодує рецептор меланокортину 4, один із п’яти рецепторів меланокортинової системи.{4} Він працює в мозку, зокрема в гіпоталамусі: його активація зменшує споживання їжі та підвищує витрати енергії.{1}",
-   "known": "Поширений варіант rs17782313 за 188 тисяч пар нуклеотидів від гена пов’язаний з ІМТ у понад 77 тисяч дорослих і дітей.{2} У дослідженні 5 724 жінок носійки цього варіанта споживали більше енергії та жирів, а їхній ІМТ за десять років зріс на 0,2 кг/м² більше.{3}",
+   "known": "Поширений варіант rs17782313 за 188 тисяч пар нуклеотидів від гена пов’язаний з ІМТ у понад 77 тисяч дорослих і майже 6 тисяч дітей.{2} У дослідженні 5 724 жінок носійки цього варіанта споживали більше енергії та жирів, а їхній ІМТ за десять років зріс на 0,2 кг/м² більше.{3}",
    "not": "Варіант rs17782313 біля MC4R — не діагноз: кожна його копія зсуває ІМТ дорослих лише на 0,05 стандартного відхилення.{2} Маса тіла залежить і від способу життя: фізична активність пов’язана зі слабшим на 40% впливом генетичної схильності до ожиріння.{5}",
    "tip": [
     {
@@ -1072,7 +1076,7 @@
   "en": {
    "intro": "80 million base pairs and about 270 genes; besides MC4R, there is a region here linked to food allergy.{8}",
    "role": "MC4R encodes the melanocortin 4 receptor, one of the five receptors of the melanocortin system.{4} It works in the brain, notably in the hypothalamus: its activation reduces food intake and raises energy expenditure.{1}",
-   "known": "The common variant rs17782313, 188 thousand base pairs from the gene, is linked to BMI in more than 77,000 adults and children.{2} In a study of 5,724 women, carriers of this variant consumed more energy and fat, and their BMI rose by 0.2 kg/m² more over ten years.{3}",
+   "known": "The common variant rs17782313, 188 thousand base pairs from the gene, is linked to BMI in more than 77,000 adults and almost 6,000 children.{2} In a study of 5,724 women, carriers of this variant consumed more energy and fat, and their BMI rose by 0.2 kg/m² more over ten years.{3}",
    "not": "The rs17782313 variant near MC4R is not a diagnosis: each copy shifts adult BMI by only 0.05 of a standard deviation.{2} Body weight also depends on lifestyle: physical activity is linked to a 40% weaker effect of genetic predisposition to obesity.{5}",
    "tip": [
     {
@@ -1084,7 +1088,7 @@
     {
      "k": "rs17782313 variant",
      "s": "near MC4R: one or two copies",
-     "t": "There is no separate advice, but the general one matters just as much: regular activity is linked to a weaker effect of genetic predisposition on body weight.",
+     "t": "There is no separate advice, but the general advice matters just as much: regular activity is linked to a weaker effect of genetic predisposition on body weight.",
      "f": "Among 20,430 people, each BMI-increasing allele (12 regions of the genome were counted) corresponded to +592 g of body weight in inactive people and +379 g in active ones, calculated for a height of 1.70 m.{5}"
     },
     {
@@ -1122,7 +1126,7 @@
   "uk": {
    "intro": "58,6 мільйона пар нуклеотидів і близько 1 470 генів, серед яких гени ліпідного обміну, обміну вітаміну K та жиру печінки.{9} Щільність генів тут найвища серед усіх хромосом людини, більш ніж удвічі вища за середню в геномі.{1}",
    "role": "FUT2 кодує фермент фукозилтрансферазу, що створює антиген H у слині та на слизових оболонках.{2} Від нього залежить, чи з’являються там розчинні антигени груп крові A, B і H: людей, у яких вони є, називають секреторами.{5}",
-   "known": "Приблизно 20% людей мають дві копії неробочого варіанта FUT2, який позначають W143X: це несекретори.{5} У шведському дослідженні серед 53 людей, які захворіли під час спалахів норовірусу, не було жодного несекретора.{2} Алель G варіанта rs492602, тісно зчеплений із W143X, пов’язаний із вищим рівнем вітаміну B12 у плазмі: дослідження за участю 2 717 жінок.{3}",
+   "known": "Приблизно 20% європейців мають дві копії неробочого варіанта FUT2, який позначають W143X: це несекретори.{5} У шведському дослідженні серед 53 людей, які захворіли під час спалахів норовірусу, не було жодного несекретора.{2} Алель G варіанта rs492602, тісно зчеплений із W143X, пов’язаний із вищим рівнем вітаміну B12 у плазмі: дослідження за участю 2 717 жінок.{3}",
    "not": "Несекретор не є невразливим до всіх норовірусів: під час спалаху, спричиненого іншим типом вірусу, несекретори хворіли так само часто, як секретори.{6} А зв’язок із вітаміном B12 і мікробіомом описує середні відмінності між групами людей і не показує вашого рівня вітаміну.{3}{4}",
    "tip": [
     {
@@ -1149,7 +1153,7 @@
   "en": {
    "intro": "58.6 million base pairs and about 1,470 genes, among them genes for lipid metabolism, vitamin K metabolism and liver fat.{9} Gene density here is the highest of all human chromosomes, more than double the genome-wide average.{1}",
    "role": "FUT2 encodes a fucosyltransferase, an enzyme that makes the H antigen in saliva and on mucous membranes.{2} It determines whether the soluble blood group antigens A, B and H appear there: people who have them are called secretors.{5}",
-   "known": "About 20% of people carry two copies of a non-working FUT2 variant known as W143X: they are non-secretors.{5} In a Swedish study, not one of the 53 people who fell ill during norovirus outbreaks was a non-secretor.{2} The G allele of the rs492602 variant, tightly linked to W143X, is associated with higher plasma vitamin B12: a study of 2,717 women.{3}",
+   "known": "About 20% of Europeans carry two copies of a non-working FUT2 variant known as W143X: they are non-secretors.{5} In a Swedish study, not one of the 53 people who fell ill during norovirus outbreaks was a non-secretor.{2} The G allele of the rs492602 variant, tightly linked to W143X, is associated with higher plasma vitamin B12: a study of 2,717 women.{3}",
    "not": "A non-secretor is not immune to all noroviruses: in an outbreak caused by a different type of the virus, non-secretors fell ill as often as secretors.{6} And the link with vitamin B12 and the microbiome describes average differences between groups of people; it does not show your own vitamin level.{3}{4}",
    "tip": [
     {
@@ -1167,7 +1171,7 @@
     {
      "k": "Plant-based diet",
      "s": "vegetarians and vegans",
-     "t": "Make sure you have a reliable source of vitamin B12, whatever your FUT2 genotype. Discuss your level and how to top it up with a doctor.",
+     "t": "Make sure you have a reliable source of vitamin B12, whatever your FUT2 genotype. Discuss your level, and how to top it up, with a doctor.",
      "f": "A review of 18 publications: B12 deficiency was found in 62% of pregnant vegetarian women, 21–41% of adolescents and 11–90% of older people; more often in vegans than in vegetarians.{8}"
     }
    ],
@@ -1203,7 +1207,7 @@
   "uk": {
    "intro": "64 мільйони пар нуклеотидів і близько 540 генів, серед яких гени пігментації, глибини сну, обміну вітаміну D та довжини теломер.{9}",
    "role": "GDF5 кодує фактор росту й диференціації 5, сигнальний білок із родини кісткових морфогенетичних білків.{1} Він потрібний для розвитку хряща й для того, щоб суглоб утворився в належному місці.{1}",
-   "known": "Поширений варіант +104T/C (rs143383) у регуляторній ділянці гена знижує його активність і пов’язаний з остеоартритом кульшового та колінного суглобів.{2} У метааналізі за участю понад 13 тисяч людей кожна копія цього варіанта підвищувала шанси остеоартриту коліна в 1,15 раза.{5} Варіанти цієї ж ділянки пов’язані зі зростом: ефект становить у середньому 0,44 см.{3}",
+   "known": "Алель T поширеного варіанта +104T/C (rs143383) у регуляторній ділянці гена знижує його активність і пов’язаний з остеоартритом кульшового та колінного суглобів.{2} У метааналізі за участю понад 13 тисяч людей кожна копія алеля T підвищувала шанси остеоартриту коліна в 1,15 раза.{5} Варіанти цієї ж ділянки пов’язані зі зростом: ефект становить у середньому 0,44 см на кожну копію алеля.{3}",
    "not": "Це не діагноз: остеоартрит — полігенне захворювання,{2} а зв’язок цього варіанта стабільно відтворюється в різних популяціях лише для колінного суглоба.{5} До того ж гаплотип, пов’язаний із вищою схильністю до артриту, має високу частоту в багатьох популяціях.{4}",
    "tip": [
     {
@@ -1214,15 +1218,15 @@
     },
     {
      "k": "Варіант +104T/C",
-     "s": "ген GDF5: одна чи дві копії",
+     "s": "алель T: одна чи дві копії",
      "t": "Порада не змінюється: внесок варіанта малий, а масу тіла можна змінити. Її зниження пов’язане з нижчим ризиком остеоартриту коліна.",
-     "f": "Кожна копія варіанта підвищувала шанси остеоартриту коліна в 1,15 раза.{5} У жінок, які за 10 років знизили ІМТ на 2 одиниці чи більше (приблизно 5,1 кг), шанси симптомного остеоартриту коліна були більш ніж удвічі нижчі.{7}"
+     "f": "Кожна копія алеля T підвищувала шанси остеоартриту коліна в 1,15 раза.{5} У жінок, які за 10 років знизили ІМТ на 2 одиниці чи більше (приблизно 5,1 кг), шанси симптомного остеоартриту коліна були більш ніж удвічі нижчі.{7}"
     },
     {
      "k": "Біль у колінах",
      "s": "остеоартрит коліна",
      "t": "Не уникайте руху: лікувальні вправи зменшують біль і поліпшують функцію суглоба. Програму вправ обговоріть із лікарем.",
-     "f": "Кокрейнівський огляд: у 44 рандомізованих дослідженнях вправи зменшували біль при остеоартриті коліна на 12 пунктів зі 100 і поліпшували функцію на 10 пунктів; користь зберігалася ще 2–6 місяців.{8}"
+     "f": "Кокрейнівський огляд: у 44 рандомізованих дослідженнях вправи зменшували біль у людей з остеоартритом коліна на 12 пунктів зі 100 і поліпшували функцію на 10 пунктів; користь зберігалася ще 2–6 місяців.{8}"
     }
    ],
    "tipNote": "Дані про біг і масу тіла спостережні: вони показують зв’язок, а не доведену причину."
@@ -1230,7 +1234,7 @@
   "en": {
    "intro": "64 million base pairs and about 540 genes, among them genes for pigmentation, sleep depth, vitamin D metabolism and telomere length.{9}",
    "role": "GDF5 encodes growth/differentiation factor 5, a signalling protein of the bone morphogenetic protein family.{1} It is needed for cartilage to develop and for a joint to form in the right place.{1}",
-   "known": "The common variant +104T/C (rs143383) in the gene’s regulatory region lowers its activity and is linked to osteoarthritis of the hip and knee.{2} In a meta-analysis of more than 13,000 people, each copy of this variant raised the odds of knee osteoarthritis 1.15-fold.{5} Variants in the same region are linked to height: the effect averages 0.44 cm.{3}",
+   "known": "The T allele of the common variant +104T/C (rs143383) in the gene’s regulatory region lowers its activity and is linked to osteoarthritis of the hip and knee.{2} In a meta-analysis of more than 13,000 people, each copy of the T allele raised the odds of knee osteoarthritis 1.15-fold.{5} Variants in the same region are linked to height: the effect averages 0.44 cm per copy of the allele.{3}",
    "not": "This is not a diagnosis: osteoarthritis is a polygenic disease,{2} and the link with this variant is consistent across populations only for the knee.{5} What is more, the haplotype linked to a higher likelihood of arthritis is very frequent in many populations.{4}",
    "tip": [
     {
@@ -1241,9 +1245,9 @@
     },
     {
      "k": "+104T/C variant",
-     "s": "GDF5 gene: one or two copies",
+     "s": "T allele: one or two copies",
      "t": "The advice does not change: the variant’s contribution is small, while body weight can be changed. Losing weight is linked to a lower risk of knee osteoarthritis.",
-     "f": "Each copy of the variant raised the odds of knee osteoarthritis 1.15-fold.{5} In women who lowered their BMI by 2 units or more over 10 years (about 5.1 kg), the odds of symptomatic knee osteoarthritis were more than halved.{7}"
+     "f": "Each copy of the T allele raised the odds of knee osteoarthritis 1.15-fold.{5} In women who lowered their BMI by 2 units or more over 10 years (about 5.1 kg), the odds of symptomatic knee osteoarthritis were more than halved.{7}"
     },
     {
      "k": "Knee pain",
@@ -1291,7 +1295,7 @@
      "k": "Для всіх",
      "s": "будь-який генотип",
      "t": "Листова зелень, бобові, продукти з вітаміном B12 і регулярний рух: із цими звичками пов’язаний нижчий рівень гомоцистеїну.",
-     "f": "У дослідженні понад 18 000 жителів Норвегії нижчий гомоцистеїн був пов’язаний із фізичною активністю та добрим статусом фолату й B12, а вищий із курінням і споживанням кави.{6}"
+     "f": "У дослідженні понад 18 000 жителів Норвегії нижчий гомоцистеїн був пов’язаний із фізичною активністю та добрим статусом фолату й B12, а вищий — із курінням і споживанням кави.{6}"
     },
     {
      "k": "Висока генетична оцінка",
@@ -1356,7 +1360,7 @@
   ],
   "uk": {
    "intro": "50,8 мільйона пар нуклеотидів і близько 490 генів, серед яких гени, пов’язані з дією кофеїну на сон, транспортом вітаміну B12 і статусом заліза.{8}",
-   "role": "COMT кодує фермент катехол-О-метилтрансферазу, що інактивує катехоламіни.{2} У префронтальній корі мозку це ключовий фермент виведення дофаміну.{1}",
+   "role": "COMT кодує фермент катехол-O-метилтрансферазу, що інактивує катехоламіни.{2} У префронтальній корі мозку це ключовий фермент виведення дофаміну.{1}",
    "known": "Заміна валіну на метіонін у позиції 158 білка (Val158Met) пов’язана з різницею в активності ферменту в 3–4 рази.{2} Систематичний огляд 255 досліджень дофамінових генів підтвердив, що цей варіант помітно впливає на активність, кількість і стабільність ферменту.{5} Проте з пам’яттю й виконавчими функціями він майже не пов’язаний: такий висновок метааналізу шести когнітивних показників.{3}",
    "not": "Генотип за варіантом Val158Met не вимірює ні пам’яті, ні виконавчих функцій: у метааналізі ранні яскраві результати слабшали з кожною новою публікацією, і знайшлися ознаки публікаційного упередження.{3} Це не діагноз і не опис характеру.",
    "tip": [
@@ -1440,14 +1444,14 @@
   "uk": {
    "intro": "X-хромосома має 156 мільйонів пар нуклеотидів і близько 840 генів, що кодують білки, а Y у референсній збірці налічує 57 мільйонів пар нуклеотидів.{9}{15} У жінок одна з двох X у кожній клітині здебільшого неактивна,{2}{5} а на Y є SRY, ген, що запускає розвиток за чоловічим типом.{3}{6}",
    "role": "AR кодує рецептор андрогенів: білок, через який діють тестостерон і дигідротестостерон.{10} Зв’язавши гормон, він регулює зчитування генів-мішеней у багатьох тканинах тіла.{10}",
-   "known": "Облисіння за чоловічим типом — найпоширеніша форма втрати волосся:{1} серед чоловіків 18–49 років помірну або значну втрату волосся мали 42%.{11} Мінливість гена AR є головною передумовою його раннього початку, з етіологічною часткою 0,46; імовірним джерелом ефекту автори назвали повтор GGN у першому екзоні гена.{1} Проте ознака полігенна: у понад 52 000 чоловіків із UK Biobank із сильним облисінням пов’язали понад 250 незалежних ділянок геному.{12}",
-   "not": "Повтор GGN у гені AR сам не визначає, чи буде облисіння: із цією ознакою пов’язано понад 250 ділянок геному.{12} І хоча X-хромосому син отримує від матері,{1} справа не лише в материнській лінії: імовірність облисіння вища й тоді, коли воно є в родичів по батькові.{13}",
+   "known": "Облисіння за чоловічим типом — найпоширеніша форма втрати волосся:{1} серед чоловіків 18–49 років помірну або значну втрату волосся мали 42%.{11} Мінливість гена AR є головною передумовою його раннього початку, з етіологічною часткою 0,46; імовірним джерелом ефекту автори назвали повтор GGN у першому екзоні гена.{1} Проте ознака полігенна: у дослідженні понад 52 000 чоловіків із UK Biobank понад 250 незалежних ділянок геному пов’язали із сильним облисінням.{12}",
+   "not": "Варіанти гена AR самі не визначають, чи буде облисіння: із цією ознакою пов’язано понад 250 ділянок геному.{12} І хоча X-хромосому син отримує від матері,{1} справа не лише в материнській лінії: імовірність облисіння вища й тоді, коли воно є в родичів по батькові.{13}",
    "tip": [
     {
      "k": "Для всіх",
      "s": "будь-який генотип",
      "t": "Не куріть: куріння пов’язане з вираженішим облисінням за чоловічим типом.",
-     "f": "Серед 740 чоловіків віком 40–91 рік курці мали в 1,77 раза вищі шанси помірного чи сильного облисіння, а ті, хто викурював 20 і більше сигарет на день, у 2,34 раза.{13}"
+     "f": "Серед 740 чоловіків віком 40–91 рік курці мали в 1,77 раза вищі шанси помірного чи сильного облисіння, а ті, хто викурював 20 і більше сигарет на день, — у 2,34 раза.{13}"
     },
     {
      "k": "Виражене облисіння",
@@ -1456,7 +1460,7 @@
      "f": "У метааналізі 31 дослідження (29 254 учасники з облисінням) воно було пов’язане з ішемічною хворобою серця (відношення шансів 1,22) і метаболічним синдромом (4,49); що сильніше облисіння, то вищим був ризик хвороби серця.{14}"
     },
     {
-     "k": "Повтор GGN в AR",
+     "k": "Варіанти гена AR",
      "s": "генотип",
      "t": "Окремої поради немає: генотип не змінює того, що варто робити. Якщо втрата волосся турбує, обговоріть можливості з дерматологом.",
      "f": "Модель, побудована лише на поширених варіантах, розрізняла чоловіків без облисіння і з сильним облисінням із чутливістю 74% і специфічністю 69%: прогноз далекий від безпомилкового.{12}"
@@ -1468,7 +1472,7 @@
    "intro": "The X chromosome has 156 million base pairs and about 840 protein-coding genes, and Y has 57 million base pairs in the reference assembly.{9}{15} In women, one of the two X chromosomes in each cell is largely inactive,{2}{5} while Y carries SRY, the gene that sets off male-typical development.{3}{6}",
    "role": "AR encodes the androgen receptor: the protein through which testosterone and dihydrotestosterone act.{10} Once it has bound the hormone, it regulates the reading of target genes in many tissues of the body.{10}",
    "known": "Male-pattern baldness is the most common form of hair loss:{1} among men aged 18–49, 42% had moderate to extensive hair loss.{11} Variation in the AR gene is the main prerequisite for its early onset, with an aetiological fraction of 0.46; the authors named the GGN repeat in the gene’s first exon as the likely source of the effect.{1} Yet the trait is polygenic: in more than 52,000 men from UK Biobank, over 250 independent regions of the genome were linked to severe hair loss.{12}",
-   "not": "The GGN repeat in AR does not by itself decide whether hair loss will occur: more than 250 regions of the genome are linked to this trait.{12} And although a son gets his X chromosome from his mother,{1} the maternal line is not the whole story: hair loss is also more likely when relatives on the father’s side have it.{13}",
+   "not": "Variants in AR do not by themselves decide whether hair loss will occur: more than 250 regions of the genome are linked to this trait.{12} And although a son gets his X chromosome from his mother,{1} the maternal line is not the whole story: hair loss is also more likely when relatives on the father’s side have it.{13}",
    "tip": [
     {
      "k": "Everyone",
@@ -1483,7 +1487,7 @@
      "f": "In a meta-analysis of 31 studies (29,254 participants with hair loss), it was linked to coronary heart disease (odds ratio 1.22) and metabolic syndrome (4.49); the more severe the hair loss, the higher the risk of heart disease.{14}"
     },
     {
-     "k": "GGN repeat in AR",
+     "k": "Variants in AR",
      "s": "genotype",
      "t": "There is no separate advice: genotype does not change what is worth doing. If hair loss bothers you, discuss the options with a dermatologist.",
      "f": "A model built on common variants alone told men with no hair loss from men with severe hair loss with a sensitivity of 74% and a specificity of 69%: the prediction is far from error-free.{12}"
@@ -1514,14 +1518,14 @@
   "uk": {
    "intro": "Не хромосома, а окрема кільцева молекула в мітохондріях: 16 569 пар нуклеотидів і 37 генів.{1}{2} До каріотипу вона не входить, тому це бонусний день.",
    "role": "Мітохондріальна ДНК (мтДНК) кодує 13 білків, 22 транспортні РНК і 2 рибосомні РНК.{1}{2} Усі 13 білків є субодиницями системи окисного фосфорилювання, яка постачає клітині енергію.{2}",
-   "known": "МтДНК передається лише по материнській лінії:{2} у родині з 33 людей у трьох поколіннях діти щоразу мали материнський варіант.{3} У кожній клітині вона присутня в сотнях і тисячах копій.{4}",
+   "known": "мтДНК передається майже винятково по материнській лінії:{2}{4} у родині з 33 людей у трьох поколіннях діти щоразу мали материнський варіант.{3} У клітині вона присутня в сотнях і тисячах копій.{4}",
    "not": "Варіант у мтДНК сам по собі не є діагнозом. І робота мітохондрій залежить не лише від неї: каталог мітохондріальних білків налічує 1 136 генів людини, і 99% цих білків закодовано в ядерному геномі.{5}",
    "tip": [
     {
      "k": "Для всіх",
      "s": "будь-який вік, будь-яка стать",
      "t": "Регулярні тренування на витривалість або інтервальні: у відповідь на них у м’язах стає більше мітохондрій.",
-     "f": "В огляді з даними 5 973 учасників вміст мітохондрій у м’язах зростав на 23% після тренувань на витривалість і на 27% після високоінтенсивних.{6}"
+     "f": "В огляді з даними 5 973 учасників вміст мітохондрій у м’язах зростав на 23% після тренувань на витривалість і на 27% після високоінтенсивних; різниця між ними не була статистично значущою.{6}"
     },
     {
      "k": "Старший вік",
@@ -1532,7 +1536,7 @@
     {
      "k": "Мало руху",
      "s": "життєва ситуація",
-     "t": "Почніть із регулярності: частіші заняття дають більший приріст мітохондрій, ніж рідкісні.",
+     "t": "Почніть із регулярності: частіші заняття дають більший приріст мітохондрій, ніж нечасті.",
      "f": "У тому самому огляді частіші тренування давали більший приріст вмісту мітохондрій у м’язах.{6}"
     }
    ],
@@ -1541,14 +1545,14 @@
   "en": {
    "intro": "Not a chromosome but a separate circular molecule inside mitochondria: 16,569 base pairs and 37 genes.{1}{2} It is not part of the karyotype, which is why this is a bonus day.",
    "role": "Mitochondrial DNA (mtDNA) encodes 13 proteins, 22 transfer RNAs and 2 ribosomal RNAs.{1}{2} All 13 proteins are subunits of the oxidative phosphorylation system, which supplies the cell with energy.{2}",
-   "known": "mtDNA is passed down only through the maternal line:{2} in a family of 33 people over three generations, the children always had the mother’s variant.{3} Each cell holds hundreds to thousands of copies.{4}",
+   "known": "mtDNA is passed down almost exclusively through the maternal line:{2}{4} in a family of 33 people over three generations, the children always had the mother’s variant.{3} A cell holds hundreds to thousands of copies.{4}",
    "not": "A variant in mtDNA is not in itself a diagnosis. And how mitochondria work depends on more than mtDNA: the catalogue of mitochondrial proteins lists 1,136 human genes, and 99% of those proteins are encoded in the nuclear genome.{5}",
    "tip": [
     {
      "k": "Everyone",
      "s": "any age and sex",
      "t": "Regular endurance or interval training: in response, muscles build more mitochondria.",
-     "f": "In a review with data from 5,973 participants, mitochondrial content in muscle rose by 23% after endurance training and by 27% after high-intensity training.{6}"
+     "f": "In a review with data from 5,973 participants, mitochondrial content in muscle rose by 23% after endurance training and by 27% after high-intensity training; the difference between them was not statistically significant.{6}"
     },
     {
      "k": "Older age",
