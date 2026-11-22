@@ -24,7 +24,7 @@
         intro: "Найбільша хромосома людини: майже 249 мільйонів пар нуклеотидів, близько 8% усієї ДНК клітини і приблизно дві тисячі генів, що кодують білки.{1}",
         role: "MTHFR кодує фермент метилентетрагідрофолатредуктазу. Він перетворює фолат на форму, потрібну для переробки гомоцистеїну на метіонін.{2}",
         known: "Поширений варіант C677T робить фермент менш стабільним.{2} Дві його копії має приблизно кожен восьмий європеєць.{4} За однакового споживання фолієвої кислоти рівень фолату в крові таких людей у середньому лише приблизно на 16% нижчий, ніж у людей без цього варіанта.{3}{5}",
-        not: "Це не діагноз і не привід змінювати форму чи дозу фолату.{5} Американська колегія медичної генетики та геноміки дійшла висновку, що клінічна користь тестування MTHFR мінімальна.{6}",
+        not: "Міф звучить так: із варіантом MTHFR слід уникати фолієвої кислоти й приймати інші форми фолату. Це не так: люди з варіантом засвоюють усі форми фолату, зокрема фолієву кислоту.{5} Варіант не є діагнозом, а клінічна користь тестування MTHFR, за висновком Американської колегії медичної генетики та геноміки, мінімальна.{6}",
         tip: [
           { k: "Для всіх", s: "будь-який генотип", t: "Листова зелень, бобові та цитрусові щодня: фолат із їжі потрібен за будь-якого генотипу.", f: "Споживання фолієвої кислоти важить для рівня фолату в крові більше, ніж варіант C677T.{5}" },
           { k: "Генотип TT", s: "дві копії варіанта C677T", t: "Порада не змінюється: достатньо фолату з їжею. Замінювати фолієву кислоту іншими формами фолату через варіант не потрібно.", f: "За даними CDC, люди з варіантом MTHFR засвоюють усі форми фолату, включно з фолієвою кислотою.{5}" },
@@ -36,7 +36,7 @@
         intro: "The largest human chromosome: almost 249 million base pairs, about 8% of all the DNA in a cell and roughly two thousand protein-coding genes.{1}",
         role: "MTHFR encodes the enzyme methylenetetrahydrofolate reductase. It converts folate into the form needed to turn homocysteine into methionine.{2}",
         known: "The common C677T variant makes the enzyme less stable.{2} About one in eight Europeans carries two copies.{4} At the same folic acid intake, their blood folate is on average only about 16% lower than in people without the variant.{3}{5}",
-        not: "This is not a diagnosis and not a reason to change the form or dose of folate.{5} The American College of Medical Genetics and Genomics concluded that MTHFR testing has minimal clinical utility.{6}",
+        not: "The myth goes like this: with an MTHFR variant you should avoid folic acid and take other forms of folate. This is not true: people with the variant can process all forms of folate, including folic acid.{5} The variant is not a diagnosis, and the American College of Medical Genetics and Genomics concluded that MTHFR testing has minimal clinical utility.{6}",
         tip: [
           { k: "Everyone", s: "any genotype", t: "Leafy greens, legumes and citrus fruit every day: folate from food is needed whatever your genotype.", f: "Folic acid intake matters more for blood folate than the C677T variant does.{5}" },
           { k: "TT genotype", s: "two copies of the C677T variant", t: "The advice does not change: enough folate from food. There is no need to swap folic acid for other forms of folate because of the variant.", f: "According to the CDC, people with an MTHFR variant can process all types of folate, including folic acid.{5}" },

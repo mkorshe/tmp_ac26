@@ -47,6 +47,7 @@
       others: "Інші гени цієї хромосоми та пов’язані з ними ознаки", noMt: "Мітохондріальна ДНК не входить до хромосомної карти.",
       noVars: "На карті немає окремих добре вивчених варіантів цієї хромосоми: її маркери працюють у складі полігенних оцінок.",
       defGene: "ген", defProd: "продукт гена",
+      pane: { chr: "Хромосома", body: "Де в тілі", chart: "Інфографіка" }, paneBody: "Де це в тілі",
       role: "Ген дня", known: "Що відомо", not: "Чого це не означає", tip: "Порада дня", tipPick: "Оберіть, що вас стосується", sources: "Джерела", source: "Джерело",
       pkgNote: "Натисніть на ознаку, щоб відкрити сторінку пакета Apixmed Prism, який її досліджує.", pkgTitle: (n) => `Пакет Apixmed Prism: ${n}`,
       blog: "Читайте також у блозі Apixmed", showAll: (n) => `Показати всі гени: ${n}`, showLess: "Згорнути перелік",
@@ -86,6 +87,7 @@
       others: "Other genes on this chromosome and the traits linked to them", noMt: "Mitochondrial DNA is not part of the chromosome map.",
       noVars: "The map has no well-studied individual variants on this chromosome: its markers work as part of polygenic scores.",
       defGene: "gene", defProd: "gene product",
+      pane: { chr: "Chromosome", body: "In the body", chart: "Infographic" }, paneBody: "Where it is in the body",
       role: "Gene of the day", known: "What is known", not: "What it does not mean", tip: "Tip of the day", tipPick: "Choose what applies to you", sources: "Sources", source: "Source",
       pkgNote: "Click a trait to open the Apixmed Prism package that covers it.", pkgTitle: (n) => `Apixmed Prism package: ${n}`,
       blog: "Read more on the Apixmed blog", showAll: (n) => `Show all genes: ${n}`, showLess: "Show fewer",
@@ -437,14 +439,14 @@
     const body = d.ready
       ? `${vz("intro")}
           <div class="sect"><h4>${T.role}</h4>${defHTML(d)}<div class="prose"><p>${m(c.role)}</p></div></div>${vz("role")}
-          <div class="sect"><h4>${T.known}</h4>${facts(c.known, m)}</div>${vz("known")}
+          <div class="sect s-known"><h4>${T.known}</h4>${facts(c.known, m)}</div><div class="dock-src">${vz("known")}</div>
           <div class="callout"><b>${T.not}</b>${m(c.not)}</div>${vz("not")}
           ${tipHTML(d, c, m)}${vz("hook")}
           ${refsHTML(d)}${blogHTML(d)}`
       : `<p class="standfirst" style="margin-top:14px">${m(c.hook)}</p>${vz("role")}${vz("hook")}${refsHTML(d)}${blogHTML(d)}`;
-    /* На широкому екрані портрет хромосоми стоїть ліворуч і лишається на екрані під час читання;
-       на вузькому порядок: заголовок, портрет, текст, інші гени */
-    return `<div class="m-grid"><div class="col c-side">${ideo}</div><div class="col">${head}<div class="c-body">${body}${tomorrow}</div>${more}</div></div>`;
+    /* На широкому екрані ліва панель лишається на екрані під час читання і показує те, про що йдеться праворуч:
+       портрет хромосоми, орган у 3D або інфографіку (див. dock). На вузькому порядок: заголовок, портрет, текст, інші гени */
+    return `<div class="m-grid"><div class="col c-side"><div class="c-tabs" hidden></div><div class="c-stage"><div class="c-slide on" data-slide="chr">${ideo}</div></div></div><div class="col">${head}<div class="c-body">${body}${tomorrow}</div>${more}</div></div>`;
   }
   const closeBtn = () => `<button class="icon-btn" id="close" aria-label="${T.close}"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg></button>`;
   /* Портрет хромосоми та інтерактивні графіки монтуються після вставлення картки в сторінку */
@@ -463,7 +465,83 @@
     stopViz();
     const d = dayOf(state.open), m = marker(d);
     figs.forEach((f) => { const v = (d.viz || [])[+f.dataset.k]; if (v) vizStops.push(Viz.mount(f, lang, m, v)); });
+    dockBody();
   }
+  /* ---------- Ліва панель картки на широкому екрані ----------
+     Панель закріплена і змінюється разом із секцією, яку читають праворуч:
+     chr — портрет хромосоми (початок картки, джерела, інші гени), body — орган у 3D («Де це в тілі»),
+     chart — інфографіка до розділу «Що відомо». На вузькому екрані все лишається в потоці тексту. */
+  const WIDE = window.matchMedia ? window.matchMedia("(min-width: 861px)") : { matches: false };
+  const sideOf = () => $("#sheet .c-side");
+  function undock() {
+    const side = sideOf();
+    if (!side) return;
+    const ph = $("#sheet .dock-ph"), fig = $('.c-slide[data-slide="chart"] .viz', side);
+    if (ph && fig) ph.replaceWith(fig); else if (ph) ph.remove();
+    $$('.c-slide:not([data-slide="chr"])', side).forEach((x) => x.remove());
+    $$("#sheet [data-pane]").forEach((x) => x.removeAttribute("data-pane"));
+    $$("#sheet .bd.docked").forEach((x) => x.classList.remove("docked"));
+    side.classList.remove("docked");
+    $(".c-tabs", side).hidden = true;
+    $('.c-slide[data-slide="chr"]', side).classList.add("on");
+  }
+  function slideFor(side, name) {
+    let sl = $(`.c-slide[data-slide="${name}"]`, side);
+    if (!sl) { sl = document.createElement("div"); sl.className = "c-slide"; sl.dataset.slide = name; $(".c-stage", side).appendChild(sl); }
+    return sl;
+  }
+  /* Викликається до монтування графіків: інфографіка одразу малюється під ширину лівої панелі */
+  function dock() {
+    const side = sideOf();
+    if (!side) return;
+    undock();
+    if (!WIDE.matches || !$("#sheet .s-known")) return;
+    const mark = (el, pane) => { if (el) el.dataset.pane = pane; };
+    mark($("#sheet .c-head"), "chr"); mark($("#sheet .c-refs"), "chr"); mark($("#sheet .c-more"), "chr");
+    const fig = $("#sheet .dock-src .viz");
+    if (fig) {
+      const ph = document.createElement("div"); ph.className = "dock-ph"; fig.before(ph);
+      slideFor(side, "chart").appendChild(fig);
+      mark($("#sheet .s-known"), "chart");
+    }
+    if ($("#sheet .viz-where")) mark($("#sheet .viz-where"), "body");
+    side.classList.add("docked");
+  }
+  /* Викликається після монтування: сцена з 3D-фігурою вже створена, переносимо її в панель */
+  function dockBody() {
+    const side = sideOf();
+    if (!side || !side.classList.contains("docked")) return;
+    const st = $("#sheet .viz-where .bd-stage"), old = $('.c-slide[data-slide="body"]', side);
+    if (st) {
+      const sl = slideFor(side, "body"), credit = $("#sheet .viz-where .bd-credit");
+      sl.innerHTML = `<div class="c-fig"><span class="c-lbl">${T.paneBody}</span></div>`;
+      sl.firstChild.appendChild(st);
+      if (credit) sl.firstChild.appendChild(credit);
+      $("#sheet .viz-where .bd").classList.add("docked");
+    } else if (old && !$(".bd-stage", old)) old.remove();
+    const names = ["chr", "body", "chart"].filter((n) => $(`.c-slide[data-slide="${n}"]`, side)), tabs = $(".c-tabs", side);
+    tabs.hidden = names.length < 2;
+    tabs.innerHTML = names.map((n) => `<button type="button" data-go="${n}">${T.pane[n]}</button>`).join("");
+    $$("button", tabs).forEach((b) => b.addEventListener("click", () => {
+      const body = $("#sheet .m-body"), el = b.dataset.go === "chr" ? null : $(`#sheet [data-pane="${b.dataset.go}"]`);
+      const top = el ? el.getBoundingClientRect().top - body.getBoundingClientRect().top + body.scrollTop - 16 : 0;
+      body.scrollTo({ top, behavior: window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    }));
+    syncPane();
+  }
+  let paneRaf = 0;
+  function syncPane() {
+    const side = sideOf(), body = $("#sheet .m-body");
+    if (!side || !body || !side.classList.contains("docked")) return;
+    const line = body.getBoundingClientRect().top + Math.min(body.clientHeight * 0.4, 320);
+    let pane = "chr";
+    const end = body.scrollTop + body.clientHeight >= body.scrollHeight - 6;        // у самому кінці картки показуємо панель останньої секції
+    $$("#sheet [data-pane]").forEach((el) => { if ((end || el.getBoundingClientRect().top <= line) && $(`.c-slide[data-slide="${el.dataset.pane}"]`, side)) pane = el.dataset.pane; });
+    $$(".c-slide", side).forEach((sl) => sl.classList.toggle("on", sl.dataset.slide === pane));
+    $$(".c-tabs button", side).forEach((b) => { const on = b.dataset.go === pane; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); });
+  }
+  const onPaneScroll = () => { if (!paneRaf) paneRaf = requestAnimationFrame(() => { paneRaf = 0; syncPane(); }); };
+
   function showSheet(html, narrow) {
     stopViz();
     const sheet = $("#sheet");
@@ -495,7 +573,9 @@
     $("#star").addEventListener("click", () => toggleStar(n));
     $("#prev").addEventListener("click", () => { if (idx > 0) openCard(avail[idx - 1]); });
     $("#next").addEventListener("click", () => { if (idx >= 0 && idx < avail.length - 1) openCard(avail[idx + 1]); });
-    mountIdeo(); mountViz(true); mountTip(); mountMore();
+    dock(); mountIdeo(); mountViz(true); mountTip(); mountMore();
+    $("#sheet .m-body").addEventListener("scroll", onPaneScroll, { passive: true });
+    syncPane();
   }
   function openInfo() {
     state.open = "info";
@@ -598,7 +678,10 @@
       layout();
       const k = $("#karyo");
       if (Math.floor(k.clientWidth) !== state.kW || Math.floor(k.clientHeight) !== state.kH) renderKaryo();
-      mountIdeo(); mountViz(false);
+      const side = sideOf();
+      if (side && typeof state.open === "number" && side.classList.contains("docked") !== (WIDE.matches && !!$("#sheet .s-known"))) { dock(); mountIdeo(); mountViz(true); }   // змінився вигляд картки: одна колонка чи дві
+      else { mountIdeo(); mountViz(false); }
+      syncPane();
     });
   }
   if (window.ResizeObserver) { const ro = new ResizeObserver(onResize); ro.observe($("#wins")); ro.observe($("#karyo")); }

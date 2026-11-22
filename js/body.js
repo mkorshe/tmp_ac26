@@ -250,10 +250,10 @@
     2: { items: [{ o: ["smallint"] }],
       uk: [["Тонка кишка", "Тут працює лактаза: вона розщеплює молочний цукор на поверхні клітин кишки.{4}{9}"]],
       en: [["Small intestine", "This is where lactase works: it breaks down milk sugar on the surface of the cells lining the gut.{4}{9}"]] },
-    3: { cut: "waist", items: [{ k: "fat" }],
+    3: { hide: true, items: [{ k: "fat" }],
       uk: [["Жирова тканина", "PPARγ керує дозріванням жирових клітин.{2}"]],
       en: [["Fat tissue", "PPARγ controls how fat cells mature.{2}"]] },
-    4: { items: [{ o: ["skin"] }, { o: ["eye"] }],
+    4: { hide: true, items: [{ o: ["skin"] }, { o: ["eye"] }],
       uk: [["Усе тіло", "Добовий цикл активності генів іде майже в кожній клітині.{2}"], ["Очі", "Світло, яке вони сприймають, зсуває внутрішній годинник: за природного освітлення він синхронізується із сонцем.{10}"]],
       en: [["The whole body", "The daily cycle of gene activity runs in almost every cell.{2}"], ["Eyes", "The light they take in shifts the inner clock: under natural light it syncs with the sun.{10}"]] },
     5: { hide: true, items: [{ o: blood }],
@@ -274,7 +274,7 @@
     10: { items: [{ o: ["pancreas"] }],
       uk: [["Підшлункова залоза", "В її острівцях від TCF7L2 залежать вироблення, дозрівання та секреція інсуліну.{2}"]],
       en: [["Pancreas", "In its islets, TCF7L2 governs the production, maturation and secretion of insulin.{2}"]] },
-    11: { cut: "thigh", items: [{ k: "muscle" }],
+    11: { hide: true, items: [{ k: "muscle" }],
       uk: [["Скелетні м’язи", "α-Актинін-3 працює лише у швидких волокнах, які розвивають силу на великій швидкості.{1}"]],
       en: [["Skeletal muscle", "α-Actinin-3 works only in fast fibres, which generate force at high speed.{1}"]] },
     12: { items: [{ o: ["liver"] }, { p: "face" }],
@@ -313,14 +313,14 @@
     23: { items: [{ p: "scalp" }, { o: ["skin"] }],
       uk: [["Волосся на голові", "Мінливість гена AR є головною передумовою раннього облисіння за чоловічим типом.{1}"], ["Багато тканин тіла", "Зв’язавши гормон, рецептор регулює зчитування генів-мішеней.{10}"]],
       en: [["Scalp hair", "Variation in the AR gene is the main prerequisite for early male-pattern hair loss.{1}"], ["Many tissues of the body", "Once it binds a hormone, the receptor regulates the reading of target genes.{10}"]] },
-    24: { cut: "thigh", items: [{ o: ["skin"] }, { k: "muscle" }],
+    24: { hide: true, items: [{ o: ["skin"] }, { k: "muscle" }],
       uk: [["Майже кожна клітина", "мтДНК присутня в клітині в сотнях і тисячах копій.{4}"], ["М’язи", "Після тренувань на витривалість у них стає більше мітохондрій.{6}"]],
       en: [["Almost every cell", "A cell holds hundreds to thousands of copies of mtDNA.{4}"], ["Muscles", "After endurance training they contain more mitochondria.{6}"]] }
   };
   const TITLE = { uk: { title: "Де це в тілі", sub: "" }, en: { title: "Where it is in the body", sub: "" } };
   DAYS.forEach((d) => {
     const w = W[d.d];
-    if (!w || w.hide) return;      // hide: у картці йдеться лише про аналіз крові, фігура там зайва
+    if (!w || w.hide) return;      // hide: фігури в цей день немає (лише аналіз крові; тканини чи органу немає в моделі; зображення виглядало моторошно)
     const pack = (lang) => ({ title: TITLE[lang].title, sub: TITLE[lang].sub, items: w[lang].map(([k, t]) => ({ k, t })) });
     d.viz = [{ id: "where", after: "role", items: w.items, cut: w.cut, frame: w.frame, uk: pack("uk"), en: pack("en") }].concat(d.viz || []);     // перед схемою з молекулами
   });
