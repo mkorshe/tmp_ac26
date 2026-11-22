@@ -367,12 +367,14 @@
       en: { title: "Height and joints", hook: "The growth factor GDF5 shapes cartilage and joints.{1} A common variant in its regulatory region is linked both to slightly shorter height{3} and to a higher likelihood of osteoarthritis.{2}{4}" } },
     { d: 21, chr: "21", len: 46.71, cen: 12.0, genes: 230, gene: "CBS", band: "21q22.3", pos: 43.05,
       viz: [{ id: "bars3d", after: "hook",
-        uk: { title: "Що знайшли, коли прочитали 21-шу хромосому", sub: "Гени, описані в першій опублікованій послідовності хромосоми 2000 року. Натисніть на стовпчик.", items: [
-          { k: "відомі гени", v: 127, t: "127", n: "Стільки вже відомих генів знайшли в послідовності.{1}" },
-          { k: "передбачені", v: 98, t: "98", n: "Ще 98 генів передбачили за послідовністю. Разом 225 на найменшій з автосом.{1}" }] },
-        en: { title: "What was found when chromosome 21 was read", sub: "Genes described in the first published sequence of the chromosome in 2000. Click a column.", items: [
-          { k: "known genes", v: 127, t: "127", n: "That many already known genes were found in the sequence.{1}" },
-          { k: "predicted", v: 98, t: "98", n: "Another 98 genes were predicted from the sequence. 225 in all on the smallest autosome.{1}" }] } }],
+        uk: { title: "Гомоцистеїн знизили. А ризик для серця?", sub: "Вісім рандомізованих досліджень фолієвої кислоти в людей із підвищеним серцево-судинним ризиком: 37 485 учасників, близько 5 років. Показники порівняно з групою плацебо (100%). Натисніть на стовпчик.", items: [
+          { k: "рівень|гомоцистеїну", v: 75, t: "75%", n: "Фолієва кислота знизила рівень гомоцистеїну в середньому на 25%.{5}" },
+          { k: "серцево-судинні|події", v: 101, t: "101%", n: "Серцево-судинних подій не поменшало: відношення частот 1,01 (від 0,97 до 1,05), тобто різниці немає.{5} Кращий показник в аналізі ще не означає нижчого ризику." },
+          { k: "інсульти", v: 96, t: "96%", n: "Для інсульту відношення частот становило 0,96 (від 0,87 до 1,06): різниця статистично не значуща.{5}" }] },
+        en: { title: "Homocysteine went down. What about heart risk?", sub: "Eight randomised trials of folic acid in people at increased cardiovascular risk: 37,485 participants, about 5 years. Figures are relative to the placebo group (100%). Click a column.", items: [
+          { k: "homocysteine|level", v: 75, t: "75%", n: "Folic acid lowered homocysteine levels by 25% on average.{5}" },
+          { k: "cardiovascular|events", v: 101, t: "101%", n: "Cardiovascular events did not become fewer: the rate ratio was 1.01 (0.97 to 1.05), that is, no difference.{5} A better test result does not yet mean a lower risk." },
+          { k: "strokes", v: 96, t: "96%", n: "For stroke the rate ratio was 0.96 (0.87 to 1.06): the difference was not statistically significant.{5}" }] } }],
       uk: { title: "Найменша, але не найпростіша", hook: "Найменша з нумерованих хромосом:{1} близько 230 генів, що кодують білки.{8} Серед них CBS,{2} ген ферменту, що перетворює гомоцистеїн на цистатіонін: це другий шлях його знешкодження поряд із фолатзалежним, у якому працює MTHFR із першої хромосоми.{3} Окремих широко вивчених варіантів на 21-й порівняно небагато: її маркери здебільшого працюють у складі полігенних оцінок." },
       en: { title: "The smallest, but not the simplest", hook: "The smallest of the numbered chromosomes:{1} about 230 protein-coding genes.{8} Among them is CBS,{2} the gene for an enzyme that converts homocysteine into cystathionine, the second route for clearing it alongside the folate-dependent one that involves MTHFR on chromosome 1.{3} Chromosome 21 has comparatively few widely studied individual variants: its markers mostly work as part of polygenic scores." } },
     { d: 22, chr: "22", len: 50.82, cen: 15.0, genes: 490, gene: "COMT", band: "22q11.21", pos: 19.96,
