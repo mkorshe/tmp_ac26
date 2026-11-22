@@ -212,14 +212,15 @@
 /* ---------- Картки-перевертні ---------- */
 .fc-hint { margin: -4px 0 10px; font-size: 12.5px; color: var(--muted); }
 .fc-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; perspective: 1100px; }
-.fc { position: relative; height: 176px; text-align: left; }
-.fc-in { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .7s var(--ease); }
+.viz-flip .viz-stage { container-type: inline-size; }
+.fc { position: relative; display: grid; text-align: left; }
+.fc-in { display: grid; min-height: 176px; transform-style: preserve-3d; transition: transform .7s var(--ease); }      /* обидві сторони в одній клітинці: висоту задає довший текст */
 .fc[aria-pressed="true"] .fc-in { transform: rotateY(180deg); }
 @media (hover: hover) {
   .fc:hover .fc-in { transform: rotateY(-12deg) translateZ(4px); }
   .fc[aria-pressed="true"]:hover .fc-in { transform: rotateY(168deg) translateZ(4px); }
 }
-.fc-f, .fc-b { position: absolute; inset: 0; padding: 14px; border-radius: 8px; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; flex-direction: column; overflow: hidden; }
+.fc-f, .fc-b { grid-area: 1 / 1; min-width: 0; padding: 14px; border-radius: 8px; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; flex-direction: column; overflow-wrap: anywhere; }
 .fc-f { color: #fff; background: linear-gradient(150deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, 0) 45%), linear-gradient(160deg, #2A7BA6, #123F5C); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35), inset 0 -4px 0 rgba(3, 14, 20, .25), 0 10px 22px rgba(11, 37, 50, .28); }
 .fc:nth-child(2) .fc-f { background: linear-gradient(150deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, 0) 45%), linear-gradient(160deg, #24809A, #0F4A60); }
 .fc:nth-child(3) .fc-f { background: linear-gradient(150deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, 0) 45%), linear-gradient(160deg, #1D4C66, #0B2532); }
@@ -339,7 +340,7 @@ a.chip:active { transform: translateY(2px); box-shadow: 0 0 0 rgba(11, 37, 50, .
   .tip .seg3 button { display: flex; align-items: baseline; gap: 8px; padding: 9px 12px; text-align: left; }
   .tip .seg3 button small { margin-top: 0; }
   .fc-row { grid-template-columns: 1fr; }
-  .fc { height: 122px; }
+  .fc-in { min-height: 104px; }
   .fc-f { flex-direction: row; align-items: center; gap: 12px; }
   .fc-f b { margin-top: 0; }
   .pk { grid-template-columns: 1fr; }
@@ -359,4 +360,12 @@ a.chip:active { transform: translateY(2px); box-shadow: 0 0 0 rgba(11, 37, 50, .
   .is-on .tl-enz circle { animation: none; }
   .fx-scene { transform: none; }
   .mh-sub, .mh-prod, .mh-enz, .mh-lig, .mh-sig circle, .mh-atp circle, .mh-rna, .mh-tcr, .mh-drop, .mh-ring { animation: none; opacity: 1; stroke-dashoffset: 0; }
+}
+
+/* Вузький блок (ліва панель картки на комп’ютері): картки-перевертні одна під одною */
+@container (max-width: 520px) {
+  .fc-row { grid-template-columns: 1fr; }
+  .fc-in { min-height: 104px; }
+  .fc-f { flex-direction: row; align-items: center; gap: 12px; }
+  .fc-f b { margin-top: 0; }
 }

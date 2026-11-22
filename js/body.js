@@ -45,10 +45,10 @@
   /* Завантаження: опис моделі й файли органів беремо один раз на сторінку */
   let manP = null;
   const built = {};
-  const manifest = () => manP || (manP = fetch(BASE + "parts.json").then((r) => { if (!r.ok) throw new Error("parts.json " + r.status); return r.json(); }).catch((e) => { manP = null; throw e; }));
+  const manifest = () => manP || (manP = fetch(BASE + "parts.json", { cache: "no-cache" }).then((r) => { if (!r.ok) throw new Error("parts.json " + r.status); return r.json(); }).catch((e) => { manP = null; throw e; }));
   function mesh(id, man) {
     if (built[id]) return built[id];
-    return (built[id] = fetch(BASE + id + ".bin").then((r) => { if (!r.ok) throw new Error(id + " " + r.status); return r.arrayBuffer(); }).then((buf) => {
+    return (built[id] = fetch(BASE + id + ".bin" + (man.rev ? "?r=" + man.rev : "")).then((r) => { if (!r.ok) throw new Error(id + " " + r.status); return r.arrayBuffer(); }).then((buf) => {
       const info = man.meshes[id], mn = man.bbox[0], mx = man.bbox[1], q = new Uint16Array(buf, 0, info.v * 3), I = new Uint16Array(buf, info.v * 6, info.i);
       const C = [(mn[0] + mx[0]) / 2, (mn[2] + mx[2]) / 2, -(mn[1] + mx[1]) / 2], sx = (mx[0] - mn[0]) / 65535, sy = (mx[1] - mn[1]) / 65535, sz = (mx[2] - mn[2]) / 65535;
       const P = new Float32Array(info.v * 3), N = new Float32Array(info.v * 3);
