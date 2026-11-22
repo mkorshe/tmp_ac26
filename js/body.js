@@ -140,7 +140,7 @@
     let pinN = 0;
     const marks = items.map((it) => (it.p ? { pin: it.p, n: ++pinN } : { color: COLOR[it.o[0]] }));
     stage.innerHTML = `<div class="bd">
-        <div class="bd-stage"><canvas role="img" aria-label="${ui.alt}"></canvas><div class="bd-pins">${marks.map((m) => (m.pin ? `<i class="bd-pin" data-pin="${m.pin}">${m.n}</i>` : "")).join("")}</div><span class="bd-load">${ui.load}</span><span class="bd-drag">${ui.drag}</span></div>
+        <div class="bd-stage"><canvas role="img" aria-label="${ui.alt}" title="${ui.drag}"></canvas><div class="bd-pins">${marks.map((m) => (m.pin ? `<i class="bd-pin" data-pin="${m.pin}">${m.n}</i>` : "")).join("")}</div><span class="bd-load">${ui.load}</span><span class="bd-drag" title="${ui.drag}" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/></svg></span></div>
         <ol class="bd-list">${items.map((it, i) => `<li><i class="bd-dot${marks[i].pin ? " pin" : ""}" style="--c:${marks[i].color || "#FF9D45"}">${marks[i].pin ? marks[i].n : ""}</i><div><b>${t.items[i].k}</b><p>${t.items[i].t}</p></div></li>`).join("")}</ol>
       </div><p class="bd-credit">${ui.credit}</p>`;
     const box = stage.querySelector(".bd"), stg = stage.querySelector(".bd-stage"), canvas = stage.querySelector("canvas"), pins = [...stage.querySelectorAll(".bd-pin")];
@@ -166,7 +166,7 @@
   if (!DAYS) return;
   const blood = ["arteries", "veins"];
   const W = {
-    1: { items: [{ o: blood }],
+    1: { hide: true, items: [{ o: blood }],
       uk: [["Кров", "Саме тут видно, як працює фермент: рівень фолату вимірюють у крові.{3}{5}"]],
       en: [["Blood", "This is where the enzyme’s work shows: folate levels are measured in the blood.{3}{5}"]] },
     2: { items: [{ o: ["smallint"] }],
@@ -178,7 +178,7 @@
     4: { items: [{ o: ["skin"] }, { o: ["eye"] }],
       uk: [["Усе тіло", "Добовий цикл активності генів іде майже в кожній клітині.{2}"], ["Очі", "Світло, яке вони сприймають, зсуває внутрішній годинник: за природного освітлення він синхронізується із сонцем.{10}"]],
       en: [["The whole body", "The daily cycle of gene activity runs in almost every cell.{2}"], ["Eyes", "The light they take in shifts the inner clock: under natural light it syncs with the sun.{10}"]] },
-    5: { items: [{ o: blood }],
+    5: { hide: true, items: [{ o: blood }],
       uk: [["Кров", "У великих дослідженнях довжину теломер вимірюють у лейкоцитах, клітинах крові.{4}"]],
       en: [["Blood", "Large studies measure telomere length in leukocytes, the white cells of the blood.{4}"]] },
     6: { items: [{ o: ["smallint"] }],
@@ -190,7 +190,7 @@
     8: { items: [{ o: ["arteries"] }, { o: ["fat", "heart"] }],
       uk: [["Судини", "Тут фермент розщеплює тригліцериди, які переносить кров.{1}"], ["Жирова тканина й серце", "Сюди, а також у скелетні м’язи, йдуть вивільнені жирні кислоти.{2}"]],
       en: [["Blood vessels", "Here the enzyme breaks down the triglycerides carried by the blood.{1}"], ["Fat tissue and the heart", "The released fatty acids go here, and to skeletal muscle as well.{2}"]] },
-    9: { items: [{ o: blood }],
+    9: { hide: true, items: [{ o: blood }],
       uk: [["Кров", "Антигени A і B розташовані на поверхні еритроцитів.{1}"]],
       en: [["Blood", "The A and B antigens sit on the surface of red blood cells.{1}"]] },
     10: { items: [{ o: ["pancreas"] }],
@@ -226,7 +226,7 @@
     20: { items: [{ o: ["bone"] }, { p: "knee" }],
       uk: [["Кістки й суглоби", "GDF5 потрібний для розвитку хряща й для того, щоб суглоб утворився в належному місці.{1}"], ["Коліно", "Саме для колінного суглоба зв’язок варіанта з остеоартритом відтворюється найстабільніше.{5}"]],
       en: [["Bones and joints", "GDF5 is needed for cartilage to develop and for a joint to form in the right place.{1}"], ["Knee", "It is for the knee joint that the variant’s link with osteoarthritis replicates most consistently.{5}"]] },
-    21: { items: [{ o: blood }],
+    21: { hide: true, items: [{ o: blood }],
       uk: [["Кров", "Тут вимірюють гомоцистеїн: речовину, яку CBS перетворює на цистатіонін.{3}"]],
       en: [["Blood", "Homocysteine, the substance CBS turns into cystathionine, is measured here.{3}"]] },
     22: { items: [{ o: ["brain"] }],
@@ -242,7 +242,7 @@
   const TITLE = { uk: { title: "Де це в тілі", sub: "" }, en: { title: "Where it is in the body", sub: "" } };
   DAYS.forEach((d) => {
     const w = W[d.d];
-    if (!w) return;
+    if (!w || w.hide) return;      // hide: у картці йдеться лише про аналіз крові, фігура там зайва
     const pack = (lang) => ({ title: TITLE[lang].title, sub: TITLE[lang].sub, items: w[lang].map(([k, t]) => ({ k, t })) });
     d.viz = [{ id: "where", after: "role", items: w.items, uk: pack("uk"), en: pack("en") }].concat(d.viz || []);     // перед схемою з молекулами
   });
