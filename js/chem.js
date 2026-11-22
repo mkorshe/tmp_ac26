@@ -12,17 +12,17 @@
 
   const UI = {
     uk: { f2: "Формула", f3: "Модель",
-      hint3: "Кульки — це атоми, палички — зв’язки між ними. Модель можна покрутити, а помаранчевим обведено місце, про яке йдеться.",
+      hint3: "Модель можна покрутити. Помаранчевим обведено місце, про яке йдеться.",
       hint2: "Так молекулу записують хіміки: кожен злам лінії — атом вуглецю. Помаранчевим підсвічено місце, про яке йдеться.",
-      hintP: "Кожна «намистина» — одна амінокислота. Натисніть на картку, щоб прочитати пояснення.",
-      hintS: "Кожна літера — один нуклеотид ДНК. Натисніть на картку, щоб прочитати пояснення.",
+      hintP: "Кожна «намистина» — одна амінокислота.",
+      hintS: "Кожна літера — один нуклеотид ДНК.",
       no3: "лише формула", eq: "Рівняння реакції", more: "Для допитливих: формули й рівняння", gmol: "г/моль", aa: (n) => `${n} амінокислот`,
       el: { C: "вуглець", H: "водень", O: "кисень", N: "азот", S: "сірка", P: "фосфор", I: "йод" }, atoms: "Кольори атомів" },
     en: { f2: "Formula", f3: "Model",
-      hint3: "The balls are atoms and the sticks are the bonds between them. You can rotate the model; the spot in question is ringed in orange.",
+      hint3: "You can rotate the model. The spot in question is ringed in orange.",
       hint2: "This is how chemists write a molecule: every corner of a line is a carbon atom. The spot in question is highlighted in orange.",
-      hintP: "Each “bead” is one amino acid. Tap a card to read the explanation.",
-      hintS: "Each letter is one DNA nucleotide. Tap a card to read the explanation.",
+      hintP: "Each “bead” is one amino acid.",
+      hintS: "Each letter is one DNA nucleotide.",
       no3: "formula only", eq: "Reaction equation", more: "For the curious: formulas and equations", gmol: "g/mol", aa: (n) => `${n} amino acids`,
       el: { C: "carbon", H: "hydrogen", O: "oxygen", N: "nitrogen", S: "sulfur", P: "phosphorus", I: "iodine" }, atoms: "Atom colours" }
   };
@@ -295,13 +295,12 @@
       else if (f.p) body = `<div class="ch-stage ch-pep">${f.p.split("").map((c, i) => `${f.cut === i ? `<i class="cut" aria-hidden="true"></i>` : ""}<b class="aa${(f.hl || []).includes(i) ? " on" : ""}" title="${(AAN[lang] || AAN.uk)[c] || ""}">${AA[c] || c}</b>`).join("")}</div>`;
       else if (f.s) body = `<div class="ch-stage ch-seq"><u>5′</u>${f.s.split("").map((c) => (c === " " ? `<i></i>` : `<b class="nt nt-${c}">${c}</b>`)).join("")}<u>3′</u></div>`;
       else body = `<div class="ch-stage ch-ico"><svg viewBox="0 0 48 48" width="58" height="58" aria-hidden="true">${ICO[f.ico] || ICO.cell}</svg></div>`;
-      const cap = x.c ? `<small class="ch-meta">${x.c}</small>` : f.p ? `<small class="ch-meta">${ui.aa(f.p.length)}</small>` : "";
+      const cap = (x.c ? `<small class="ch-meta">${x.c}</small>` : f.p ? `<small class="ch-meta">${ui.aa(f.p.length)}</small>` : "") + (mols[k] ? `<small class="ch-form">${formula(mols[k].f)}</small>` : "");
       return `<div class="ch-mol${x.t ? " can" : ""}" data-k="${k}"${x.t ? ` role="button" tabindex="0"` : ""}>${body}<b class="ch-name">${nameOf(k)}</b>${cap}</div>`;
     };
     const sci = mols.map((m, k) => (m ? `<li><b>${sciOf(k)}</b> <span class="ch-f">${formula(m.f)} · ${nf(m.w, lang)} ${ui.gmol}</span> <a class="ch-src" href="https://pubchem.ncbi.nlm.nih.gov/compound/${m.cid}" target="_blank" rel="noopener">PubChem</a></li>` : "")).join("");
     const eq = t.eq && t.eq.length ? `<div class="ch-eq"><span>${ui.eq}</span>${t.eq.map((e) => `<p>${e}</p>`).join("")}</div>` : "";
     stage.innerHTML = `<div class="ch" data-mode="">
-      ${any3 ? `<div class="ch-bar"><div class="seg3 two ch-mode" role="group"><button type="button" data-mode="3d"><b>${ui.f3}</b></button><button type="button" data-mode="2d"><b>${ui.f2}</b></button></div></div>` : ""}
       <div class="ch-flow">${sets.map((p) => (p.set ? `<div class="ch-set">${p.set.map((k) => tile(flow[k], k)).join("")}</div>` : tile(flow[p.arr], p.arr))).join("")}</div>
       <p class="ch-hint"></p>
       <div class="ch-note" aria-live="polite"></div>

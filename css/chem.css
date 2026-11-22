@@ -106,3 +106,7 @@
 .ch-more ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 5px; font-size: 12.5px; line-height: 1.4; color: var(--ink-2); }
 .ch-more li b { font-weight: 700; color: var(--navy-900); }
 .ch-more .ch-src { margin: 0 0 0 4px; }
+
+/* брутто-формула під назвою молекули */
+.ch-form { margin-top: 3px; font-size: 11.5px; line-height: 1.3; color: var(--muted); white-space: nowrap; }
+.ch-form sub, .ch-form sup { font-size: .72em; line-height: 0; }

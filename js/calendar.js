@@ -46,6 +46,7 @@
       genes: "генів, що кодують білки", genesMt: "генів у молекулі", regions: "інших відомих ділянок на карті", legGene: "ген дня", legOther: "інші відомі ділянки",
       others: "Інші гени цієї хромосоми та пов’язані з ними ознаки", noMt: "Мітохондріальна ДНК не входить до хромосомної карти.",
       noVars: "На карті немає окремих добре вивчених варіантів цієї хромосоми: її маркери працюють у складі полігенних оцінок.",
+      defGene: "ген", defProd: "продукт гена",
       role: "Ген дня", known: "Що відомо", not: "Чого це не означає", tip: "Порада дня", tipPick: "Оберіть, що вас стосується", sources: "Джерела", source: "Джерело",
       pkgNote: "Натисніть на ознаку, щоб відкрити сторінку пакета Apixmed Prism, який її досліджує.", pkgTitle: (n) => `Пакет Apixmed Prism: ${n}`,
       blog: "Читайте також у блозі Apixmed", showAll: (n) => `Показати всі гени: ${n}`, showLess: "Згорнути перелік",
@@ -84,6 +85,7 @@
       genes: "protein-coding genes", genesMt: "genes in the molecule", regions: "other known regions on the map", legGene: "gene of the day", legOther: "other known regions",
       others: "Other genes on this chromosome and the traits linked to them", noMt: "Mitochondrial DNA is not part of the chromosome map.",
       noVars: "The map has no well-studied individual variants on this chromosome: its markers work as part of polygenic scores.",
+      defGene: "gene", defProd: "gene product",
       role: "Gene of the day", known: "What is known", not: "What it does not mean", tip: "Tip of the day", tipPick: "Choose what applies to you", sources: "Sources", source: "Source",
       pkgNote: "Click a trait to open the Apixmed Prism package that covers it.", pkgTitle: (n) => `Apixmed Prism package: ${n}`,
       blog: "Read more on the Apixmed blog", showAll: (n) => `Show all genes: ${n}`, showLess: "Show fewer",
@@ -169,7 +171,7 @@
       <span class="in-gene">${L(d.gene)}</span>
       <span class="in-ttl">${C(d).title}</span>
       <span class="in-chr">${Viz.miniChrom(d, { fill: "#1E658C", op: 1, hero: true })}</span>
-      <span class="in-go"><span>${T.read}</span>${arrow}</span>`;
+      <span class="in-go">${arrow}</span>`;
   }
   function winHTML(d, i) {
     return `<div class="win" style="--i:${i}" data-win="${d.d}">
@@ -355,8 +357,15 @@
       return r ? `<sup class="ref"><a href="${r[1]}" target="_blank" rel="noopener" title="${esc(L(r[0]))}" aria-label="${T.source} ${n}: ${esc(L(r[0]))}">${n}</a></sup>` : "";
     });
   }
+  /* Абзац із кількох речень показуємо окремими фактами: так його легше охопити оком. Ділимо лише після джерела наприкінці речення */
+  const facts = (txt, m) => {
+    const parts = String(txt).replace(/(\.(?:\{\d+\})+)\s+/g, "$1\u0001").split("\u0001");
+    return parts.length > 1 ? `<ul class="facts">${parts.map((p) => `<li>${m(p)}</li>`).join("")}</ul>` : `<div class="prose"><p>${m(txt)}</p></div>`;
+  };
+  /* Визначення: ген, що він кодує, і до якого типу належить цей продукт */
+  const defHTML = (d) => (d.def ? `<div class="def"><span class="def-g"><small>${T.defGene}</small><em>${L(d.gene)}</em></span><i class="def-ar" aria-hidden="true">${arrow}</i><span class="def-p"><small>${T.defProd} · ${L(d.def.k)}</small><b>${L(d.def.p)}</b></span></div>` : "");
   const refsHTML = (d) => (d.refs && d.refs.length)
-    ? `<div class="sect c-refs"><h4>${T.sources}</h4><ol class="refs">${d.refs.map((r) => `<li><a href="${r[1]}" target="_blank" rel="noopener">${L(r[0])}</a></li>`).join("")}</ol></div>` : "";
+    ? `<details class="sect c-refs"><summary>${T.sources} · ${d.refs.length}</summary><ol class="refs">${d.refs.map((r) => `<li><a href="${r[1]}" target="_blank" rel="noopener">${L(r[0])}</a></li>`).join("")}</ol></details>` : "";
   /* Порада дня: текст залежить від обраного генотипу або групи */
   function tipHTML(d, c, m) {
     if (!c.tip || !c.tip.length) return "";
@@ -426,9 +435,9 @@
     const tomorrow = d.d === now.today && d.d < CFG.last ? `<p class="next">${lockIcon}${T.next(d.d + 1)}</p>` : "";
     const vz = (slot) => (d.viz || []).map((v, k) => (v.after === slot && Viz.has(v.id) ? Viz.html(v, lang, m, k) : "")).join("");
     const body = d.ready
-      ? `<div class="prose" style="margin-top:14px"><p>${m(c.intro)}</p></div>${vz("intro")}
-          <div class="sect"><h4>${T.role}</h4><div class="prose"><p>${m(c.role)}</p></div></div>${vz("role")}
-          <div class="sect"><h4>${T.known}</h4><div class="prose"><p>${m(c.known)}</p></div></div>${vz("known")}
+      ? `${vz("intro")}
+          <div class="sect"><h4>${T.role}</h4>${defHTML(d)}<div class="prose"><p>${m(c.role)}</p></div></div>${vz("role")}
+          <div class="sect"><h4>${T.known}</h4>${facts(c.known, m)}</div>${vz("known")}
           <div class="callout"><b>${T.not}</b>${m(c.not)}</div>${vz("not")}
           ${tipHTML(d, c, m)}${vz("hook")}
           ${refsHTML(d)}${blogHTML(d)}`
